@@ -1,0 +1,14 @@
+# IDE / Editors
+.idea/
+.vscode/
+
+# Git
+.git/
+.gitignore
+.gitkeep
+.gitlab-ci.yml
+
+
+database.cnf/
+logs/
+venv/
