@@ -9,6 +9,6 @@
 .gitlab-ci.yml
 
 
-database.cnf/
+docker/
 logs/
 venv/
