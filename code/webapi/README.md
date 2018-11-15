@@ -1,4 +1,4 @@
-# Backend Application for out IoT Coffeemachine
+# Backend Application for our IoT Coffeemachine
 Python >= 3.6 required
 
 ## Initialization of the project
