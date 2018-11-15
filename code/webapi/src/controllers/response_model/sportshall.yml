@@ -1,0 +1,28 @@
+SportsHall object
+---
+type: object
+properties:
+  id:
+    type: integer
+    example: 12345
+  street:
+    type: string
+    example: Hauptstr.
+  street_number:
+    type: integer
+    example: 123
+  zip_code:
+    type: string
+    example: 99098
+  place:
+    type: string
+    example: City
+  country:
+    type: string
+    example: Germany
+  state:
+    type: string
+    example: Bavaria
+  has_pictures:
+    type: boolean
+    example: true

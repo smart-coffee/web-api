@@ -1,0 +1,9 @@
+Token object
+---
+type: object
+required:
+  - token
+properties:
+  token:
+    type: string
+    example: b5386ca2-6c25-4308-a22a-4cf81c58af8b

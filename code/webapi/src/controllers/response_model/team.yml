@@ -1,0 +1,22 @@
+Team object
+---
+type: object
+required:
+  - name
+  - numbering
+properties:
+  id:
+    type: integer
+    example: 42
+  name:
+    type: string
+    example: TTC Sülzfeld 1
+  numbering:
+    type: integer
+    example: 1
+  leader_id:
+    type: string
+    example: b5386ca2-6c25-4308-a22a-4cf81c58af8b
+  has_players:
+    type: boolean
+    example: true

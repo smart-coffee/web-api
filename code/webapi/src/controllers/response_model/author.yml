@@ -1,0 +1,13 @@
+Author object
+---
+type: object
+properties:
+  id:
+    type: integer
+    example: 42
+  name:
+    type: string
+    example: Max Mustermann
+  shorthand_symbol:
+    type: string
+    example: MM

@@ -1,0 +1,22 @@
+TrainingSession object
+---
+type: object
+properties:
+  id:
+    type: integer
+    example: 42
+  start_hour:
+    type: integer
+    example: 20
+  start_minute:
+    type: integer
+    example: 0
+  end_hour:
+    type: integer
+    example: 21
+  end_minute:
+    type: integer
+    example: 30
+  weekday_id:
+    type: integer
+    example: 1

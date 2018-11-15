@@ -1,0 +1,29 @@
+Edit the currently logged in User
+---
+tags:
+  - user
+consumes:
+  - application/json
+produces:
+  - application/json
+  - application/xml
+parameters:
+  - in: header
+    name: x-access-token
+    description: JWT received by after succussful login.
+    type: string
+    required: true
+  - in: body
+    name: body
+    description: New User
+    required: true
+    schema:
+      $ref: '#/definitions/UserRequest'
+responses:
+  200:
+    description: OK
+    schema:
+      type: object
+      properties:
+        user:
+          $ref: '#/definitions/User'

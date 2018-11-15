@@ -1,0 +1,32 @@
+NewsEntry object
+---
+type: object
+properties:
+  id:
+    type: integer
+    example: 42
+  title:
+    type: string
+    example: Heute Schlagzeile
+  description:
+    type: string
+    example: Here is the main content of your news entry
+  publish_date:
+    type: string
+    format: date-time
+    example: 2017-01-21 10:00:02
+  topic:
+    $ref: '#/definitions/Topic'
+  author:
+    $ref: '#/definitions/Author'
+  club_id:
+    type: integer
+    example: 1
+  has_images:
+    type: boolean
+    example: true
+  preview_image:
+    $ref: '#/definitions/Image'
+  view_count:
+    type: integer
+    example: 22

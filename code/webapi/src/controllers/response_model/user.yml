@@ -1,0 +1,17 @@
+User object
+---
+type: object
+required:
+  - public_id
+  - name
+  - email
+properties:
+  public_id:
+    type: string
+    example: b5386ca2-6c25-4308-a22a-4cf81c58af8b
+  name:
+    type: string
+    example: John
+  email:
+    type: string
+    example: a.d@y.de

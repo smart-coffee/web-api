@@ -1,0 +1,24 @@
+Login and receive a Token to access secured areas of this API
+---
+tags:
+  - authentication
+consumes:
+  - application/json
+produces:
+  - application/json
+  - application/xml
+parameters:
+  - in: body
+    name: body
+    description: Credentials for Login
+    required: true
+    schema:
+      $ref: '#/definitions/Credentials'
+responses:
+  200:
+    description: Logged In
+    schema:
+      type: object
+      properties:
+        player:
+          $ref: '#/definitions/Token'

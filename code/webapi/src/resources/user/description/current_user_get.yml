@@ -1,0 +1,21 @@
+Get a the currently logged in User
+---
+tags:
+  - user
+produces:
+  - application/json
+  - application/xml
+parameters:
+  - in: header
+    name: x-access-token
+    description: JWT received by after succussful login.
+    type: string
+    required: true
+responses:
+  200:
+    description: OK
+    schema:
+      type: object
+      properties:
+        user:
+          $ref: '#/definitions/User'
