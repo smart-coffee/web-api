@@ -8,7 +8,10 @@ Initialize the project: `sh scripts/init.sh`. This will:
 * ... initialize `docker` containers
 
 ## Start the app
-`sh scripts/app-start.sh`
+* `sh scripts/app-start.sh`
+* Go to [http://localhost:5000](http://localhost:5000)
+* Try the login resource with the following credentials => admin:password
+* You should receive a JWT Token, which you can use for other resources available.
 
 ## Reset database
 `sh scripts/init-database.sh`
