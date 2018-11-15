@@ -74,6 +74,5 @@ def post_configuration(app: Flask, configs):
 
 
 def register_blueprints(app: Flask, blueprints: List[Blueprint]):
-    print(blueprints)
     for bp in blueprints:
         app.register_blueprint(bp)

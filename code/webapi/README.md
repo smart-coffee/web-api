@@ -7,9 +7,21 @@ Initialize the project: `sh scripts/init.sh`. This will:
 * ... initialize `.env` files
 * ... initialize `docker` containers
 
+## Start the app
+`sh scripts/app-start.sh`
+
+## Reset database
+`sh scripts/init-database.sh`
+
 ## Docker
 Start docker environment with `docker-compose up`. This will start the following containers:
 * MySQL, Database Server (Host:3308, Network:3306)
 * Adminer, Database Administration Tool (Host:8081, Network:8080)
 
 Visit [http://localhost:8081](http://localhost:8081) and access the database with the credentials listed in `docker-compose.yml`. There should be **1 user in the `user` table** if you initialized the project correctly.
+
+Example connection:
+* server: mysql-dev
+* user: admin
+* password: admin
+* database: cm_db
