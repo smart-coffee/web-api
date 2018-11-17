@@ -1,8 +1,8 @@
 {
-  "name": "frontend-angular",
-  "short_name": "frontend-angular",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "name": "Smart Coffee Hub",
+  "short_name": "SmartC",
+  "theme_color": "#F5F4F2",
+  "background_color": "#F5F4F2",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",

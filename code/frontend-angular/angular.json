@@ -156,5 +156,10 @@
       }
     }
   },
-  "defaultProject": "frontend-angular"
+  "defaultProject": "frontend-angular",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }
