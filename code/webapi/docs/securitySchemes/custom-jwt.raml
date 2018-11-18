@@ -1,0 +1,21 @@
+description: |
+    Anhand dieses Sicherheitsmechanismus werden Endpunkte gegen ungewollten Zugriff abgesichert.
+    Ein JWT-Token wird hierbei bei jedem Request benötigt, um den Nutzer zu identifizieren.
+type: x-jwt
+describedBy:
+    headers:
+        x-access-token:
+            type: string
+            description: |
+                Ein JWT-Token wird im Header platziert, um den Nutzer der Anfrage zu identifizieren.
+            example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwdWJsaWNfaWQiOiJkMzg5MjRmYi05NDE3LTRhNTAtYjcxNS0wMWY4MDVjMjgwNjMiLCJleHAiOjE1NDI1NDE3NDV9.jbWsgjOFn6jEx0IGVoUaiqwt530_Fko8qgoMhGvl4mg"
+    responses:
+        401:
+            description: |
+                Token fehlt.
+        401:
+            description: |
+                Token ist invalide.
+        403:
+            description: |
+                Ausführung der Methode verboten.

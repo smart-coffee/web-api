@@ -12,7 +12,7 @@ Initialize the project: `sh scripts/init.sh`. This will:
 * Go to [http://localhost:5000](http://localhost:5000)
 * Try the login resource with the following credentials => admin:password
 * You should receive a JWT Token, which you can use for other available resources that require a JWT Token.
-* Use the token for the `/user/current` and you will receive all information about the current user account.
+* Use the token for the `/users/current` and you will receive all information about the current user account.
 
 ## Reset database
 `sh scripts/init-database.sh`

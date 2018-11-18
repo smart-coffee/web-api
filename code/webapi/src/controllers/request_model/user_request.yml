@@ -1,10 +1,6 @@
 UserRequest object
 ---
 type: object
-required:
-  - email
-  - name
-  - password
 properties:
   email:
     type: string
@@ -12,6 +8,9 @@ properties:
   name:
     type: string
     example: John
-  password:
+  old_password:
     type: string
     example: somepassword
+  new_password:
+    type: string
+    example: new_password
