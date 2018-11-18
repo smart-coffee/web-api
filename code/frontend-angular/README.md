@@ -10,6 +10,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
+Keep the modules up to date with `npm install` before building the application
+
 Run `ng serve --open` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 This is also a Progressive Web App (PWA) with dedicated [service workers](https://angular.io/guide/service-worker-intro). Service workers do not function in an angular development environment. To test the PWA functionality execute the following steps:
