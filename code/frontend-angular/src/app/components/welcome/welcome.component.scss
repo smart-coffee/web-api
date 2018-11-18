@@ -1,0 +1,32 @@
+$left-right-margin: 16px;
+
+.welcome-container {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: $left-right-margin auto $left-right-margin;
+  grid-template-rows: 3fr 2fr 1fr;
+  grid-auto-flow: column;
+  grid-template-areas:
+    "art art art"
+    ". text ."
+    ". cta .";
+
+  &__art {
+    grid-area: art;
+    background-color: red;
+  }
+
+  &__text {
+    grid-area: text;
+    align-self: center;
+    justify-self: center;
+    font-family: 'Lobster', cursive;
+    background-color: yellow;
+  }
+
+  &__cta {
+    grid-area: cta;
+    justify-self: center;
+    align-self: center;
+  }
+}
