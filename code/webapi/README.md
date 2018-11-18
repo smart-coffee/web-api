@@ -1,5 +1,6 @@
 # Backend Application for our IoT Coffeemachine
-Python >= 3.6 required
+* Python >= 3.6 required
+* API-Documentation (HTML): `docs/webservice.html`
 
 ## Initialization of the project
 Initialize the project: `sh scripts/init.sh`. This will:
