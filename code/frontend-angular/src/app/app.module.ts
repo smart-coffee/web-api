@@ -12,6 +12,9 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { AccountRecoveryComponent } from './components/account-recovery/account-recovery.component';
 import { HomeComponent } from './components/home/home.component';
 import { CoffeePreferencesComponent } from './components/coffee-preferences/coffee-preferences.component';
+import { AnalysisComponent } from './components/analysis/analysis.component';
+import { HotWaterComponent } from './components/hot-water/hot-water.component';
+import { AccountSettingsComponent } from './components/account-settings/account-settings.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,9 @@ import { CoffeePreferencesComponent } from './components/coffee-preferences/coff
     AccountRecoveryComponent,
     HomeComponent,
     CoffeePreferencesComponent,
+    AnalysisComponent,
+    HotWaterComponent,
+    AccountSettingsComponent,
   ],
   imports: [
     BrowserModule,
