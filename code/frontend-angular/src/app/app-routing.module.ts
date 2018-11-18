@@ -10,11 +10,11 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 
 /**
  * App routing module contains all routes for the application
- * All routes EXCEPT 'splash' are sorted alphabetically for ease of use
+ * All routes are sorted alphabetically for ease of use
  */
 
 const routes: Routes = [
-  { path: '', component: SplashComponent },
+  { path: '', pathMatch: 'full', component: SplashComponent },
   { path: 'account-recovery', component: AccountRecoveryComponent },
   { path: 'coffee-preferences', component: CoffeePreferencesComponent },
   { path: 'home', component: HomeComponent },
@@ -24,6 +24,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
+  imports: [ RouterModule.forRoot(routes) ],
   exports: [ RouterModule ]
 })
 export class AppRoutingModule { }
