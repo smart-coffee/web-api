@@ -1,0 +1,95 @@
+#%RAML 1.0
+title: IoT Coffee Machine Core
+version: v1.0
+baseUri: http://localhost:5000
+protocols: [ HTTP, HTTPS ]
+mediaType:  application/json
+
+types:
+    credentials: !include types/credentials.raml
+    token: !include types/token.raml
+    user: !include types/user.raml
+    userrequest-edit: !include types/userrequest-edit.raml
+    userrequest-create: !include types/userrequest-create.raml
+
+securitySchemes:
+  jwt: !include securitySchemes/custom-jwt.raml
+        
+/login:
+    post:
+        description: Am System anmelden.
+        body:
+            type: credentials
+        responses:
+            200:
+                description: Ok. Login erfolgreich.
+                body:
+                    application/json:
+                        type: token
+
+/users:
+    securedBy: [ jwt ]
+    get:
+        description: Liefert eine Liste an Nutzeraccounts.
+        responses:
+            200:
+                description: Ok.
+                body:
+                    type: user[]
+    post:
+        description: Erstellt einen neuen Nutzeraccount.
+        body:
+            type: userrequest-create
+        responses:
+            201:
+                description: Created. Nutzeraccount erstellt.
+                headers:
+                    Location:
+                        description: URL zum neu angelegten Nutzeraccount.
+                body:
+                    type: user
+    put:
+        description: Editiert den Nutzeraccount mit der angegebenen öffentlichen ID.
+        body:
+            type: userrequest-edit
+        responses:
+            200:
+                description: Nutzeraccount bearbeitet.
+                body:
+                    type: user
+    
+    /{public_id}:
+        securedBy: [ jwt ]
+        get:
+            description: Liefert den Nutzeraccount mit der angegebenen öffentlichen ID.
+            responses:
+                200:
+                    description: Ok. 
+                    body:
+                        type: user
+        delete:
+            description: Löscht den Nutzeraccount mit der angegebenen öffentlichen ID.
+            responses:
+                200:
+                    description: Ok. Nutzeraccount gelöscht.
+
+    /current:
+        securedBy: [ jwt ]
+        get:
+            description: Liefert den Nutzeraccount des aktuell eingeloggten Nutzers.
+            responses:
+                200:
+                    description: Ok.
+                    body:
+                        type: user
+        put:
+            description: Editiert den Nutzeraccount des aktuell eingeloggten Nutzers.
+            body:
+                type: userrequest-edit
+            responses:
+                200:
+                    description: Ok. Nutzeraccount bearbeitet.
+                    body:
+                        type: user
+                                                                                
+                    

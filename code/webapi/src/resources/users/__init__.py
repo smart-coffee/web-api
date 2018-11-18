@@ -8,7 +8,7 @@ from controllers.response_model import get_registered_user_details
 from utils.http import token_required
 
 
-API_PREFIX = 'user'
+API_PREFIX = 'users'
 USER_BP = Blueprint('{rsc}_api'.format(rsc=API_PREFIX), __name__)
 api = Api(USER_BP)
 
@@ -20,13 +20,13 @@ class _ControllerBased:
 
 class CurrentUserResource(Resource, _ControllerBased):
     @token_required
-    @swag_from('/resources/user/description/current_user_get.yml')
+    @swag_from('/resources/users/description/current_user_get.yml')
     @marshal_with(get_registered_user_details())
     def get(self, current_user: User):
         return current_user
 
     @token_required
-    @swag_from('/resources/user/description/current_user_put.yml')
+    @swag_from('/resources/users/description/current_user_put.yml')
     @marshal_with(get_registered_user_details())
     def put(self, current_user: User):
         return self.controller.edit_current_user(current_user)
