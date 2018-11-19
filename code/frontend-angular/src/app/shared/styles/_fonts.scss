@@ -1,6 +1,15 @@
 /*
- * Lobster (headlines)
+ * Font imports
+ * Font family declarations
+ * Font size declarations
+ * Font line height declarations
  */
+
+/******************************/
+/*******  font imports  *******/
+/******************************/
+
+/* Lobster */
 @font-face {
   font-family: 'Lobster';
   src: url('../../../assets/fonts/Lobster/Lobster-Regular.ttf') format('truetype');
@@ -8,9 +17,7 @@
   font-style: normal;
 }
 
-/*
- * Cabin (general)
- */
+/* Cabin */
 @font-face {
   font-family: 'CabinBold';
   src: url('../../../assets/fonts/Cabin/Cabin-Bold.ttf') format('truetype');
@@ -73,3 +80,49 @@
   font-weight: normal;
   font-style: normal;
 }
+
+
+/******************************/
+/** font family declarations **/
+/******************************/
+
+$font-family-hero: Lobster, serif;
+$font-family-title: Lobster, serif;
+$font-family-subtitle: Lobster, serif;
+$font-family-paragraph: CabinRegular, sans-serif;
+$font-family-input-1: CabinRegular, sans-serif;
+$font-family-input-2: CabinRegular, sans-serif;
+$font-family-button-1: CabinBold, sans-serif;
+$font-family-button-2: CabinBold, sans-serif;
+$font-family-link-1: CabinRegular, sans-serif;
+$font-family-link-2: CabinRegular, sans-serif;
+
+/******************************/
+/*** font size declarations ***/
+/******************************/
+
+$font-size-hero: 36px;
+$font-size-title: 30px;
+$font-size-subtitle: 23px;
+$font-size-paragraph: 21px;
+$font-size-input-1: 21px;
+$font-size-input-2: 16px;
+$font-size-button-1: 21px;
+$font-size-button-2: 18px;
+$font-size-link-1: 21px;
+$font-size-link-2: 14px;
+
+/******************************/
+/** line height declarations **/
+/******************************/
+
+$font-lnheight-hero: 58px;
+$font-lnheight-title: 49px;
+$font-lnheight-subtitle: 37px;
+$font-lnheight-paragraph: 34px;
+$font-lnheight-input-1: 34px;
+$font-lnheight-input-2: 26px;
+$font-lnheight-button-1: 34px;
+$font-lnheight-button-2: 29px;
+$font-lnheight-link-1: 34px;
+$font-lnheight-link-2: 23px;
