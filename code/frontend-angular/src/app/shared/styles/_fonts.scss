@@ -81,7 +81,6 @@
   font-style: normal;
 }
 
-
 /******************************/
 /** font family declarations **/
 /******************************/
@@ -126,3 +125,17 @@ $font-lnheight-button-1: 34px;
 $font-lnheight-button-2: 29px;
 $font-lnheight-link-1: 34px;
 $font-lnheight-link-2: 23px;
+
+/******************************/
+/****** font shorthands *******/
+/******************************/
+$font-sc-hero: $font-size-hero unquote("/") $font-lnheight-hero $font-family-hero;
+$font-sc-title: $font-size-title unquote("/") $font-lnheight-title $font-family-title;
+$font-sc-subtitle: $font-size-subtitle unquote("/") $font-lnheight-subtitle $font-family-hero;
+$font-sc-paragraph: $font-size-paragraph unquote("/") $font-lnheight-paragraph $font-family-paragraph;
+$font-sc-input-1: $font-size-input-1 unquote("/") $font-lnheight-input-1 $font-family-input-1;
+$font-sc-input-2: $font-size-input-2 unquote("/") $font-lnheight-input-2 $font-family-input-2;
+$font-sc-button-1: $font-size-button-1 unquote("/") $font-lnheight-button-1 $font-family-button-1;
+$font-sc-button-2: $font-size-button-2 unquote("/") $font-lnheight-button-2 $font-family-button-2;
+$font-sc-link-1: $font-size-link-1 unquote("/") $font-lnheight-link-1 $font-family-link-1;
+$font-sc-link-2: $font-size-link-2 unquote("/") $font-lnheight-link-2 $font-family-link-2;

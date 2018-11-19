@@ -1,32 +1,43 @@
-$left-right-margin: 16px;
+@import '../../shared/styles/colors';
+@import '../../shared/styles/dimensions';
+@import '../../shared/styles/fonts';
 
 .welcome-container {
   height: 100vh;
   display: grid;
-  grid-template-columns: $left-right-margin auto $left-right-margin;
+  grid-template-columns: $mobile-side-margin auto $mobile-side-margin;
   grid-template-rows: 3fr 2fr 1fr;
   grid-auto-flow: column;
   grid-template-areas:
     "art art art"
     ". text ."
     ". cta .";
+  background-color: $color-background-light;
 
   &__art {
     grid-area: art;
-    background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('../../../assets/backgrounds/bg-art-welcome.svg') no-repeat;
+    background-size: cover;
   }
+
 
   &__text {
     grid-area: text;
-    align-self: center;
-    justify-self: center;
-    font-family: 'Lobster', cursive;
-    background-color: yellow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font: $font-sc-hero;
+    text-align: center;
+    color: $color-text-dark;
   }
 
   &__cta {
     grid-area: cta;
-    justify-self: center;
-    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
