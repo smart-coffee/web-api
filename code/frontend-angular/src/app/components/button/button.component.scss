@@ -1,12 +1,40 @@
 @import '../../shared/styles/colors';
 @import '../../shared/styles/fonts';
 
-.default {
-  width: 167px;
-  height: 48px;
+.sc-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 163px;
+  height: 44px;
   border-radius: 500px;
-  color: $color-background-light;
-  background-color: $color-button-coffee;
-  font: $font-sc-button-1;
-  text-align: center;
+  border: 2px solid $color-button-coffee;
+  margin-left: 2px;
+  margin-right: 2px;
+
+  &--default {
+    color: $color-background-light;
+    background-color: $color-button-coffee;
+    font: $font-sc-button-1;
+    text-align: center;
+
+    &:hover {
+      cursor: pointer;
+      background-color: darken($color-button-coffee, 10%);
+      border: 2px solid darken($color-button-coffee, 10%);
+    }
+  }
+
+  &--ghost {
+    color: $color-button-coffee;
+    background-color: $color-background-light;
+    font: $font-sc-button-1;
+    text-align: center;
+
+    &:hover {
+      cursor: pointer;
+      color: darken($color-button-coffee, 10%);
+      border: 2px solid darken($color-button-coffee, 10%);
+    }
+  }
 }

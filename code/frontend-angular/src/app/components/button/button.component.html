@@ -1,5 +1,3 @@
-<div>
-  <button type="button" class="{{buttonType}}" (click)="handleClick($event)">
-    {{ label }}
-  </button>
+<div class="sc-button sc-button--{{buttonType}}" (click)="handleClick($event)">
+  <span class="sc-button__label">{{label}}</span>
 </div>

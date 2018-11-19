@@ -15,15 +15,13 @@ export class ButtonComponent implements OnChanges {
 
   constructor() { }
 
-  ngOnInit() {
-  }
-
   ngOnChanges(changes: SimpleChanges) {
     console.log(changes);
   }
 
   handleClick(event) {
     this.numberOfClicks++;
+    console.log(this.numberOfClicks);
     this.action.emit(this.numberOfClicks);
   }
 
