@@ -1,0 +1,12 @@
+@import '../../shared/styles/colors';
+@import '../../shared/styles/fonts';
+
+.default {
+  width: 208px;
+  height: 48px;
+  border-radius: 50%;
+  color: $color-background-light;
+  background-color: $color-button-coffee;
+  font: $font-sc-button-1;
+  text-align: center;
+}

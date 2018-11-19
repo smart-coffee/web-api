@@ -15,6 +15,7 @@ import { CoffeePreferencesComponent } from './components/coffee-preferences/coff
 import { AnalysisComponent } from './components/analysis/analysis.component';
 import { HotWaterComponent } from './components/hot-water/hot-water.component';
 import { AccountSettingsComponent } from './components/account-settings/account-settings.component';
+import { ButtonComponent } from './components/button/button.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { AccountSettingsComponent } from './components/account-settings/account-
     AnalysisComponent,
     HotWaterComponent,
     AccountSettingsComponent,
+    ButtonComponent,
   ],
   imports: [
     BrowserModule,
