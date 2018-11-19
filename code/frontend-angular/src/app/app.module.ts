@@ -16,6 +16,7 @@ import { AnalysisComponent } from './components/analysis/analysis.component';
 import { HotWaterComponent } from './components/hot-water/hot-water.component';
 import { AccountSettingsComponent } from './components/account-settings/account-settings.component';
 import { ButtonComponent } from './components/button/button.component';
+import { FormTextInputComponent } from './components/form-text-input/form-text-input.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ButtonComponent } from './components/button/button.component';
     HotWaterComponent,
     AccountSettingsComponent,
     ButtonComponent,
+    FormTextInputComponent,
   ],
   imports: [
     BrowserModule,

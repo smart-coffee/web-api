@@ -8,7 +8,7 @@ import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '
 export class ButtonComponent implements OnChanges {
 
   @Input() label = 'default';
-  @Input() buttonType = 'default';
+  @Input() type = 'default';
   @Output() action = new EventEmitter<number>();
 
   private numberOfClicks = 0;
