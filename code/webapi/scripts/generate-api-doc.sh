@@ -1,4 +1,5 @@
 #!/bin/sh
 
 cd docs
-raml2html webservice.raml > webservice.html
+mkdir gen
+raml2html webservice.raml > gen/index.html
