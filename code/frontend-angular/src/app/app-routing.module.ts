@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SplashComponent } from './components/splash/splash.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { AccountRecoveryComponent } from './components/account-recovery/account-recovery.component';
 import { CoffeePreferencesComponent } from './components/coffee-preferences/coffee-preferences.component';
 import { HomeComponent } from './components/home/home.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
+import { AuthGuard } from './auth-guard.service';
 
 /**
  * App routing module contains all routes for the application
@@ -14,10 +14,10 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
  */
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', component: SplashComponent },
+  { path: '', canActivate: [AuthGuard], pathMatch: 'full', redirectTo: 'home' },
   { path: 'account-recovery', component: AccountRecoveryComponent },
   { path: 'coffee-preferences', component: CoffeePreferencesComponent },
-  { path: 'home', component: HomeComponent },
+  { path: 'home', canActivate: [AuthGuard], component: HomeComponent },
   { path: 'sign-up', component: SignUpComponent },
   { path: 'sign-in', component: SignInComponent  },
   { path: 'welcome', component: WelcomeComponent }

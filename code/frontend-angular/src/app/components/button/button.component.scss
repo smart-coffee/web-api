@@ -1,11 +1,14 @@
 @import '../../shared/styles/colors';
 @import '../../shared/styles/fonts';
 
+
+//TODO: replace div drawn buttons with svg, fucking width breaks everything on smaller devices
 .sc-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 163px;
+  min-width: 155px;
+  max-width: 163px;
   height: 44px;
   border-radius: 500px;
   border: 2px solid $color-button-coffee;

@@ -3,7 +3,7 @@
 @import '../../shared/styles/fonts';
 
 .welcome-container {
-  height: 100vh;
+  height: 100%;
   display: grid;
   grid-template-columns: $mobile-side-margin auto $mobile-side-margin;
   grid-template-rows: 3fr 2fr 1fr;
@@ -19,10 +19,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url('../../../assets/backgrounds/bg-art-welcome.svg') no-repeat;
     background-size: cover;
+    background: url('../../../assets/backgrounds/bg-art-welcome.svg') no-repeat;
   }
-
 
   &__text {
     grid-area: text;

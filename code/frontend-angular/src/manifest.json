@@ -1,8 +1,8 @@
 {
   "name": "Smart Coffee Hub",
   "short_name": "SmartC",
-  "theme_color": "#F5F4F2",
-  "background_color": "#F5F4F2",
+  "theme_color": "#F8E8D4",
+  "background_color": "#F8E8D4",
   "display": "standalone",
   "scope": "/",
   "orientation": "portrait",
