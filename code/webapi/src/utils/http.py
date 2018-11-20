@@ -39,7 +39,7 @@ def get_post_response(obj, body, content_type, api):
     return response
 
 
-def get_login_response(body, content_type='application/json'):
+def get_token_response(body, content_type='application/json'):
     if content_type == 'application/json':
         body = json.dumps(body)
     response = Response(body)

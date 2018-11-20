@@ -14,18 +14,28 @@ types:
 
 securitySchemes:
   jwt: !include securitySchemes/custom-jwt.raml
-        
-/login:
-    post:
-        description: Am System anmelden.
-        body:
-            type: credentials
-        responses:
-            200:
-                description: Ok. Login erfolgreich.
-                body:
-                    application/json:
+
+/auth:        
+    /login:
+        post:
+            description: Am System anmelden.
+            body:
+                type: credentials
+            responses:
+                200:
+                    description: Ok. Login erfolgreich.
+                    body:
                         type: token
+    /refresh:
+        securedBy: [ jwt ]
+        post:
+            description: Liefert einen neuen JWT-Token.
+            responses:
+                200:
+                    description: Ok. JWT-Token erneuert.
+                    body:
+                        type: token
+
 
 /users:
     securedBy: [ jwt ]

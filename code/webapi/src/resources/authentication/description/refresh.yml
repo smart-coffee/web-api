@@ -1,0 +1,21 @@
+Refresh the JWT-Token
+---
+tags:
+  - authentication
+produces:
+  - application/json
+  - application/xml
+parameters:
+  - in: header
+    name: x-access-token
+    description: JWT received by after succussful login.
+    type: string
+    required: true
+responses:
+  200:
+    description: Ok. Token refreshed.
+    schema:
+      type: object
+      properties:
+        token:
+          $ref: '#/definitions/Token'
