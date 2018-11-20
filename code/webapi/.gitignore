@@ -111,3 +111,4 @@ venv.bak/
 logs/
 alembic/versions/*
 data/
+/docs/**/*.html
