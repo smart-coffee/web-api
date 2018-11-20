@@ -6,7 +6,7 @@
   height: 100%;
   display: grid;
   grid-template-columns: $mobile-side-margin auto $mobile-side-margin;
-  grid-template-rows: 3fr 2fr 1fr;
+  grid-template-rows: 3.2fr 2fr 0.8fr;
   grid-auto-flow: column;
   grid-template-areas:
     "art art art"
