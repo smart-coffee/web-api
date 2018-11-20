@@ -68,7 +68,7 @@ input {
       color: $color-button-coffee;
     }
 
-    ~ .bar:before {
+    ~ .sc-text-input__bar:before {
       transform: translateX(0);
     }
   }
