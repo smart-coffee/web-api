@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 400 352" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>bg</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Smart-Coffee-Mobile" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Welcome-Screen" transform="translate(0.000000, -19.000000)" fill="#F8E8D4">
+            <path d="M0,88.8345769 C36.264666,59.8638051 91.687491,37.9649063 166.268475,23.1378808 C257.834532,6.34848919 335.74504,40.6511331 400,126.045813 L400,332.360748 C295.541115,367.438872 162.207782,378.503314 0,365.554073 C6.43557354e-13,301.645265 6.43557354e-13,209.405433 0,88.8345769 Z" id="bg"></path>
+        </g>
+    </g>
+</svg>
