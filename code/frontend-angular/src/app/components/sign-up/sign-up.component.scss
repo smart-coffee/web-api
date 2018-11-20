@@ -22,6 +22,8 @@
     font: $font-sc-hero;
     text-align: center;
     color: $color-text-dark;
+    background-size: cover;
+    background: url('../../../assets/backgrounds/bg-art-headline.svg') no-repeat;
   }
 
   &__form {
@@ -29,6 +31,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
   }
 
   &__cta {
@@ -36,5 +39,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  &__log-in {
+    font: $font-sc-link-2;
+    color: $color-link;
+    text-align: center;
   }
 }

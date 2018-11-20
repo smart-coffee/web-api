@@ -3,10 +3,19 @@
     Account erstellen
   </div>
   <form class="sign-up-container__form">
-    <app-form-text-input label="Benutzername" name="username" type="text">
-    </app-form-text-input>
+    <!-- Username -->
+    <app-form-text-input label="Benutzername" name="username" type="text"></app-form-text-input>
+    <!-- Email -->
+    <app-form-text-input label="Email Adresse" name="email" type="email"></app-form-text-input>
+    <!-- Password -->
+    <app-form-text-input label="Passwort" name="password" type="password"></app-form-text-input>
+    <!-- Password confirm -->
+    <app-form-text-input label="Passwortbestätigung" name="passwordConfirm" type="password"></app-form-text-input>
   </form>
   <div class="sign-up-container__cta">
+    <div class="sign-up-container__log-in">
+      Sie haben bereits einen Account? Hier anmelden
+    </div>
     <app-button label="Registrieren" type="default"></app-button>
   </div>
 </div>
