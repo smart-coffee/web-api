@@ -19,8 +19,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-size: cover;
-    background: url('../../../assets/backgrounds/bg-art-welcome-2.svg') no-repeat;
   }
 
   &__text {
@@ -31,6 +29,7 @@
     font: $font-sc-hero;
     text-align: center;
     color: $color-text-dark;
+    z-index: 1;
   }
 
   &__cta {
@@ -38,5 +37,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1;
   }
+}
+
+#background-art {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 0;
+}
+
+#coffee-machine {
+  z-index: 1;
 }
