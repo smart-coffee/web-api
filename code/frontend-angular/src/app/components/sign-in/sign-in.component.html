@@ -1,3 +1,17 @@
-<p>
-  sign-in works!
-</p>
+<div class="sign-in-container">
+  <div class="sign-in-container__headline">
+    Einloggen
+  </div>
+  <form class="sign-in-container__form">
+    <!-- Username -->
+    <app-form-text-input label="Benutzername" name="username" type="text"></app-form-text-input>
+    <!-- Password -->
+    <app-form-text-input label="Passwort" name="password" type="password"></app-form-text-input>
+  </form>
+  <div class="sign-in-container__cta">
+    <div class="sign-in-container__forgot-pw">
+      Passwort vergessen?
+    </div>
+    <app-button label="Anmelden" type="default"></app-button>
+  </div>
+</div>
