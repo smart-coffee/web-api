@@ -1,0 +1,38 @@
+securedBy: [ jwt ]
+get:
+  description: Liefert eine Liste aller Kaffee-Profile.
+  responses: 
+    200:
+      description: Ok.
+      body:
+        type: coffee-profile[]
+post:
+  description: Erstellt ein Kaffee-Profil.
+  body:
+    type: coffee-profile[]
+  responses: 
+    201:
+      description: Created. Kaffee-Profil erstellt.
+      body:
+        type: coffee-profile[]
+/{id}:
+  securedBy: [ jwt ]
+  get:
+    description: Liefert das Kaffee-Profil mit der angegebenen ID.
+    responses: 
+      200:
+        description: Ok.
+        body:
+          type: coffee-profile
+  put:
+    description: Bearbeitet das Kaffee-Profil mit der angegebenen ID.
+    body:
+      type: coffee-profile
+    responses: 
+      200:
+        description: Ok. Kaffee-Profil bearbeitet.
+  delete:
+    description: Löscht das Kaffee-Profil mit der angegebenen ID.
+    responses: 
+      200:
+        description: Ok. Kaffee-Profil gelöscht.

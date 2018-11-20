@@ -6,136 +6,128 @@ protocols: [ HTTP, HTTPS ]
 mediaType:  application/json
 
 types:
-    coffee-profile: !include types/coffee-profile.raml
-    credentials: !include types/credentials.raml
-    token: !include types/token.raml
-    user: !include types/user.raml
-    userrequest-edit-roles: !include types/userrequest-edit-roles.raml
-    userrequest-edit: !include types/userrequest-edit.raml
-    userrequest-create: !include types/userrequest-create.raml
-    userrole: !include types/userrole.raml
+  coffee-profile: !include types/coffee-profile.raml
+  credentials: !include types/credentials.raml
+  token: !include types/token.raml
+  user: !include types/user.raml
+  userrequest-edit-roles: !include types/userrequest-edit-roles.raml
+  userrequest-edit: !include types/userrequest-edit.raml
+  userrequest-create: !include types/userrequest-create.raml
+  userrole: !include types/userrole.raml
 
 securitySchemes:
   jwt: !include securitySchemes/custom-jwt.raml
 
-/auth:        
-    /login:
-        post:
-            description: Am System anmelden.
-            body:
-                type: credentials
-            responses:
-                200:
-                    description: Ok. Login erfolgreich.
-                    body:
-                        type: token
-    /refresh:
-        securedBy: [ jwt ]
-        post:
-            description: Liefert einen neuen JWT-Token.
-            responses:
-                200:
-                    description: Ok. JWT-Token erneuert.
-                    body:
-                        type: token
-
+/auth:    
+  /login:
+    post:
+      description: Am System anmelden.
+      body:
+        type: credentials
+      responses:
+        200:
+          description: Ok. Login erfolgreich.
+          body:
+            type: token
+  /refresh:
+    securedBy: [ jwt ]
+    post:
+      description: Liefert einen neuen JWT-Token.
+      responses:
+        200:
+          description: Ok. JWT-Token erneuert.
+          body:
+            type: token
 
 /users:
+  securedBy: [ jwt ]
+  get:
+    description: Liefert eine Liste an Nutzeraccounts.
+    responses:
+      200:
+        description: Ok.
+        body:
+          type: user[]
+  post:
+    description: Erstellt einen neuen Nutzeraccount.
+    body:
+      type: userrequest-create
+    responses:
+      201:
+        description: Created. Nutzeraccount erstellt.
+        headers:
+          Location:
+            description: URL zum neu angelegten Nutzeraccount.
+        body:
+          type: user
+  /{public_id}:
     securedBy: [ jwt ]
     get:
-        description: Liefert eine Liste an Nutzeraccounts.
+      description: Liefert den Nutzeraccount mit der angegebenen öffentlichen ID.
+      responses:
+        200:
+          description: Ok. 
+          body:
+            type: user
+    put:
+      description: Bearbeitet den Nutzeraccount mit der angegebenen öffentlichen ID.
+      body:
+        type: userrequest-edit
+      responses:
+        200:
+          description: Ok. Nutzeraccount bearbeitet.
+          body:
+            type: user
+    delete:
+      description: Löscht den Nutzeraccount mit der angegebenen öffentlichen ID.
+      responses:
+        200:
+          description: Ok. Nutzeraccount gelöscht.
+    /roles:
+      securedBy: [ jwt ]
+      get:
+        description: Liefert eine Liste aller Nutzerrollen des Nutzeraccounts mit der angegebenen öffentlichen ID.
         responses:
-            200:
-                description: Ok.
-                body:
-                    type: user[]
-    post:
-        description: Erstellt einen neuen Nutzeraccount.
+          200:
+            description: Ok.
+            body:
+              type: userrole[]
+      put:
+        description: Bearbeitet Nutzerrollen des Nutzeraccounts mit der angegebenen öffentlichen ID.
         body:
-            type: userrequest-create
+          type: userrequest-edit-roles
         responses:
-            201:
-                description: Created. Nutzeraccount erstellt.
-                headers:
-                    Location:
-                        description: URL zum neu angelegten Nutzeraccount.
-                body:
-                    type: user
-    /{public_id}:
-        securedBy: [ jwt ]
-        get:
-            description: Liefert den Nutzeraccount mit der angegebenen öffentlichen ID.
-            responses:
-                200:
-                    description: Ok. 
-                    body:
-                        type: user
-        put:
-            description: Editiert den Nutzeraccount mit der angegebenen öffentlichen ID.
+          200:
+            description: Ok. Nutzerrollen bearbeitet.
             body:
-                type: userrequest-edit
-            responses:
-                200:
-                    description: Nutzeraccount bearbeitet.
-                    body:
-                        type: user
-        delete:
-            description: Löscht den Nutzeraccount mit der angegebenen öffentlichen ID.
-            responses:
-                200:
-                    description: Ok. Nutzeraccount gelöscht.
-        /roles:
-            securedBy: [ jwt ]
-            get:
-                description: Liefert eine Liste aller Nutzerrollen des Nutzeraccounts mit der angegebenen öffentlichen ID.
-                responses:
-                    200:
-                        description: Ok.
-                        body:
-                            type: userrole[]
-            put:
-                description: Editiert Nutzerrollen des Nutzeraccounts mit der angegebenen öffentlichen ID.
-                body:
-                    type: userrequest-edit-roles
-                responses:
-                    200:
-                        description: Ok. Nutzerrollen editiert.
-                        body:
-                            type: userrole[]
-        /profiles:
-            securedBy: [ jwt ]
-            get:
-                description: Liefert eine Liste aller Kaffee-Profile des Nutzeraccounts mit der angegebenen öffentlichen ID.
-                responses:
-                    200:
-                        description: Ok.
-                        body:
-                            type: coffee-profile[]
-    /current:
-        securedBy: [ jwt ]
-        get:
-            description: Liefert den Nutzeraccount des aktuell eingeloggten Nutzers.
-            responses:
-                200:
-                    description: Ok.
-                    body:
-                        type: user
-        put:
-            description: Editiert den Nutzeraccount des aktuell eingeloggten Nutzers.
-            body:
-                type: userrequest-edit
-            responses:
-                200:
-                    description: Ok. Nutzeraccount bearbeitet.
-                    body:
-                        type: user
+              type: userrole[]
+    /profiles: !include resources/coffee-profiles.raml
+  /current:
+    securedBy: [ jwt ]
+    get:
+      description: Liefert den Nutzeraccount des eingeloggten Nutzers.
+      responses:
+        200:
+          description: Ok.
+          body:
+            type: user
+    put:
+      description: Bearbeitet den Nutzeraccount des eingeloggten Nutzers.
+      body:
+        type: userrequest-edit
+      responses:
+        200:
+          description: Ok. Nutzeraccount bearbeitet.
+          body:
+            type: user
+    /profiles: !include resources/coffee-profiles.raml
 
 /roles:
-    securedBy: [ jwt ]
-    get:
-        description: Liefert eine Liste aller verfügbarer Nutzerrollen.
-        responses:
-            200:
-                description: Ok.
-                body:
-                    type: userrole[]
+  securedBy: [ jwt ]
+  get:
+    description: Liefert eine Liste aller verfügbarer Nutzerrollen.
+    responses:
+      200:
+        description: Ok.
+        body:
+          type: userrole[]
