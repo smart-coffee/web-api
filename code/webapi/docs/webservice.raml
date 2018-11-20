@@ -6,11 +6,14 @@ protocols: [ HTTP, HTTPS ]
 mediaType:  application/json
 
 types:
+    coffee-profile: !include types/coffee-profile.raml
     credentials: !include types/credentials.raml
     token: !include types/token.raml
     user: !include types/user.raml
+    userrequest-edit-roles: !include types/userrequest-edit-roles.raml
     userrequest-edit: !include types/userrequest-edit.raml
     userrequest-create: !include types/userrequest-create.raml
+    userrole: !include types/userrole.raml
 
 securitySchemes:
   jwt: !include securitySchemes/custom-jwt.raml
@@ -58,16 +61,6 @@ securitySchemes:
                         description: URL zum neu angelegten Nutzeraccount.
                 body:
                     type: user
-    put:
-        description: Editiert den Nutzeraccount mit der angegebenen öffentlichen ID.
-        body:
-            type: userrequest-edit
-        responses:
-            200:
-                description: Nutzeraccount bearbeitet.
-                body:
-                    type: user
-    
     /{public_id}:
         securedBy: [ jwt ]
         get:
@@ -77,12 +70,47 @@ securitySchemes:
                     description: Ok. 
                     body:
                         type: user
+        put:
+            description: Editiert den Nutzeraccount mit der angegebenen öffentlichen ID.
+            body:
+                type: userrequest-edit
+            responses:
+                200:
+                    description: Nutzeraccount bearbeitet.
+                    body:
+                        type: user
         delete:
             description: Löscht den Nutzeraccount mit der angegebenen öffentlichen ID.
             responses:
                 200:
                     description: Ok. Nutzeraccount gelöscht.
-
+        /roles:
+            securedBy: [ jwt ]
+            get:
+                description: Liefert eine Liste aller Nutzerrollen des Nutzeraccounts mit der angegebenen öffentlichen ID.
+                responses:
+                    200:
+                        description: Ok.
+                        body:
+                            type: userrole[]
+            put:
+                description: Editiert Nutzerrollen des Nutzeraccounts mit der angegebenen öffentlichen ID.
+                body:
+                    type: userrequest-edit-roles
+                responses:
+                    200:
+                        description: Ok. Nutzerrollen editiert.
+                        body:
+                            type: userrole[]
+        /profiles:
+            securedBy: [ jwt ]
+            get:
+                description: Liefert eine Liste aller Kaffee-Profile des Nutzeraccounts mit der angegebenen öffentlichen ID.
+                responses:
+                    200:
+                        description: Ok.
+                        body:
+                            type: coffee-profile[]
     /current:
         securedBy: [ jwt ]
         get:
@@ -101,5 +129,13 @@ securitySchemes:
                     description: Ok. Nutzeraccount bearbeitet.
                     body:
                         type: user
-                                                                                
-                    
+
+/roles:
+    securedBy: [ jwt ]
+    get:
+        description: Liefert eine Liste aller verfügbarer Nutzerrollen.
+        responses:
+            200:
+                description: Ok.
+                body:
+                    type: userrole[]
