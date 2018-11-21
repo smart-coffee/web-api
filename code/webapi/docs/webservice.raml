@@ -62,6 +62,11 @@ securitySchemes:
           type: user
   /{public_id}:
     securedBy: [ jwt ]
+    uriParameters: 
+      public_id: 
+        description: Öffentliche ID des Nutzeraccounts.
+        type: string
+        example: f9940ce9-5adf-4247-810c-b2f7e771143b
     get:
       description: Liefert den Nutzeraccount mit der angegebenen öffentlichen ID.
       responses:

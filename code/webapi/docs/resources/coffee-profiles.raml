@@ -17,6 +17,11 @@ post:
         type: coffee-profile[]
 /{id}:
   securedBy: [ jwt ]
+  uriParameters: 
+    id: 
+      description: ID des Kaffee-Profils.
+      type: integer
+      example: 42
   get:
     description: Liefert das Kaffee-Profil mit der angegebenen ID.
     responses: 
