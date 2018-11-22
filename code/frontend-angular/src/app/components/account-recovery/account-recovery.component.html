@@ -1,4 +1,4 @@
-<div class="account-recovery" (swiperight)="onSwipeRight($event)">
+<div class="account-recovery" (swiperight)="onSwipeRight()">
   <app-arty-headline class="account-recovery__arty-headline-component" text="Account wiederherstellen" artSource="../../../assets/backgrounds/bg-art-headline-big.svg"></app-arty-headline>
   <form class="account-recovery__form">
     <div class="account-recovery__instructions">
@@ -7,5 +7,5 @@
     <!-- Password -->
     <app-form-text-input label="Email Adresse" name="email" type="email"></app-form-text-input>
   </form>
-  <app-button class="account-recovery__recovery-button" label="Abesenden" type="default" (click)="recoverAccount($event)"></app-button>
+  <app-button class="account-recovery__recovery-button" label="Abesenden" type="default" (click)="recoverAccount()"></app-button>
 </div>

@@ -13,11 +13,11 @@ export class WelcomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  private navigateToSignUp () {
+  navigateToSignUp () {
     this.router.navigate(['sign-up']);
   }
 
-  private navigateToSignIn () {
+  navigateToSignIn () {
     this.router.navigate(['sign-in']);
   }
 }

@@ -1,4 +1,4 @@
-<div class="sign-up" (swiperight)="onSwipeRight($event)">
+<div class="sign-up" (swiperight)="onSwipeRight()">
   <app-arty-headline class="sign-up__arty-headline-component" text="Account erstellen" artSource="../../../assets/backgrounds/bg-art-headline.svg"></app-arty-headline>
   <form class="sign-up__form">
     <!-- Username -->
@@ -13,5 +13,5 @@
   <div class="sign-up__log-in-link" (click)="navigateToSignIn()">
     Sie haben bereits einen Account? Hier anmelden
   </div>
-  <app-button class="sign-up__sign-up-button" label="Registrieren" type="default" (click)="signUp($event)"></app-button>
+  <app-button class="sign-up__sign-up-button" label="Registrieren" type="default" (click)="signUp()"></app-button>
 </div>
