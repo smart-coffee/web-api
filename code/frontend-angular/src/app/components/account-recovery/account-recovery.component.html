@@ -1,12 +1,11 @@
-<div class="account-recovery-container">
-  <div class="account-recovery-container__headline">
-    Account wiederherstellen
-  </div>
-  <form class="account-recovery-container__form">
+<div class="account-recovery">
+  <app-arty-headline class="account-recovery__arty-headline-component" text="Account wiederherstellen" artSource="../../../assets/backgrounds/bg-art-headline-big.svg"></app-arty-headline>
+  <form class="account-recovery__form">
+    <div class="account-recovery__instructions">
+      Bitte geben Sie die mit Ihrem Account verbundene Email ein.
+    </div>
     <!-- Password -->
     <app-form-text-input label="Email Adresse" name="email" type="email"></app-form-text-input>
   </form>
-  <div class="account-recovery-container__cta">
-    <app-button label="Abesenden" type="default"></app-button>
-  </div>
+  <app-button class="account-recovery__button" label="Abesenden" type="default" (click)="recoverAccount($event)"></app-button>
 </div>

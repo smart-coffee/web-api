@@ -5,12 +5,13 @@
 .sign-up {
   min-height: 100%;
   display: grid;
-  grid-template-columns: $mobile-side-margin auto $mobile-side-margin;
+  grid-template-columns: $mobile-side-margin auto auto $mobile-side-margin;
+  grid-template-rows: auto 1fr auto;
   grid-auto-flow: column;
   grid-template-areas:
-    "headline headline headline"
-    ". form ."
-    ". cta .";
+    "headline headline headline headline"
+    ". form form ."
+    ". login signup .";
   background-color: $color-background-light;
 
   &__arty-headline-component {
@@ -25,14 +26,12 @@
     flex-direction: column;
   }
 
-  &__cta {
-    grid-area: cta;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  &__log-in-link, &__sign-up-button {
+    padding-bottom: $mobile-bottom-cta-padding;
   }
 
-  &__log-in {
+  &__log-in-link {
+    grid-area: login;
     font: $font-sc-link-2;
     color: $color-link;
     text-align: center;
@@ -40,5 +39,9 @@
     &:hover {
       cursor: pointer;
     }
+  }
+
+  &__sign-up-button {
+    grid-area: signup;
   }
 }

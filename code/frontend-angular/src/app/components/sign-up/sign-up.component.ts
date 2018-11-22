@@ -16,4 +16,8 @@ export class SignUpComponent implements OnInit {
   navigateToSignIn () {
     this.router.navigate(['sign-in']);
   }
+
+  signUp () {
+    console.log('something sign-uppy should be happening right now');
+  }
 }

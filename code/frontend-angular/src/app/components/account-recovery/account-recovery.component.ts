@@ -12,4 +12,7 @@ export class AccountRecoveryComponent implements OnInit {
   ngOnInit() {
   }
 
+  recoverAccount () {
+    console.log('something account recovery related should be happening right now...');
+  }
 }

@@ -10,16 +10,15 @@
   font: $font-sc-hero;
   text-align: center;
   color: $color-text-dark;
-  background-size: cover;
 
   &__background-art {
-    position: absolute;
     width: 100%;
     z-index: 0;
   }
 
   &__text {
     z-index: 1;
-    align-self: center;
+    position: absolute;
+    padding: 0 10% 0 10%;
   }
 }
