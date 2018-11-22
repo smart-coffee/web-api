@@ -1,6 +1,7 @@
 <div class="sign-up-container">
   <div class="sign-up-container__headline">
-    Account erstellen
+    <img alt="background" class="sign-up-container__background-art" src="../../../assets/backgrounds/bg-art-headline.svg">
+    <div class="sign-up-container__headline-text">Account erstellen</div>
   </div>
   <form class="sign-up-container__form">
     <!-- Username -->
@@ -13,7 +14,7 @@
     <app-form-text-input label="Passwortbestätigung" name="passwordConfirm" type="password"></app-form-text-input>
   </form>
   <div class="sign-up-container__cta">
-    <div class="sign-up-container__log-in">
+    <div class="sign-up-container__log-in" (click)="navigateToSignIn()">
       Sie haben bereits einen Account? Hier anmelden
     </div>
     <app-button label="Registrieren" type="default"></app-button>

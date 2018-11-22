@@ -20,6 +20,16 @@
     align-items: center;
   }
 
+  &__background-art {
+    position: absolute;
+    width: 100%;
+    z-index: 0;
+  }
+
+  &__coffee-machine {
+    z-index: 1;
+  }
+
   &__text {
     grid-area: text;
     display: flex;
@@ -38,14 +48,4 @@
     align-items: center;
     z-index: 1;
   }
-}
-
-#background-art {
-  position: absolute;
-  width: 100%;
-  z-index: 0;
-}
-
-#coffee-machine {
-  z-index: 1;
 }
