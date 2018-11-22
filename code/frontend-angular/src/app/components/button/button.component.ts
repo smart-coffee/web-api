@@ -7,11 +7,9 @@ import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '
 })
 export class ButtonComponent implements OnChanges {
 
-  @Input() label = 'default';
-  @Input() type = 'default';
-  @Output() action = new EventEmitter<number>();
-
-  private numberOfClicks = 0;
+  @Input() label: string;
+  @Input() type: string;
+  @Output() action = new EventEmitter<any>();
 
   constructor() { }
 
@@ -20,9 +18,7 @@ export class ButtonComponent implements OnChanges {
   }
 
   handleClick(event) {
-    this.numberOfClicks++;
-    console.log(this.numberOfClicks);
-    this.action.emit(this.numberOfClicks);
+    this.action.emit(event);
   }
 
 }

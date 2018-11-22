@@ -13,7 +13,7 @@
     Machen Sie Ihren Morgen smart!
   </div>
   <div class="welcome-container__cta">
-    <app-button label="Registrieren" type="ghost"></app-button>
-    <app-button label="Anmelden" type="default"></app-button>
+    <app-button label="Registrieren" type="ghost" (click)="navigateToSignUp($event)"></app-button>
+    <app-button label="Anmelden" type="default" (click)="navigateToSignIn($event)"></app-button>
   </div>
 </div>
