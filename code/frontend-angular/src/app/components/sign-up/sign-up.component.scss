@@ -2,8 +2,8 @@
 @import '../../shared/styles/dimensions';
 @import '../../shared/styles/fonts';
 
-.sign-up-container {
-  height: 100%;
+.sign-up {
+  min-height: 100%;
   display: grid;
   grid-template-columns: $mobile-side-margin auto $mobile-side-margin;
   grid-auto-flow: column;
@@ -13,25 +13,8 @@
     ". cta .";
   background-color: $color-background-light;
 
-  &__headline {
+  &__arty-headline-component {
     grid-area: headline;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font: $font-sc-hero;
-    text-align: center;
-    color: $color-text-dark;
-    background-size: cover;
-  }
-
-  &__background-art {
-    position: absolute;
-    width: 100%;
-    z-index: 0;
-  }
-
-  &__headline-text {
-    z-index: 1;
   }
 
   &__form {

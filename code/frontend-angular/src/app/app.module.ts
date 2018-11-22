@@ -17,6 +17,7 @@ import { HotWaterComponent } from './components/hot-water/hot-water.component';
 import { AccountSettingsComponent } from './components/account-settings/account-settings.component';
 import { ButtonComponent } from './components/button/button.component';
 import { FormTextInputComponent } from './components/form-text-input/form-text-input.component';
+import { ArtyHeadlineComponent } from './components/arty-headline/arty-headline.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { FormTextInputComponent } from './components/form-text-input/form-text-i
     AccountSettingsComponent,
     ButtonComponent,
     FormTextInputComponent,
+    ArtyHeadlineComponent,
   ],
   imports: [
     BrowserModule,
