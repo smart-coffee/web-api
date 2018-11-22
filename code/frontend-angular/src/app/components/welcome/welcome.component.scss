@@ -5,12 +5,13 @@
 .welcome {
   height: 100%;
   display: grid;
-  grid-template-columns: $mobile-side-margin auto $mobile-side-margin;
+  grid-template-columns: $mobile-side-margin 1fr 1fr $mobile-side-margin;
+  grid-template-rows: auto 1fr auto;
   grid-auto-flow: column;
   grid-template-areas:
-    "art art art"
-    ". text ."
-    ". cta .";
+    "art art art art"
+    ". text text ."
+    ". signup signin .";
   background-color: $color-background-light;
 
   &__art {
@@ -41,11 +42,18 @@
     z-index: 1;
   }
 
-  &__cta {
-    grid-area: cta;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  &__sign-in-button, &__sign-up-button {
+    padding-bottom: $mobile-bottom-cta-padding;
+    align-self: center;
+    justify-self: center;
     z-index: 1;
+  }
+
+  &__sign-up-button {
+    grid-area: signup;
+  }
+
+  &__sign-in-button {
+    grid-area: signin;
   }
 }

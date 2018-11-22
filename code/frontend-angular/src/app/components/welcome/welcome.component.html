@@ -6,8 +6,6 @@
   <div class="welcome__text">
     Machen Sie Ihren Morgen smart!
   </div>
-  <div class="welcome__cta">
-    <app-button label="Registrieren" type="ghost" (click)="navigateToSignUp()"></app-button>
-    <app-button label="Anmelden" type="default" (click)="navigateToSignIn()"></app-button>
-  </div>
+  <app-button class="welcome__sign-up-button" label="Registrieren" type="ghost" (click)="navigateToSignUp()"></app-button>
+  <app-button class="welcome__sign-in-button" label="Anmelden" type="default" (click)="navigateToSignIn()"></app-button>
 </div>

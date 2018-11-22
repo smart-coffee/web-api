@@ -28,6 +28,8 @@
 
   &__forgot-pw-link, &__sign-in-button {
     padding-bottom: $mobile-bottom-cta-padding;
+    justify-self: center;
+    align-self: center;
   }
 
   &__forgot-pw-link {
@@ -35,7 +37,6 @@
     font: $font-sc-link-2;
     color: $color-link;
     text-align: center;
-    align-self: center;
 
     &:hover {
       cursor: pointer;
