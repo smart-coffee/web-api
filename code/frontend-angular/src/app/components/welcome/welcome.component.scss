@@ -2,7 +2,7 @@
 @import '../../shared/styles/dimensions';
 @import '../../shared/styles/fonts';
 
-.welcome-container {
+.welcome {
   height: 100%;
   display: grid;
   grid-template-columns: $mobile-side-margin auto $mobile-side-margin;

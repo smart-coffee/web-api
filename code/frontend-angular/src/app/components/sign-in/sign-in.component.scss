@@ -3,7 +3,7 @@
 @import '../../shared/styles/fonts';
 
 .sign-in {
-  height: 100%;
+  min-height: 100%;
   display: grid;
   grid-template-columns: $mobile-side-margin 1fr 1fr $mobile-side-margin;
   grid-template-rows: auto 1fr auto;

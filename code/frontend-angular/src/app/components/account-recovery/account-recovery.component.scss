@@ -3,7 +3,7 @@
 @import '../../shared/styles/fonts';
 
 .account-recovery {
-  height: 100%;
+  min-height: 100%;
   display: grid;
   grid-template-columns: $mobile-side-margin auto $mobile-side-margin;
   grid-auto-flow: column;

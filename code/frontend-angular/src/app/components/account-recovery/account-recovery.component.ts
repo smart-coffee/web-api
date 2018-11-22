@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-account-recovery',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountRecoveryComponent implements OnInit {
 
-  constructor() { }
+  constructor(private location: Location) { }
 
   ngOnInit() {
+  }
+
+  onSwipeRight () {
+    this.location.back();
   }
 
   recoverAccount () {
