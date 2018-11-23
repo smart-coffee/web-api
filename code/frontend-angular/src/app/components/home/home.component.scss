@@ -1,0 +1,86 @@
+@import '../../shared/styles/colors';
+@import '../../shared/styles/dimensions';
+@import '../../shared/styles/fonts';
+
+$mobile-head-margin: 16px;
+
+.home {
+  min-height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: $mobile-side-margin 1fr 1fr $mobile-side-margin;
+  grid-template-rows: auto 1fr 1fr 1fr auto;
+  grid-auto-flow: column;
+  grid-template-areas:
+    ". logosec usericon ."
+    ". machineinfo machineinfo ."
+    ". onecup twocup ."
+    ". hotwater analysis ."
+    "bgbot bgbot bgbot bgbot";
+  background-color: $color-background-light;
+
+  &__head {
+    grid-area: head;
+  }
+
+  &__bg-art-top-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+  }
+
+  &__logo-secondary {
+    grid-area: logosec;
+    z-index: 1;
+    justify-self: start;
+    align-self: center;
+    padding-top: $mobile-head-margin;
+    padding-bottom: $mobile-head-margin;
+    width: 36px; //TODO: maybe change this somehow
+  }
+
+  &__user-icon {
+    grid-area: usericon;
+    z-index: 1;
+    justify-self: end;
+    align-self: center;
+  }
+
+  &__machine-info {
+    grid-area: machineinfo;
+    justify-self: center;
+    text-align: center;
+    font: $font-sc-hero;
+    color: $color-text-dark;
+  }
+
+  &__one-coffee {
+    grid-area: onecup;
+    align-self: end;
+    background-color: red;
+  }
+
+  &__two-coffee {
+    grid-area: twocup;
+    align-self: end;
+    background-color: blue;
+  }
+
+  &__hot-water {
+    grid-area: hotwater;
+    align-self: start;
+    background-color: green;
+  }
+
+  &__analysis {
+    grid-area: analysis;
+    align-self: start;
+    background-color: yellow;
+  }
+
+  &__bg-art-bottom {
+    grid-area: bgbot;
+    width: 100%;
+  }
+}
