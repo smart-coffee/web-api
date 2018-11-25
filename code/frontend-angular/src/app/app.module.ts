@@ -21,6 +21,7 @@ import { FormTextInputComponent } from './components/form-text-input/form-text-i
 import { ArtyHeadlineComponent } from './components/arty-headline/arty-headline.component';
 import { RadialProgressComponent } from './components/radial-progress/radial-progress.component';
 import { HeaderComponent } from './components/header/header.component';
+import { CoffeeMachineInfoComponent } from './components/coffee-machine-info/coffee-machine-info.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { HeaderComponent } from './components/header/header.component';
     ArtyHeadlineComponent,
     RadialProgressComponent,
     HeaderComponent,
+    CoffeeMachineInfoComponent,
   ],
   imports: [
     BrowserModule,

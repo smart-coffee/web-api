@@ -37,27 +37,7 @@
 
   &__machine-info {
     grid-area: machineinfo;
-    text-align: center;
-    font: $font-sc-hero;
-    color: $color-text-dark;
     align-self: center;
-  }
-
-  &__machine-picker {
-    margin-bottom: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  &__arrow-down {
-    margin-left: 10px;
-    width: 0;
-    height: 0;
-    border-left: 7px solid transparent;
-    border-right: 7px solid transparent;
-    border-top: 7px solid $color-text-dark;
-
   }
 
   &__machine-fill-indicators {

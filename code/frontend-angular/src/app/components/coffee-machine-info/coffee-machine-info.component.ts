@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
+  selector: 'app-coffee-machine-info',
+  templateUrl: './coffee-machine-info.component.html',
+  styleUrls: ['./coffee-machine-info.component.scss'],
   animations: [
     trigger('showHide', [
       state('show', style({
         opacity: 1,
         display: 'block',
-        transform: 'scale(1)'
+        transform: 'translateX(0)'
       })),
       state('hide', style({
         opacity: 0,
         display: 'none',
-        transform: 'scale(0.7)'
+        transform: 'translateY(-50px)'
       })),
       transition('show => hide', [
         animate('0.1s ease-in-out')
@@ -27,11 +27,11 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     ])
   ]
 })
-export class HeaderComponent implements OnInit {
+export class CoffeeMachineInfoComponent implements OnInit {
 
   showMenu: boolean;
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   ngOnInit() {
     this.showMenu = false;
@@ -39,11 +39,6 @@ export class HeaderComponent implements OnInit {
 
   toggleMenu () {
     this.showMenu = !this.showMenu;
-  }
-
-  signOut () {
-    localStorage.setItem('isLoggedIn', 'false');
-    this.router.navigate(['welcome']);
   }
 
 }
