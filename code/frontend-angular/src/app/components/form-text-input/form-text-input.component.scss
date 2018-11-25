@@ -2,6 +2,7 @@
 @import '../../shared/styles/dimensions';
 @import '../../shared/styles/fonts';
 
+// TODO: move to dimensions
 $width: 300px;
 
 .sc-text-input {
@@ -77,6 +78,7 @@ input {
   }
 
   &:-webkit-autofill {
+    background-color: red !important;
     -webkit-box-shadow: 0 0 0 1000px transparent inset;
     -webkit-text-fill-color: transparent !important;
   }

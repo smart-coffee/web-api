@@ -38,11 +38,12 @@ export class RadialProgressComponent implements OnInit {
   colorType: string;
   iconWidth: number;
 
-  percentage = true;
+  percentage: boolean;
 
   constructor() {  }
 
   ngOnInit() {
+    this.percentage = true;
     // calculate stroke width according to circle size
     this.strokeWidth = this.width / 10 - 1;
     // calculate circle radius, circle center coordinate, circumference and dashoffset
