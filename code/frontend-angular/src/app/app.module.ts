@@ -20,6 +20,7 @@ import { ButtonComponent } from './components/button/button.component';
 import { FormTextInputComponent } from './components/form-text-input/form-text-input.component';
 import { ArtyHeadlineComponent } from './components/arty-headline/arty-headline.component';
 import { RadialProgressComponent } from './components/radial-progress/radial-progress.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { RadialProgressComponent } from './components/radial-progress/radial-pro
     FormTextInputComponent,
     ArtyHeadlineComponent,
     RadialProgressComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
