@@ -1,19 +1,26 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {state, style} from '@angular/animations';
+import { Component, Input, OnInit } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-radial-progress',
   templateUrl: './radial-progress.component.html',
   styleUrls: ['./radial-progress.component.scss'],
   animations: [
-    state('percentage', style({
-      opacity: 1,
-      backgroundColor: 'green'
-    })),
-    state('icon', style({
-      opacity: 1,
-      backgroundColor: 'red'
-    }))
+    trigger('showHide', [
+      state('show', style({
+        opacity: 1
+      })),
+      state('hide', style({
+        opacity: 0
+      })),
+      transition('show => hide', [
+        animate('1s ease-in-out')
+      ]),
+      transition('hide => show', [
+        animate('1s ease-in-out')
+      ])
+    ])
   ]
 })
 export class RadialProgressComponent implements OnInit {
@@ -29,8 +36,11 @@ export class RadialProgressComponent implements OnInit {
   private circumference: number;
   private dashoffset: number;
   private colorType: string;
+  private iconWidth: number;
 
-  constructor() { }
+  private percentage = true;
+
+  constructor() {  }
 
   ngOnInit() {
     // calculate stroke width according to circle size
@@ -40,7 +50,24 @@ export class RadialProgressComponent implements OnInit {
     this.circleCenter = this.width / 2;
     this.circumference = 2 * Math.PI * this.radius;
     this.dashoffset = this.circumference * (1 - this.progress / 100);
+    this.iconWidth = this.width / 2 - 5;
     // init color type string for svg attribute
-    this.colorType = this.type + 'Gradient';
+    this.colorType = `${this.type}Gradient`;
+    // start circle animation
+    this.startAnimationInterval();
+  }
+
+  startAnimationInterval() {
+    // Create an Observable that will publish a value on an interval
+    const secondsCounter = interval(7000);
+    // Subscribe to begin publishing values
+    secondsCounter.subscribe(n => {
+      this.toggleCircleLabel();
+      console.log(`${this.type} circle animation toggle`);
+    });
+  }
+
+  toggleCircleLabel() {
+    this.percentage = !this.percentage;
   }
 }

@@ -1,7 +1,9 @@
 <div class="radial-progress">
-  <div class="radial-progress__text" [style.width.px]="width" [style.height.px]="width">
-    <span class="radial-progress__percentage">{{progress}}%</span>
-    <span class="radial-progress__icon"></span>
+  <div class="radial-progress__circle-label" [style.width.px]="width" [style.height.px]="width">
+    <span [@showHide]="percentage ? 'show' : 'hide'" class="radial-progress__percentage">{{progress}}%</span>
+  </div>
+  <div class="radial-progress__circle-label" [style.width.px]="width" [style.height.px]="width">
+    <img width="{{iconWidth}}" [@showHide]="percentage ? 'hide' : 'show'" class="radial-progress__icon" [src]="iconSource"/>
   </div>
   <svg class="radial-progress__circle" [attr.width]="width" [attr.height]="width" [attr.viewBox]="'0 0 ' + width + ' ' + width">
     <defs>
