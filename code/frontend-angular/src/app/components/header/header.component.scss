@@ -1,0 +1,20 @@
+@import '../../shared/styles/dimensions';
+
+// TODO: put this into dimensions
+$mobile-head-margin: 16px;
+
+.sc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &__logo-secondary {
+    z-index: 1;
+    padding-top: $mobile-head-margin;
+    padding-bottom: $mobile-head-margin;
+    width: 36px; //TODO: maybe change this somehow
+  }
+
+  &__user-icon {
+    z-index: 1;
+  }
+}

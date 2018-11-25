@@ -2,9 +2,6 @@
 @import '../../shared/styles/dimensions';
 @import '../../shared/styles/fonts';
 
-// TODO: put this into dimensions
-$mobile-head-margin: 16px;
-
 .home {
   min-height: 100%;
   width: 100%;
@@ -13,14 +10,14 @@ $mobile-head-margin: 16px;
   grid-template-rows: auto 1.3fr 1fr 1fr;
   grid-auto-flow: column;
   grid-template-areas:
-    ". logosec usericon ."
+    ". header header ."
     ". machineinfo machineinfo ."
     ". onecup twocup ."
     ". hotwater analysis .";
   background-color: $color-background-light;
 
-  &__head {
-    grid-area: head;
+  &__header {
+    grid-area: header;
   }
 
   &__bg-art-top-left {
@@ -36,23 +33,6 @@ $mobile-head-margin: 16px;
     bottom: 0;
     left: 0;
     z-index: 0;
-  }
-
-  &__logo-secondary {
-    grid-area: logosec;
-    z-index: 1;
-    justify-self: start;
-    align-self: center;
-    padding-top: $mobile-head-margin;
-    padding-bottom: $mobile-head-margin;
-    width: 36px; //TODO: maybe change this somehow
-  }
-
-  &__user-icon {
-    grid-area: usericon;
-    z-index: 1;
-    justify-self: end;
-    align-self: center;
   }
 
   &__machine-info {
