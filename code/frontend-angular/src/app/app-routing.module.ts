@@ -14,10 +14,10 @@ import { AuthGuard } from './auth-guard.service';
  */
 
 const routes: Routes = [
-  { path: '', /*canActivate: [AuthGuard],*/ pathMatch: 'full', redirectTo: 'home' },
+  { path: '', canActivate: [AuthGuard], pathMatch: 'full', redirectTo: 'home' },
   { path: 'account-recovery', component: AccountRecoveryComponent },
   { path: 'coffee-preferences', component: CoffeePreferencesComponent },
-  { path: 'home', /*canActivate: [AuthGuard],*/ component: HomeComponent },
+  { path: 'home', canActivate: [AuthGuard], component: HomeComponent },
   { path: 'sign-up', component: SignUpComponent },
   { path: 'sign-in', component: SignInComponent  },
   { path: 'welcome', component: WelcomeComponent }
