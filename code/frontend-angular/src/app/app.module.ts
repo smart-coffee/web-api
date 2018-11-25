@@ -18,6 +18,7 @@ import { AccountSettingsComponent } from './components/account-settings/account-
 import { ButtonComponent } from './components/button/button.component';
 import { FormTextInputComponent } from './components/form-text-input/form-text-input.component';
 import { ArtyHeadlineComponent } from './components/arty-headline/arty-headline.component';
+import { RadialProgressComponent } from './components/radial-progress/radial-progress.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { ArtyHeadlineComponent } from './components/arty-headline/arty-headline.
     ButtonComponent,
     FormTextInputComponent,
     ArtyHeadlineComponent,
+    RadialProgressComponent,
   ],
   imports: [
     BrowserModule,

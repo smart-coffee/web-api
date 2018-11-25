@@ -2,6 +2,7 @@
 @import '../../shared/styles/dimensions';
 @import '../../shared/styles/fonts';
 
+// TODO: put this into dimensions
 $mobile-head-margin: 16px;
 
 .home {
@@ -49,10 +50,19 @@ $mobile-head-margin: 16px;
 
   &__machine-info {
     grid-area: machineinfo;
-    justify-self: center;
     text-align: center;
     font: $font-sc-hero;
     color: $color-text-dark;
+    align-self: center;
+  }
+
+  &__machine-name {
+    margin-bottom: 25px;
+  }
+
+  &__machine-fill-indicators {
+    display: flex;
+    justify-content: space-evenly;
   }
 
   &__one-coffee,
@@ -68,21 +78,45 @@ $mobile-head-margin: 16px;
   &__one-coffee {
     grid-area: onecup;
     align-self: end;
+    background: url("../../../assets/backgrounds/one-cup-bg-inactive.svg") center no-repeat;
+    background-size: contain;
+    &:hover {
+      background: url("../../../assets/backgrounds/one-cup-bg-active.svg") center no-repeat;
+      background-size: contain;
+    }
   }
 
   &__two-coffee {
     grid-area: twocup;
     align-self: end;
+    background: url("../../../assets/backgrounds/two-cups-bg-inactive.svg") center no-repeat;
+    background-size: contain;
+    &:hover {
+      background: url("../../../assets/backgrounds/two-cups-bg-active.svg") center no-repeat;
+      background-size: contain;
+    }
   }
 
   &__hot-water {
     grid-area: hotwater;
     align-self: start;
+    background: url("../../../assets/backgrounds/hot-water-bg-inactive.svg") center no-repeat;
+    background-size: contain;
+    &:hover {
+      background: url("../../../assets/backgrounds/hot-water-bg-active.svg") center no-repeat;
+      background-size: contain;
+    }
   }
 
   &__analysis {
     grid-area: analysis;
     align-self: start;
+    background: url("../../../assets/backgrounds/analysis-bg-inactive.svg") center no-repeat;
+    background-size: contain;
+    &:hover {
+      background: url("../../../assets/backgrounds/analysis-bg-active.svg") center no-repeat;
+      background-size: contain;
+    }
   }
 
   &__bg-art-bottom {

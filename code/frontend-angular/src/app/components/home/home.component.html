@@ -3,10 +3,12 @@
   <img class="home__logo-secondary" alt="logo-secondary" src="../../../assets/logos/Secondary/Dark.svg"/>
   <img class="home__user-icon" alt="user-icon" src="../../../assets/icons/24/User/Dark.svg"/>
   <div class="home__machine-info">
-    <div>Winston</div>
-    <img class="home__coffee-indicator" alt="coffee-indicator" src="../../../assets/pictograms/coffee-indicator.svg"/>
-    <img class="home__water-indicator" alt="water-indicator" src="../../../assets/pictograms/water-indicator.svg"/>
-    <img class="home__trash-indicator" alt="trash-indicator" src="../../../assets/pictograms/tash-indicator.svg"/>
+    <div class="home__machine-name">Winston</div>
+    <div class="home__machine-fill-indicators">
+      <app-radial-progress type="coffee" width="100" progress="90"></app-radial-progress>
+      <app-radial-progress type="water" width="100" progress="73"></app-radial-progress>
+      <app-radial-progress type="trash" width="100" progress="20"></app-radial-progress>
+    </div>
   </div>
   <div class="home__one-coffee">
     <img class="home__coffee-icon" alt="coffee-cup" src="../../../assets/icons/24/Cup/Dark.svg"/>

@@ -1,0 +1,33 @@
+@import '../../shared/styles/colors';
+@import '../../shared/styles/fonts';
+
+.radial-progress {
+  display: flex;
+  &__text {
+    font: $font-sc-paragraph;
+    color: $color-text-dark;
+    position: absolute;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-animation: fadeinout 4s ease-in-out infinite;
+    animation: fadeinout 4s ease-in-out infinite;
+  }
+
+  &__circle {
+    display: block;
+    transform: rotate(-90deg);
+  }
+}
+
+
+@-webkit-keyframes fadeinout {
+  0%,100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+@keyframes fadeinout {
+  0%,100% { opacity: 0; }
+  50% { opacity: 1; }
+}
