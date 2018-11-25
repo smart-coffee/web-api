@@ -20,7 +20,6 @@ export class RadialProgressComponent implements OnInit {
 
   @Input() type;
   @Input() width;
-  //@Input() strokeWidth;
   @Input() progress;
   @Input() iconSource;
 
@@ -34,13 +33,13 @@ export class RadialProgressComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    // calculate stroke width according to circle size
     this.strokeWidth = this.width / 10 - 1;
     // calculate circle radius, circle center coordinate, circumference and dashoffset
     this.radius = (this.width / 2) - (this.strokeWidth / 2);
     this.circleCenter = this.width / 2;
     this.circumference = 2 * Math.PI * this.radius;
     this.dashoffset = this.circumference * (1 - this.progress / 100);
-
     // init color type string for svg attribute
     this.colorType = this.type + 'Gradient';
   }
