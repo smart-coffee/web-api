@@ -30,15 +30,15 @@ export class RadialProgressComponent implements OnInit {
   @Input() progress;
   @Input() iconSource;
 
-  private strokeWidth;
-  private radius: number;
-  private circleCenter: number;
-  private circumference: number;
-  private dashoffset: number;
-  private colorType: string;
-  private iconWidth: number;
+  strokeWidth;
+  radius: number;
+  circleCenter: number;
+  circumference: number;
+  dashoffset: number;
+  colorType: string;
+  iconWidth: number;
 
-  private percentage = true;
+  percentage = true;
 
   constructor() {  }
 
@@ -60,10 +60,9 @@ export class RadialProgressComponent implements OnInit {
   startAnimationInterval() {
     // Create an Observable that will publish a value on an interval
     const secondsCounter = interval(7000);
-    // Subscribe to begin publishing values
+
     secondsCounter.subscribe(n => {
       this.toggleCircleLabel();
-      console.log(`${this.type} circle animation toggle`);
     });
   }
 
