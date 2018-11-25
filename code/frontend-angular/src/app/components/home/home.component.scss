@@ -43,8 +43,21 @@
     align-self: center;
   }
 
-  &__machine-name {
+  &__machine-picker {
     margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__arrow-down {
+    margin-left: 10px;
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 7px solid $color-text-dark;
+
   }
 
   &__machine-fill-indicators {
