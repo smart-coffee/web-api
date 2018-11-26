@@ -1,0 +1,38 @@
+type: object
+properties:
+  coffee_machine_name:
+    required: true
+    type: string
+    description: Der Name der Kaffeemaschine, welche den Auftrag ausgeführt hat.
+    example: Winston
+  coffee_strength_in_percent:
+    required: true
+    type: integer
+    minimum: 0
+    maximum: 100
+    description: Kaffeestärke in Prozent
+    example: 66
+  water_in_percent:
+    required: true
+    type: integer
+    minimum: 0
+    maximum: 100
+    description: Wasseranteil in Prozent
+    example: 66
+  price:
+    required: true
+    type: integer
+    minimum: 0
+    description: Der Preis pro Kaffee in Cents
+    example: 10
+  doses:
+    required: true
+    type: integer
+    minimum: 1
+    maximum: 2
+    description: Die Anzahl der hergestellten Kaffee in diesem Auftrag
+    example: 1
+  coffee_product:
+    required: true
+    type: coffee-product
+    description: Das Kaffeeprodukt, welches zum Zeitpunkt des Auftrags in der Kaffeemaschine sich befindet.

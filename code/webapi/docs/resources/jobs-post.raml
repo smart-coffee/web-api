@@ -1,0 +1,11 @@
+description: Speichert einen neuen ausgeführten Auftrag einer Kaffeemaschine.
+body:
+  type: job-create
+responses: 
+  201:
+    description: Created. Neuer Auftrag wurde gespeichert.
+    headers:
+      Location:
+        description: URL zum neu angelegten Auftrag.
+    body:
+      type: job

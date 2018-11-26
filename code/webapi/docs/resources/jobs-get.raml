@@ -1,0 +1,17 @@
+description: Liefert einen eine Liste aller Aufträge.
+queryParameters:
+  coffee_machine_name:
+    required: false
+    type: string
+    description: Filtert die Liste der Aufträge nach dem Namen einer Kaffeemaschinen.
+    example: Winston
+  square:
+    required: false
+    type: boolean
+    description: Filter die Liste nach beglichenen (square=true) oder offenen (square=false) Aufträgen.
+    example: false
+responses:
+  200:
+    description: Ok.
+    body:
+      type: job[]

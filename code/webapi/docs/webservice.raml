@@ -6,8 +6,11 @@ protocols: [ HTTP, HTTPS ]
 mediaType:  application/json
 
 types:
+  coffee-product: !include types/coffee-product.raml
   coffee-profile: !include types/coffee-profile.raml
   credentials: !include types/credentials.raml
+  job-create: !include types/job-create.raml
+  job: !include types/job.raml
   token: !include types/token.raml
   user: !include types/user.raml
   userrequest-edit-roles: !include types/userrequest-edit-roles.raml
@@ -126,6 +129,11 @@ securitySchemes:
           body:
             type: user
     /profiles: !include resources/coffee-profiles.raml
+    /jobs:
+      securedBy: [ jwt ]
+      get: !include resources/jobs-get.raml
+      post: !include resources/jobs-post.raml
+              
 
 /roles:
   securedBy: [ jwt ]
@@ -136,3 +144,20 @@ securitySchemes:
         description: Ok.
         body:
           type: userrole[]
+
+/jobs:
+  securedBy: [ jwt ]
+  get: !include resources/jobs-get.raml
+  put: !include resources/jobs-put.raml
+  /{id}:
+    securedBy: [ jwt ]
+    delete:
+      description: Löscht den Auftrag mit der angegebenen ID.
+      uriParameters: 
+        id:
+          type: integer
+          description: ID des Auftrags.
+          example: 42
+      responses:
+        200:
+          description: Ok. Auftrag gelöscht.
