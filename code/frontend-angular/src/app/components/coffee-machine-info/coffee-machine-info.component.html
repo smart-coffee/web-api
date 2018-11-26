@@ -3,9 +3,15 @@
     <span class="coffee-machine-info__machine-name" (click)="toggleMenu()">Winston</span>
     <span class="coffee-machine-info__arrow-down" (click)="toggleMenu()"></span>
     <div class="coffee-machine-info__machine-dropdown" [@showHide]="showMenu ? 'show' : 'hide'">
-      <div class="coffee-machine-info__dropdown-headline">Kaffeemaschinen in meiner Nähe:</div>
-      <div class="coffee-machine-info__dropdown-option">Winston</div>
-      <div class="coffee-machine-info__dropdown-option">Reinhart</div>
+      <div class="coffee-machine-info__dropdown-headline">Kaffeemaschinen in meiner Nähe</div>
+      <div class="coffee-machine-info__dropdown-option">
+        <img class="coffee-machine-info__coffee-machine-icon" alt="coffee-machine" src="../../../assets/icons/24/Coffeemaker/Dark.svg"/>
+        <span>Winston</span>
+      </div>
+      <div class="coffee-machine-info__dropdown-option">
+        <img class="coffee-machine-info__coffee-machine-icon" alt="coffee-machine" src="../../../assets/icons/24/Coffeemaker/Dark.svg"/>
+        <span>Reinhart</span>
+      </div>
     </div>
   </div>
   <div class="coffee-machine-info__machine-fill-indicators">
