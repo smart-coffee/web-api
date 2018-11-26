@@ -27,16 +27,40 @@
 
   &__machine-dropdown {
     position: absolute;
+    overflow: auto;
     top: $font-lnheight-hero;
-    padding: 3%;
-    width: 80%;
+    width: 100%;
+    padding: 4% 0;
     z-index: 3;
-    font: $font-sc-title;
     color: $color-text-dark;
     text-align: left;
     background-color: $color-background-light;
     border-radius: 3px;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26), 0 2px 10px 0 rgba(0, 0, 0, 0.16);
+  }
+
+  &__dropdown-headline {
+    font: $font-sc-input-2;
+    color: rgba($color-text-dark, 0.7);
+    white-space: nowrap;
+    padding: 1% 4%;
+  }
+
+  &__dropdown-option {
+    display: flex;
+    align-content: center;
+    border-radius: 5px;
+    font: $font-sc-input-2;
+    margin: 1% 2%;
+    padding: 2% 2%;
+
+    &:hover {
+      background-color: darken($color-background-light, 10%);
+    }
+  }
+
+  &__coffee-machine-icon {
+    margin-right: 2%;
   }
 
   &__machine-fill-indicators {

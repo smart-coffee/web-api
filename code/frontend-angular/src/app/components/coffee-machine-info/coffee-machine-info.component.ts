@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-coffee-machine-info',
@@ -31,14 +30,52 @@ export class CoffeeMachineInfoComponent implements OnInit {
 
   showMenu: boolean;
 
+  coffeeMachines: Object = [
+    { name: 'Winston' },
+    { name: 'Reinhart' },
+    { name: 'Moira' }
+  ];
+
+  coffeeMachineDetails = {
+    name: '',
+    coffeeLevel: 0,
+    waterLevel: 0,
+    trashLevel: 0
+  };
+
+  coffeeMachineDetailsList: Object = [
+    {name: 'Winston', coffeeLevel: 90, waterLevel: 73, trashLevel: 20},
+    {name: 'Reinhart', coffeeLevel: 50, waterLevel: 40, trashLevel: 60},
+    {name: 'Moira', coffeeLevel: 22, waterLevel: 50, trashLevel: 85},
+  ];
+
   constructor() { }
 
   ngOnInit() {
     this.showMenu = false;
+
+    this.coffeeMachineDetails = {
+      name: 'Winston',
+      coffeeLevel: 90,
+      waterLevel: 73,
+      trashLevel: 20
+    };
   }
 
   toggleMenu () {
     this.showMenu = !this.showMenu;
+  }
+
+  pickMachine (machineName: string) {
+    this.coffeeMachineDetails = this.search(machineName, this.coffeeMachineDetailsList);
+  }
+
+  search (nameKey: string, array: any) {
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].name === nameKey) {
+        return array[i];
+      }
+    }
   }
 
 }

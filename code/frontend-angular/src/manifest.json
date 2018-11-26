@@ -6,7 +6,7 @@
   "display": "standalone",
   "scope": "/",
   "orientation": "portrait",
-  "start_url": "/welcome",
+  "start_url": "/",
   "icons": [
     {
       "src": "assets/logos/icon-72x72.png",
