@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { interval } from 'rxjs';
 
@@ -23,7 +23,7 @@ import { interval } from 'rxjs';
     ])
   ]
 })
-export class RadialProgressComponent implements OnInit {
+export class RadialProgressComponent implements OnChanges {
 
   @Input() type;
   @Input() width;
@@ -42,7 +42,7 @@ export class RadialProgressComponent implements OnInit {
 
   constructor() {  }
 
-  ngOnInit() {
+  ngOnChanges() {
     this.percentage = true;
     // calculate stroke width according to circle size
     this.strokeWidth = this.width / 10 - 1;
