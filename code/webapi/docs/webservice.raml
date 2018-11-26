@@ -6,8 +6,14 @@ protocols: [ HTTP, HTTPS ]
 mediaType:  application/json
 
 types:
+  coffee-brand-create: !include types/coffee-brand-create.raml
+  coffee-brand: !include types/coffee-brand.raml
+  coffee-machine-create: !include types/coffee-machine-create.raml
+  coffee-machine: !include types/coffee-machine.raml
   coffee-product: !include types/coffee-product.raml
   coffee-profile: !include types/coffee-profile.raml
+  coffee-type-create: !include types/coffee-type-create.raml
+  coffee-type: !include types/coffee-type.raml
   credentials: !include types/credentials.raml
   job-create: !include types/job-create.raml
   job: !include types/job.raml
@@ -148,9 +154,9 @@ securitySchemes:
 /jobs:
   securedBy: [ jwt ]
   get: !include resources/jobs-get.raml
-  put: !include resources/jobs-put.raml
   /{id}:
     securedBy: [ jwt ]
+    put: !include resources/jobs-put.raml
     delete:
       description: Löscht den Auftrag mit der angegebenen ID.
       uriParameters: 
@@ -161,3 +167,91 @@ securitySchemes:
       responses:
         200:
           description: Ok. Auftrag gelöscht.
+
+/coffee:
+  /products:
+    securedBy: [ jwt ]
+    get:
+      description: Liefert eine Liste an verfügbaren Kaffeeprodukten.
+      responses: 
+        200:
+          description: Ok.
+          body:
+            type: coffee-product[]
+    post:
+      description: Erstellt ein neues Kaffeeprodukt.
+      body:
+        type: coffee-product-create
+      responses: 
+        201:
+          description: Created. Neues Kaffeeprodukt erstellt.
+          headers:
+            Location:
+              description: URL des neu erstellten Kaffeeprodukts.
+          body:
+            type: coffee-product
+  /types:
+    securedBy: [ jwt ]
+    get:
+      description: Liefert eine Liste an verfügbaren Kaffeetypen.
+      responses: 
+        200:
+          description: Ok.
+          body:
+            type: coffee-type[]
+    post:
+      description: Erstellt einen neue Kaffeetyp.
+      body:
+        type: coffee-type-create
+      responses: 
+        201:
+          description: Created. Neuer Kaffeetype erstellt.
+          headers:
+            Location:
+              description: URL zum neu angelegten Kaffeetyp.
+          body:
+            type: coffee-type
+  /brands:
+    securedBy: [ jwt ]
+    get:
+      description: Liefert eine Liste an verfügbaren Kaffeemarken.
+      responses: 
+        200:
+          description: Ok.
+          body:
+            type: coffee-brand[]
+    post:
+      description: Erstellt eine neue Kaffeemarke
+      body:
+        type: coffee-brand-create
+      responses: 
+        201:
+          description: Created. Neue Kaffeemarke erstellt.
+          headers:
+            Location:
+              description: URL zur neu angelegten Kaffeemarke.
+          body:
+            type: coffee-brand
+  /machines:
+    securedBy: [ jwt ]
+    get:
+      description: Liefert eine Liste an verfügbaren Kaffeemaschinen.
+      responses:
+        200:
+          description: Ok.
+          body:
+            type: coffee-machine[]
+    post:
+      description: Erstellt eine neue Kaffeemaschine.
+      body:
+        type: coffee-machine-create
+      responses: 
+        201:
+          description: Created. Neue Kaffeemachine erstellt.
+          headers:
+            Location:
+              description: URL zur neu angelegten Kaffeemaschine.
+          body:
+            type: coffee-machine
+
+              
