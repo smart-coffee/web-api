@@ -23,6 +23,7 @@ import { RadialProgressComponent } from './components/radial-progress/radial-pro
 import { HeaderComponent } from './components/header/header.component';
 import { CoffeeMachineInfoComponent } from './components/coffee-machine-info/coffee-machine-info.component';
 import { APP_BASE_HREF } from '@angular/common';
+import { FormRangeInputComponent } from './components/form-range-input/form-range-input.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { APP_BASE_HREF } from '@angular/common';
     RadialProgressComponent,
     HeaderComponent,
     CoffeeMachineInfoComponent,
+    FormRangeInputComponent,
   ],
   imports: [
     BrowserModule,

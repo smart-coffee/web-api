@@ -1,0 +1,44 @@
+@import '../../shared/styles/colors';
+@import '../../shared/styles/dimensions';
+@import '../../shared/styles/fonts';
+
+.coffee-preferences {
+  min-height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: $mobile-side-margin 1fr $mobile-side-margin;
+  grid-template-rows: auto auto 1fr auto;
+  grid-auto-flow: column;
+  grid-template-areas:
+    ". header ."
+    "texthead texthead  texthead"
+    ". form ."
+    ". btn .";
+  background-color: $color-background-light;
+
+  &__header {
+    grid-area: header;
+  }
+
+  &__text-headline {
+    grid-area: texthead;
+  }
+
+  &__form {
+    grid-area: form;
+    font: $font-sc-paragraph;
+    color: $color-text-dark;
+    padding: 0 5%;
+  }
+
+  &__form-headline {
+    text-align: center;
+    padding: 9% 0;
+  }
+
+  &__start-button {
+    grid-area: btn;
+  }
+}
+
+

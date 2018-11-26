@@ -1,0 +1,60 @@
+@import '../../shared/styles/colors';
+@import '../../shared/styles/dimensions';
+@import '../../shared/styles/fonts';
+
+
+.sc-range-input {
+  font: $font-sc-input-2;
+  padding: 4% 0;
+  &__layout-container {
+    margin-top: 2%;
+    display: flex;
+    align-content: center;
+  }
+
+  &__range-wrapper {
+    flex-grow: 100;
+    display: flex;
+    align-items: center;
+    margin: 0 3%;
+  }
+
+  &__range-value-text {
+    margin-left: 3%;
+    border: 1px solid $color-text-dark;
+    border-radius: 500px;
+    width: 42px;
+    padding: 0 10px;
+    text-align: center;
+    background-color: $color-primary;
+  }
+
+  &__range-input {
+    width: 100%;
+  }
+}
+
+
+input[type="range"]{
+  -webkit-appearance: none;
+  height: 4px;
+  border-radius: 4px;
+  position: relative;
+  background: #b8b7b8 -webkit-gradient(
+      linear,
+      left top,
+      right top,
+      color-stop(0.2, #007aff),
+      color-stop(0.2, #b8b7b8)
+  );
+}
+
+input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,.2);
+  cursor: pointer;
+}
