@@ -22,6 +22,7 @@ import { ArtyHeadlineComponent } from './components/arty-headline/arty-headline.
 import { RadialProgressComponent } from './components/radial-progress/radial-progress.component';
 import { HeaderComponent } from './components/header/header.component';
 import { CoffeeMachineInfoComponent } from './components/coffee-machine-info/coffee-machine-info.component';
+import { APP_BASE_HREF } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,9 @@ import { CoffeeMachineInfoComponent } from './components/coffee-machine-info/cof
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    { provide: APP_BASE_HREF, useValue: '/'}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
