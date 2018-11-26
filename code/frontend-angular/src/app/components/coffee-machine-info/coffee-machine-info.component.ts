@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-coffee-machine-info',

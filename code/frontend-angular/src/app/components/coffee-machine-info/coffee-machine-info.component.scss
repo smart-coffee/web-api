@@ -28,15 +28,25 @@
   &__machine-dropdown {
     position: absolute;
     top: $font-lnheight-hero;
-    padding: 3%;
-    width: 80%;
+    padding: 2%;
     z-index: 3;
-    font: $font-sc-title;
     color: $color-text-dark;
     text-align: left;
     background-color: $color-background-light;
     border-radius: 3px;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26), 0 2px 10px 0 rgba(0, 0, 0, 0.16);
+  }
+
+  &__dropdown-headline {
+    font: $font-sc-paragraph;
+  }
+
+  &__dropdown-option {
+    font: $font-sc-input-2;
+
+    &:hover {
+      background-color: darken($color-background-light, 10%);
+    }
   }
 
   &__machine-fill-indicators {
