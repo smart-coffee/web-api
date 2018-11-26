@@ -357,7 +357,7 @@ template {
 
 /**
  * force portrait mode
- */
+
 @media screen and (min-width: 320px) and (max-width: 824px) and (orientation: landscape) {
   html {
     transform: rotate(-90deg);
@@ -369,4 +369,4 @@ template {
     top: 100%;
     left: 0;
   }
-}
+} */
