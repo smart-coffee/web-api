@@ -36,7 +36,12 @@ export class CoffeeMachineInfoComponent implements OnInit {
     { name: 'Moira' }
   ];
 
-  coffeeMachineDetails: Object;
+  coffeeMachineDetails = {
+    name: '',
+    coffeeLevel: 0,
+    waterLevel: 0,
+    trashLevel: 0
+  };
 
   coffeeMachineDetailsList: Object = [
     {name: 'Winston', coffeeLevel: 90, waterLevel: 73, trashLevel: 20},
