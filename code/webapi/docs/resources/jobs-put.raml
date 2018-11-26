@@ -1,0 +1,14 @@
+description: Bearbeitet einen existierenden Job einer Kaffeemaschine.
+uriParameters: 
+  id:
+    required: true
+    type: integer
+    description: ID des zu bearbeitenden Jobs.
+    example: 42
+body:
+  type: job
+responses:
+  200:
+    description: Ok. Auftrag bearbeitet.
+    body:
+      type: job
