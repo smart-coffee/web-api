@@ -26,19 +26,49 @@
 
   &__form {
     grid-area: form;
-    font: $font-sc-paragraph;
+    font: $font-sc-input-2;
     color: $color-text-dark;
     padding: 0 5%;
   }
 
   &__form-headline {
+    font: $font-sc-paragraph;
     text-align: center;
     padding: 9% 0;
   }
 
+  &__profile-input-container {
+    padding: 4% 0;
+  }
+
+  &__profile-picker {
+    padding: 0 2px 0 4%;
+    margin-top: 2%;
+    border: 1px solid $color-text-dark;
+    border-radius: 500px;
+    font: $font-sc-input-1;
+    color: $color-text-dark;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__dropdown-activator--closed {
+    transition: all 0.5s ease-in-out;
+    transform-origin: center;
+    transform: rotate(0);
+  }
+
+  &__dropdown-activator--open {
+    transition: all 0.5s ease-in-out;
+    transform-origin: center;
+    transform: rotate(180deg);
+  }
+
   &__start-button {
     grid-area: btn;
+    justify-self: center;
+    padding: 5% 0;
   }
 }
-
 
