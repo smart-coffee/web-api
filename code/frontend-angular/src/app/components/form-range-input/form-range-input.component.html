@@ -3,7 +3,17 @@
   <div class="sc-range-input__layout-container">
     <img class="sc-range-input__range-icon" src="{{startIconSource}}"/>
     <div class="sc-range-input__range-wrapper sc-range-input__range-wrapper--{{type}}">
-      <input class="sc-range-input__input" id="{{name}}" min="{{minVal}}" max="{{maxVal}}" [(ngModel)]="localValue" (ngModelChange)="rangeValChanged($event)" type="range">
+      <input
+        class="sc-range-input__input"
+        id="{{name}}"
+        min="{{minVal}}"
+        max="{{maxVal}}"
+        on-tap="rangeValChanged($event)"
+        on-drag="rangeValChanged($event)"
+        [(ngModel)]="localValue"
+        (ngModelChange)="rangeValChanged($event)"
+        type="range"
+      >
     </div>
     <img class="sc-range-input__range-icon" src="{{endIconSource}}"/>
     <span class="sc-range-input__range-value-text">{{value}}{{unit}}</span>
