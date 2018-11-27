@@ -28,6 +28,16 @@ app = Flask(__name__)
 CORS(app, allow_headers="*")
 app.register_blueprint(get_devices_api, url_prefix='/balena')
 
+certificate = os.environ['CERT_FILE']
+private_key = os.environ['PRIVKEY_FILE']
+if certificate and len(certificate) > 0 and not os.path.isfile(certificate):
+    raise KeyError('{} does not exist'.format(certificate))
+if private_key and len(private_key) > 0 and not os.path.isfile(private_key):
+    raise KeyError('{} does not exist'.format(private_key))
+_ssl_context = (certificate, private_key)
+if not certificate or len(certificate) == 0 or not private_key or len(private_key) == 0:
+    _ssl_context = None
+
 if __name__ == '__main__':
-    app.run(host=os.environ['APP_HOST'], port=os.environ['APP_PORT'], ssl_context=None, threaded=True)
+    app.run(host=os.environ['APP_HOST'], port=os.environ['APP_PORT'], ssl_context=_ssl_context, threaded=True)
     

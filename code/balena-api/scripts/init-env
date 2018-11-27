@@ -9,4 +9,8 @@ BALENA_TOKEN=
 # Use your email and password here.
 BALENA_USERNAME=
 BALENA_PASSWORD=
+
+# HTTP/HTTPS
+CERT_FILE=
+PRIVKEY_FILE=
 EOF
