@@ -1,0 +1,12 @@
+#!/bin/sh
+
+cat <<EOF >src/.env
+# Choose one of the following authentication methods.
+
+# (Recommended)
+BALENA_TOKEN=
+
+# Use your email and password here.
+BALENA_USERNAME=
+BALENA_PASSWORD=
+EOF

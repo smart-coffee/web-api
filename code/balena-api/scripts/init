@@ -1,0 +1,4 @@
+#!/bin/sh
+
+sh scripts/init-env
+sh scripts/init-venv
