@@ -12,3 +12,7 @@
 docker/
 logs/
 venv/
+__pycache__/
+docs/
+scripts/
+.env
