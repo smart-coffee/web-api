@@ -1,4 +1,4 @@
-UserRequest object
+EditUserRequest object
 ---
 type: object
 properties:

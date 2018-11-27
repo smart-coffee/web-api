@@ -1,0 +1,24 @@
+Register a new User
+---
+tags:
+  - user
+consumes:
+  - application/json
+produces:
+  - application/json
+  - application/xml
+parameters:
+  - in: body
+    name: body
+    description: New User
+    required: true
+    schema:
+      $ref: '#/definitions/RegisterUserRequest'
+responses:
+  201:
+    description: Created.
+    schema:
+      type: object
+      properties:
+        user:
+          $ref: '#/definitions/User'

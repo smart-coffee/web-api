@@ -13,7 +13,7 @@ class User(DB.Model):
 	email = DB.Column(DB.String(50), nullable=False)
 	
 	# Foreign Keys
-	role_id_fk = DB.Column(DB.Integer, DB.ForeignKey('role.id', name='fk_user_role'), nullable=False)
+	role_id_fk = DB.Column(DB.Integer, DB.ForeignKey('role.id', name='fk_user_role'))
 	
 	# Relationships: 1 .. n
 	profiles = DB.relationship('Profile', back_populates='user')
@@ -23,7 +23,7 @@ class User(DB.Model):
 	role = DB.relationship('Role', foreign_keys=[role_id_fk], back_populates='users')
 
 	def get_id(self):
-		return self.id
+		return self.public_id
 		
 		
 class Role(DB.Model):

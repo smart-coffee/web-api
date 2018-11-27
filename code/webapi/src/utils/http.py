@@ -7,6 +7,8 @@ from flask import Blueprint, request, make_response
 from flask_restful import Api
 from simplexml import dumps
 from werkzeug.wrappers import Response, HTTP_STATUS_CODES
+from sqlalchemy.ext.declarative import DeclarativeMeta
+from sqlalchemy.orm import class_mapper
 
 from config import get_secret_key, FLASK_APP
 from config.flask_config import AuthenticationFailed, ForbiddenResourceException
@@ -76,3 +78,34 @@ def token_required(roles:List[str]=None):
             return func(current_user=current_user, *args, **kwargs)
         return wrapper
     return decorator
+
+def new_alchemy_encoder():
+    _visited_objs = []
+    class AlchemyEncoder(json.JSONEncoder):
+        def default(self, obj):
+            if isinstance(obj.__class__, DeclarativeMeta):
+                # don't re-visit self
+                if obj in _visited_objs:
+                    return None
+                _visited_objs.append(obj)
+                # an SQLAlchemy class
+                fields = {}
+                for field in [x for x in dir(obj) if not x.startswith('_') and x != 'metadata']:
+                    fields[field] = obj.__getattribute__(field)
+                # a json-encodable dict
+                return fields
+            return json.JSONEncoder.default(self, obj)
+    return AlchemyEncoder
+
+def serialize(model, column_filter:dict=None):
+    """Transforms a model into a dictionary which can be dumped to JSON."""
+    # first we get the names of all the columns on your model
+    columns = [c.key for c in class_mapper(model.__class__).columns]
+
+    # then we filter the columns
+    filter_list = column_filter.keys()
+    columns = list(set(columns) & set(filter_list))
+
+    # then we return their values in a dict
+    values = dict((c, getattr(model, c)) for c in columns)
+    return values

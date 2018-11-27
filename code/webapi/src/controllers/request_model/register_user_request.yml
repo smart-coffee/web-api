@@ -1,0 +1,13 @@
+RegisterUserRequest object
+---
+type: object
+properties:
+  email:
+    type: string
+    example: a.b@s.de
+  name:
+    type: string
+    example: John
+  password:
+    type: string
+    example: somepassword
