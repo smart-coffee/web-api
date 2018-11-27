@@ -1,7 +1,8 @@
 # Simple Balena API
 Small API that uses balena-sdk to get information about registered devices.
 
-After starting the app/containers visit: http://localhost:<port>/balena/<application_name>/devices
+API: `http://localhost:<port>/balena/<application_name>/devices`
+(Application name = sandbox-test)
 
 ## Docker usage
 * Start development container: `docker-compose up webapi-dev`
