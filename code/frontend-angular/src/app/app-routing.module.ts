@@ -7,6 +7,7 @@ import { HomeComponent } from './components/home/home.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { AuthGuard } from './auth-guard.service';
+import { AnalysisComponent } from './components/analysis/analysis.component';
 
 /**
  * App routing module contains all routes for the application
@@ -16,6 +17,7 @@ import { AuthGuard } from './auth-guard.service';
 const routes: Routes = [
   { path: '', canActivate: [AuthGuard], pathMatch: 'full', redirectTo: 'home' },
   { path: 'account-recovery', component: AccountRecoveryComponent },
+  { path: 'analysis', component: AnalysisComponent},
   { path: 'coffee-preferences', component: CoffeePreferencesComponent },
   { path: 'home', canActivate: [AuthGuard], component: HomeComponent },
   { path: 'sign-up', component: SignUpComponent },

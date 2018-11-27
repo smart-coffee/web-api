@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AnalysisComponent implements OnInit {
 
+  min = 0;
+  max = 100;
+  twoWayRange = [10, 30];
+
   constructor() { }
 
   ngOnInit() {
   }
 
+  changed() {
+    this.twoWayRange = [...this.twoWayRange];
+  }
 }

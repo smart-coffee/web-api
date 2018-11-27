@@ -8,7 +8,7 @@
         id="{{name}}"
         min="{{minVal}}"
         max="{{maxVal}}"
-        on-tap="rangeValChanged($event)"
+        onCLick="rangeValChanged($event)"
         on-drag="rangeValChanged($event)"
         [(ngModel)]="localValue"
         (ngModelChange)="rangeValChanged($event)"
