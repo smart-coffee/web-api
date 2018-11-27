@@ -30,6 +30,12 @@ class AuthenticationFailed(ResourceException):
     def __init__(self, message, payload=None, headers=None):
         ResourceException.__init__(self, message, 401, payload, headers)
 
+
+class ForbiddenResourceException(ResourceException):
+    def __init__(self, message, payload=None, headers=None):
+        ResourceException.__init__(self, message, 403, payload, headers)
+
+
 class ResourceNotImplemented(ResourceException):
     def __init__(self, message='Not implemented yet', payload=None, headers=None):
         ResourceException.__init__(self, message, 501, payload, headers)

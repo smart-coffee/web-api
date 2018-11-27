@@ -8,7 +8,7 @@ from simplexml import dumps
 from werkzeug.wrappers import Response, HTTP_STATUS_CODES
 
 from config import get_secret_key, FLASK_APP
-from config.flask_config import AuthenticationFailed
+from config.flask_config import AuthenticationFailed, ForbiddenResourceException
 from models import User
 
 
@@ -69,4 +69,29 @@ def token_required(f):
             raise AuthenticationFailed('Token is invalid')
         return f(current_user=current_user, *args, **kwargs)
 
+    return decorated
+
+
+def admin_token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = None
+        if 'x-access-token' in request.headers:
+            token = request.headers['x-access-token']
+
+        if not token:
+            raise AuthenticationFailed('Token is missing')
+
+        try:
+            data = jwt.decode(token, get_secret_key(FLASK_APP), algorithms=['HS256'])
+            current_user = User.query.filter_by(
+                public_id=data['public_id']).first()
+        except:
+            raise AuthenticationFailed('Token is invalid')
+
+        if current_user.role.name != 'Administrator':
+            raise ForbiddenResourceException('Access denied.')
+
+        return f(current_user=current_user, *args, **kwargs)
+    
     return decorated
