@@ -57,7 +57,7 @@ class LoginAPI(MethodView):
 
 
 class RefreshAPI(MethodView):
-    @token_required
+    @token_required()
     @swag_from('/resources/authentication/description/refresh.yml')
     def post(self, current_user: User):
         token = _generate_token(current_user)
@@ -76,5 +76,5 @@ def _generate_token(user: User):
     return token
 
 
-api.add_resource(LoginAPI, '/{rsc}/login'.format(rsc=API_PREFIX))
+api.add_resource(LoginAPI, '/public/{rsc}/login'.format(rsc=API_PREFIX))
 api.add_resource(RefreshAPI, '/{rsc}/refresh'.format(rsc=API_PREFIX))

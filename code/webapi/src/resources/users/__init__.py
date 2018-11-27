@@ -17,13 +17,13 @@ class CurrentUserResource(Resource):
     def __init__(self):
         self.controller = UserController()
 
-    @token_required
+    @token_required()
     @swag_from('/resources/users/description/current_user_get.yml')
     @marshal_with(get_registered_user_details())
     def get(self, current_user: User):
         return current_user
 
-    @token_required
+    @token_required()
     @swag_from('/resources/users/description/current_user_put.yml')
     @marshal_with(get_registered_user_details())
     def put(self, current_user: User):

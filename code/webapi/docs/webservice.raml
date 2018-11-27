@@ -18,17 +18,19 @@ types:
   job-create: !include types/job-create.raml
   job: !include types/job.raml
   token: !include types/token.raml
+  user-create: !include types/user-create.raml
+  user-register: !include types/user-register.raml
   user: !include types/user.raml
   userrequest-edit-roles: !include types/userrequest-edit-roles.raml
   userrequest-edit: !include types/userrequest-edit.raml
-  userrequest-create: !include types/userrequest-create.raml
   userrole: !include types/userrole.raml
 
 securitySchemes:
   jwt: !include securitySchemes/custom-jwt.raml
 
-/auth:    
-  /login:
+
+/public:
+  /auth/login:
     post:
       description: Am System anmelden.
       body:
@@ -38,7 +40,21 @@ securitySchemes:
           description: Ok. Login erfolgreich.
           body:
             type: token
-  /refresh:
+  /users:
+    post:
+      description: Im System registrieren.
+      body:
+        type: user-register
+      responses: 
+        201:
+          description: Created. Nutzeraccount erstellt.
+          headers:
+            Location:
+              description: URL zum neu angelegten Nutzeraccount.
+          body:
+            type: user
+
+/auth/refresh:
     securedBy: [ jwt ]
     post:
       description: Liefert einen neuen JWT-Token.
@@ -60,7 +76,7 @@ securitySchemes:
   post:
     description: Erstellt einen neuen Nutzeraccount.
     body:
-      type: userrequest-create
+      type: user-create
     responses:
       201:
         description: Created. Nutzeraccount erstellt.
