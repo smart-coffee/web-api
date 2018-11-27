@@ -7,7 +7,7 @@ from flask_restful import Api, marshal_with, Resource
 from controllers.role import RoleController
 from models import User, Role
 from controllers.response_model import get_role_fields
-from utils.http import token_required, admin_token_required
+from utils.http import token_required
 
 
 API_PREFIX = 'roles'
@@ -19,7 +19,7 @@ class RoleResource(Resource):
     def __init__(self):
         self.controller = RoleController()
 
-    @admin_token_required
+    @token_required(roles=['Administrator'])
     @swag_from('/resources/roles/description/roles_get.yml')
     @marshal_with(get_role_fields())
     def get(self, current_user: User) -> List[Role]:

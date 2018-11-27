@@ -1,6 +1,7 @@
 import jwt
 import json
 
+from typing import List
 from functools import wraps
 from flask import Blueprint, request, make_response
 from flask_restful import Api
@@ -9,7 +10,7 @@ from werkzeug.wrappers import Response, HTTP_STATUS_CODES
 
 from config import get_secret_key, FLASK_APP
 from config.flask_config import AuthenticationFailed, ForbiddenResourceException
-from models import User
+from models import User, Role
 
 
 CODE = 201
@@ -51,47 +52,27 @@ def get_token_response(body, content_type='application/json'):
     return response
 
 
-def token_required(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        token = None
-        if 'x-access-token' in request.headers:
-            token = request.headers['x-access-token']
+def token_required(roles:List[str]=None):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            token = None
+            if 'x-access-token' in request.headers:
+                token = request.headers['x-access-token']
 
-        if not token:
-            raise AuthenticationFailed('Token is missing')
+            if not token:
+                raise AuthenticationFailed('Token is missing')
 
-        try:
-            data = jwt.decode(token, get_secret_key(FLASK_APP), algorithms=['HS256'])
-            current_user = User.query.filter_by(
-                public_id=data['public_id']).first()
-        except:
-            raise AuthenticationFailed('Token is invalid')
-        return f(current_user=current_user, *args, **kwargs)
+            try:
+                data = jwt.decode(token, get_secret_key(FLASK_APP), algorithms=['HS256'])
+                current_user = User.query.filter_by(
+                    public_id=data['public_id']).first()
+            except:
+                raise AuthenticationFailed('Token is invalid')
+            
+            if roles and not current_user.role.name in roles:
+                raise ForbiddenResourceException('Access denied.')
 
-    return decorated
-
-
-def admin_token_required(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        token = None
-        if 'x-access-token' in request.headers:
-            token = request.headers['x-access-token']
-
-        if not token:
-            raise AuthenticationFailed('Token is missing')
-
-        try:
-            data = jwt.decode(token, get_secret_key(FLASK_APP), algorithms=['HS256'])
-            current_user = User.query.filter_by(
-                public_id=data['public_id']).first()
-        except:
-            raise AuthenticationFailed('Token is invalid')
-
-        if current_user.role.name != 'Administrator':
-            raise ForbiddenResourceException('Access denied.')
-
-        return f(current_user=current_user, *args, **kwargs)
-    
-    return decorated
+            return func(current_user=current_user, *args, **kwargs)
+        return wrapper
+    return decorator
