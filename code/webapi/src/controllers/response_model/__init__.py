@@ -3,6 +3,31 @@ from flask_restful import fields
 from config import SWAG
 
 
+@SWAG.definition('User')
+def get_registered_user_details():
+    """
+    file: /controllers/response_model/user.yml
+    """
+    _user_fields = {
+        'public_id': fields.String,
+        'name': fields.String,
+        'email': fields.String
+    }
+    return _user_fields
+
+
+@SWAG.definition('Role')
+def get_role_fields():
+    """
+    file: /controllers/response_model/role.yml
+    """
+    _role_fields = {
+        'id': fields.Integer,
+        'name': fields.String
+    }
+    return _role_fields
+
+
 @SWAG.definition('Image')
 def get_image_fields():
     """
@@ -168,19 +193,6 @@ def get_news_preview_fields():
         'view_count': fields.Integer
     }
     return _news_entry_preview_fields
-
-
-@SWAG.definition('User')
-def get_registered_user_details():
-    """
-    file: /controllers/response_model/user.yml
-    """
-    _user_fields = {
-        'public_id': fields.String,
-        'name': fields.String,
-        'email': fields.String
-    }
-    return _user_fields
 
 
 @SWAG.definition('Token')

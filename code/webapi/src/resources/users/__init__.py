@@ -13,12 +13,10 @@ USER_BP = Blueprint('{rsc}_api'.format(rsc=API_PREFIX), __name__)
 api = Api(USER_BP)
 
 
-class _ControllerBased:
+class CurrentUserResource(Resource):
     def __init__(self):
         self.controller = UserController()
 
-
-class CurrentUserResource(Resource, _ControllerBased):
     @token_required
     @swag_from('/resources/users/description/current_user_get.yml')
     @marshal_with(get_registered_user_details())
