@@ -4,7 +4,7 @@ from flasgger import swag_from
 from flask import Blueprint
 from flask_restful import Api, marshal_with, Resource
 
-from controllers.user import UserController
+from controllers.user import CurrentUserController, PublicUserController
 from models import User
 from controllers.response_model import get_registered_user_details
 from utils.http import token_required, get_post_response, serialize
@@ -17,7 +17,7 @@ api = Api(USER_BP)
 
 class CurrentUserResource(Resource):
     def __init__(self):
-        self.controller = UserController()
+        self.controller = CurrentUserController()
 
     @token_required()
     @swag_from('/resources/users/description/current_user_get.yml')
@@ -34,7 +34,7 @@ class CurrentUserResource(Resource):
 
 class PublicUserResource(Resource):
     def __init__(self):
-        self.controller = UserController()
+        self.controller = PublicUserController()
     
     @swag_from('/resources/users/description/public_user_post.yml')
     # Marshal will not work because of 'Response' object

@@ -70,7 +70,7 @@ class _BaseController:
             logger.error('Failed to edit {resource_name}: {error}'.format(resource_name=self.resource_name, error=str(err)))
             session.rollback()
             raise err
-        logger.info('{resource_name} {id} created.'.format(resource_name=self.resource_name, id=obj.get_id()))
+        logger.info('{resource_name} {id} edited.'.format(resource_name=self.resource_name, id=obj.get_id()))
         self.fixture_function(obj)
         return obj
     

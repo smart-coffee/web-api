@@ -18,10 +18,11 @@ from config import FLASK_APP, DB
 logger = logging.getLogger(get_logger_name(__name__))
 
 
-class UserController(_BaseController):
+class CurrentUserController(_BaseController):
     def __init__(self):
-        super(UserController, self).__init__(model_class=User, resource_name='User', fixture_function=run_user_fixture, create_request_fields=get_register_user_request_fields(), edit_request_fields=get_edit_user_request_fields(), id_field='public_id')
-    
+        super(CurrentUserController, self).__init__(model_class=User, resource_name='User', fixture_function=run_user_fixture, edit_request_fields=get_edit_user_request_fields(), id_field='public_id')
+        self.tools = UserTools()
+
     def get_by_username(self, username: str, current_user: User=None) -> User:
         _user = User.query.filter_by(name=username).first()
         if not _user:
@@ -29,20 +30,28 @@ class UserController(_BaseController):
         run_user_fixture(_user)
         return _user
 
-    def create_object(self, data: dict) -> User:
-        new_user = User()
-        new_user.email = self._get_validated_email(data['email'])
-        new_user.name = self._get_validated_user_name(data['name'])
-        new_user.password = self._encode_password(data['password'])
-        new_user.public_id = self._generate_new_public_id()
-        return new_user
-
     def edit_object(self, object_to_edit: User, data: dict) -> User:
-        self._try_edit_user_password(data=data, user=object_to_edit)
-        self._try_edit_user_email(data=data, user=object_to_edit)
-        self._try_edit_user_name(data=data, user=object_to_edit)
+        self.tools._try_edit_user_password(data=data, user=object_to_edit)
+        self.tools._try_edit_user_email(data=data, user=object_to_edit)
+        self.tools._try_edit_user_name(data=data, user=object_to_edit)
         return object_to_edit
 
+
+class PublicUserController(_BaseController):
+    def __init__(self):
+        super(PublicUserController, self).__init__(model_class=User, resource_name='User', fixture_function=run_user_fixture, create_request_fields=get_register_user_request_fields(), id_field='public_id')
+        self.tools = UserTools() 
+
+    def create_object(self, data: dict) -> User:
+        new_user = User()
+        new_user.email = self.tools._get_validated_email(data['email'])
+        new_user.name = self.tools._get_validated_user_name(data['name'])
+        new_user.password = self.tools._encode_password(data['password'])
+        new_user.public_id = self.tools._generate_new_public_id()
+        return new_user
+
+
+class UserTools:
     def _try_edit_user_password(self, data: dict, user: User):
         new_password = data['new_password']
         old_password = data['old_password']
