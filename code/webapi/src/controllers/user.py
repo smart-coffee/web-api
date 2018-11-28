@@ -41,7 +41,7 @@ class UserController:
         return _user
 
     def edit_current_user(self, current_user:User) -> User:
-        data = self.get_validated_request_body_as_json(template=get_edit_user_request_fields())
+        data = get_validated_request_body_as_json(template=get_edit_user_request_fields())
 
         self._try_edit_user_password(data=data, user=current_user)
         self._try_edit_user_email(data=data, user=current_user)
@@ -59,7 +59,7 @@ class UserController:
         return current_user
     
     def create_user(self) -> User:
-        data = self.get_validated_request_body_as_json(template=get_register_user_request_fields())
+        data = get_validated_request_body_as_json(template=get_register_user_request_fields())
 
         new_user = User()
         new_user.email = self._get_validated_email(data['email'])
@@ -80,8 +80,7 @@ class UserController:
         logger.info('User {name} created ({id}).'.format(name=new_user.name, id=new_user.public_id))
         return new_user
 
-    @staticmethod
-    def _try_edit_user_password(data: dict, user: User):
+    def _try_edit_user_password(self, data: dict, user: User):
         new_password = data['new_password']
         old_password = data['old_password']
 
@@ -113,8 +112,7 @@ class UserController:
             hashed_password = generate_password_hash(new_password, method='sha256')
             user.password = hashed_password
 
-    @staticmethod
-    def _try_edit_user_email(data: dict, user: User):
+    def _try_edit_user_email(self, data: dict, user: User):
         email = data['email']
 
         if email and email != user.email:
@@ -124,8 +122,7 @@ class UserController:
             except EmailNotValidError as err:
                 raise ResourceException('Email {0} is not in a valid format: {1}'.format(email, str(err)))
 
-    @staticmethod
-    def _try_edit_user_name(data: dict, user: User):
+    def _try_edit_user_name(self, data: dict, user: User):
         name = data['name']
 
         if name and name != user.name:

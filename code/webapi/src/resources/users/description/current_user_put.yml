@@ -18,7 +18,7 @@ parameters:
     description: New User
     required: true
     schema:
-      $ref: '#/definitions/UserRequest'
+      $ref: '#/definitions/EditUserRequest'
 responses:
   200:
     description: OK
