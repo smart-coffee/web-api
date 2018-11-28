@@ -1,0 +1,9 @@
+CreateCoffeeBrandRequest object
+---
+type: object
+required:
+  - name
+properties:
+  name:
+    type: string
+    example: Dallmayr

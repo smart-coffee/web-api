@@ -1,5 +1,5 @@
 from config.flask_config import ResourceNotFound
-from models import User, Role, CoffeeMachine, CoffeeType
+from models import User, Role, CoffeeMachine, CoffeeType, CoffeeBrand
 
 
 def run_user_fixture(user: User):
@@ -12,4 +12,7 @@ def run_coffee_machine_fixture(coffee_machine: CoffeeMachine):
     pass
 
 def run_coffee_type_fixture(coffee_type: CoffeeType):
+    pass
+
+def run_coffee_brand_fixture(coffee_brand: CoffeeBrand):
     pass

@@ -62,3 +62,15 @@ def get_token_fields():
         'token': fields.String
     }
     return _token_fields
+
+
+@SWAG.definition('CoffeeBrand')
+def get_coffee_brand_fields():
+    """
+    file: /controllers/response_model/coffee_brand.yml
+    """
+    _coffee_brand_fields = {
+        'id': fields.Integer,
+        'name': fields.String
+    }
+    return _coffee_brand_fields

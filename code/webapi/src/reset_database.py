@@ -1,4 +1,4 @@
-from models import DB, User, Role, CoffeeMachine, CoffeeType
+from models import DB, User, Role, CoffeeMachine, CoffeeType, CoffeeBrand
 
 
 def reset_database():
@@ -22,9 +22,13 @@ def reset_database():
     coffee_type = CoffeeType()
     coffee_type.name = 'Arabica'
 
+    coffee_brand = CoffeeBrand()
+    coffee_brand.name = 'Dallmayr'
+
     DB.session.add(user)
     DB.session.add(coffee_machine)
     DB.session.add(coffee_type)
+    DB.session.add(coffee_brand)
     DB.session.commit()
 
 

@@ -63,3 +63,14 @@ def get_create_coffee_type_request_fields():
         'name': fields.String
     }
     return _create_coffee_type_request_fields
+
+
+@SWAG.definition('CreateCoffeeBrandRequest')
+def get_create_coffee_brand_request_fields():
+    """
+    file: /controllers/request_model/create_coffee_brand_request.yml
+    """
+    _create_coffee_brand_request_fields = {
+        'name': fields.String
+    }
+    return _create_coffee_brand_request_fields

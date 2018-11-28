@@ -6,9 +6,9 @@ from flasgger import swag_from
 from flask import Blueprint
 from flask_restful import Api, marshal_with, Resource
 
-from controllers.coffee import CoffeeMachineController, CoffeeTypeController
-from models import CoffeeMachine, User, CoffeeType
-from controllers.response_model import get_coffee_machine_fields, get_coffee_type_fields
+from controllers.coffee import CoffeeMachineController, CoffeeTypeController, CoffeeBrandController
+from models import CoffeeMachine, User, CoffeeType, CoffeeBrand
+from controllers.response_model import get_coffee_machine_fields, get_coffee_type_fields, get_coffee_brand_fields
 from utils.http import token_required, get_post_response, serialize
 
 
@@ -79,7 +79,40 @@ class CoffeeTypeResource(Resource):
         return self.controller.get_by_id(coffee_type_id, current_user)
 
 
+class CoffeeBrandListResource(Resource):
+    def __init__(self):
+        self.controller = CoffeeBrandController()
+    
+    @token_required()
+    @swag_from('/resources/coffee/description/coffee_brand_list_get.yml')
+    @marshal_with(get_coffee_brand_fields())
+    def get(self, current_user: User) -> List[CoffeeBrand]:
+        return self.controller.get_list(current_user)
+    
+    @token_required(roles=['Administrator'])
+    @swag_from('/resources/coffee/description/coffee_brand_list_post.yml')
+    def post(self, current_user: User) -> CoffeeBrand:
+        coffee_brand = self.controller.create_coffee_brand(current_user)
+        serialized_coffee_brand = serialize(coffee_brand, get_coffee_brand_fields())
+        json_coffee_brand = json.dumps(serialized_coffee_brand)
+        response = get_post_response(obj=coffee_brand, body=json_coffee_brand, content_type='application/json', api='/{rsc}/brands'.format(rsc=API_PREFIX))
+        return response
+
+
+class CoffeeBrandResource(Resource):
+    def __init__(self):
+        self.controller = CoffeeBrandController()
+
+    @token_required()
+    @swag_from('/resources/coffee/description/coffee_brand_get.yml')
+    @marshal_with(get_coffee_brand_fields())
+    def get(self, coffee_brand_id, current_user: User) -> CoffeeBrand:
+        return self.controller.get_by_id(coffee_brand_id, current_user)
+
+
 api.add_resource(CoffeeMachineListResource, '/{rsc}/machines'.format(rsc=API_PREFIX))
 api.add_resource(CoffeeMachineResource, '/{rsc}/machines/<int:coffee_machine_id>'.format(rsc=API_PREFIX))
 api.add_resource(CoffeeTypeListResource, '/{rsc}/types'.format(rsc=API_PREFIX))
 api.add_resource(CoffeeTypeResource, '/{rsc}/types/<int:coffee_type_id>'.format(rsc=API_PREFIX))
+api.add_resource(CoffeeBrandListResource, '/{rsc}/brands'.format(rsc=API_PREFIX))
+api.add_resource(CoffeeBrandResource, '/{rsc}/brands/<int:coffee_brand_id>'.format(rsc=API_PREFIX))
