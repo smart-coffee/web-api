@@ -52,3 +52,14 @@ def get_create_coffee_machine_request_fields():
         'repository': fields.String
     }
     return _create_coffee_machine_request_fields
+
+
+@SWAG.definition('CreateCoffeeTypeRequest')
+def get_create_coffee_type_request_fields():
+    """
+    file: /controllers/request_model/create_coffee_type_request.yml
+    """
+    _create_coffee_type_request_fields = {
+        'name': fields.String
+    }
+    return _create_coffee_type_request_fields

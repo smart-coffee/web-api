@@ -15,9 +15,6 @@ responses:
   200:
     description: OK
     schema:
-      type: object
-      properties:
-        roles:
-          type: array
-          items:
-            $ref: '#/definitions/Role'
+      type: array
+      items:
+        $ref: '#/definitions/Role'

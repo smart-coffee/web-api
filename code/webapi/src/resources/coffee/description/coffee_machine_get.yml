@@ -1,9 +1,7 @@
-Create a new Coffee Machine
+Get a Coffee Machine by ID
 ---
 tags:
   - coffee
-consumes:
-  - application/json
 produces:
   - application/json
   - application/xml
@@ -13,14 +11,13 @@ parameters:
     description: JWT received after succussful login.
     type: string
     required: true
-  - in: body
-    name: body
-    description: New Coffee Machine
+  - in: path
+    name: coffee_machine_id
+    description: ID of the Coffee Machine
+    type: integer
     required: true
-    schema:
-      $ref: '#/definitions/CreateCoffeeMachineRequest'
 responses:
-  201:
-    description: Created.
+  200:
+    description: OK
     schema:
       $ref: '#/definitions/CoffeeMachine'

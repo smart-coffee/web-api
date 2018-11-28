@@ -1,4 +1,4 @@
-Get all available Coffee Machines
+Get all available Coffee Types
 ---
 tags:
   - coffee
@@ -17,4 +17,4 @@ responses:
     schema:
       type: array
       items:
-        $ref: '#/definitions/CoffeeMachine'
+        $ref: '#/definitions/CoffeeType'

@@ -23,7 +23,4 @@ responses:
   200:
     description: OK
     schema:
-      type: object
-      properties:
-        user:
-          $ref: '#/definitions/User'
+      $ref: '#/definitions/User'

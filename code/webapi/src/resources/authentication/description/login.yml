@@ -18,7 +18,4 @@ responses:
   200:
     description: Logged In
     schema:
-      type: object
-      properties:
-        token:
-          $ref: '#/definitions/Token'
+      $ref: '#/definitions/Token'

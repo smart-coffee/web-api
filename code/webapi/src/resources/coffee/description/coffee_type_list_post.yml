@@ -1,4 +1,4 @@
-Create a new Coffee Machine
+Create a new Coffee Type
 ---
 tags:
   - coffee
@@ -15,12 +15,12 @@ parameters:
     required: true
   - in: body
     name: body
-    description: New Coffee Machine
+    description: New Coffee Type
     required: true
     schema:
-      $ref: '#/definitions/CreateCoffeeMachineRequest'
+      $ref: '#/definitions/CreateCoffeeTypeRequest'
 responses:
   201:
     description: Created.
     schema:
-      $ref: '#/definitions/CoffeeMachine'
+      $ref: '#/definitions/CoffeeType'

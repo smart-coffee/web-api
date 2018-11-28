@@ -207,6 +207,20 @@ securitySchemes:
               description: URL des neu erstellten Kaffeeprodukts.
           body:
             type: coffee-product
+    /{id}:
+      securedBy: [ jwt ]
+      get:
+        description: Liefert das Kaffeeprodukt mit der angegebenen ID.
+        uriParameters: 
+          id:
+            type: integer
+            description: ID des Kaffeeprodukts.
+            example: 42
+        responses: 
+          200:
+            description: Ok.
+            body:
+              type: coffee-product
   /types:
     securedBy: [ jwt ]
     get:
@@ -228,6 +242,20 @@ securitySchemes:
               description: URL zum neu angelegten Kaffeetyp.
           body:
             type: coffee-type
+    /{id}:
+      securedBy: [ jwt ]
+      get:
+        description: Liefert den Kaffeetyp mit der angegebenen ID.
+        uriParameters: 
+          id:
+            type: integer
+            description: ID des Kaffeetyps.
+            example: 42
+        responses: 
+          200:
+            description: Ok.
+            body:
+              type: coffee-type
   /brands:
     securedBy: [ jwt ]
     get:
@@ -249,6 +277,20 @@ securitySchemes:
               description: URL zur neu angelegten Kaffeemarke.
           body:
             type: coffee-brand
+    /{id}:
+      securedBy: [ jwt ]
+      get:
+        description: Liefert die Kaffeemarke mit der angegebenen ID.
+        uriParameters: 
+          id:
+            type: integer
+            description: ID der Kaffeemarke.
+            example: 42
+        responses: 
+          200:
+            description: Ok.
+            body:
+              type: coffee-brand
   /machines:
     securedBy: [ jwt ]
     get:
@@ -270,4 +312,18 @@ securitySchemes:
               description: URL zur neu angelegten Kaffeemaschine.
           body:
             type: coffee-machine
+    /{id}:
+      securedBy: [ jwt ]
+      get:
+        description: Liefert die Kaffeemaschine mit der angegebenen ID.
+        uriParameters: 
+          id:
+            type: integer
+            description: ID der Kaffeemaschine.
+            example: 42
+        responses: 
+          200:
+            description: Ok.
+            body:
+              type: coffee-machine
   
