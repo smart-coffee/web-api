@@ -6,9 +6,11 @@ from flasgger import swag_from
 from flask import Blueprint
 from flask_restful import Api, marshal_with, Resource
 
+from controllers.fixture_functions import run_coffee_brand_fixture
 from controllers.coffee import CoffeeMachineController, CoffeeTypeController, CoffeeBrandController
 from models import CoffeeMachine, User, CoffeeType, CoffeeBrand
 from controllers.response_model import get_coffee_machine_fields, get_coffee_type_fields, get_coffee_brand_fields
+from controllers.request_model import get_create_coffee_brand_request_fields
 from utils.http import token_required, get_post_response, serialize
 
 
@@ -30,7 +32,7 @@ class CoffeeMachineListResource(Resource):
     @token_required(roles=['Administrator'])
     @swag_from('/resources/coffee/description/coffee_machine_list_post.yml')
     def post(self, current_user: User) -> CoffeeMachine:
-        coffee_machine = self.controller.create_coffee_machine(current_user)
+        coffee_machine = self.controller.create(current_user)
         serialized_coffee_machine = serialize(coffee_machine, get_coffee_machine_fields())
         json_coffee_machine = json.dumps(serialized_coffee_machine)
         response = get_post_response(obj=coffee_machine, body=json_coffee_machine, content_type='application/json', api='/{rsc}/machines'.format(rsc=API_PREFIX))
@@ -61,7 +63,7 @@ class CoffeeTypeListResource(Resource):
     @token_required(roles=['Administrator'])
     @swag_from('/resources/coffee/description/coffee_type_list_post.yml')
     def post(self, current_user: User) -> CoffeeType:
-        coffee_type = self.controller.create_coffee_type(current_user)
+        coffee_type = self.controller.create(current_user)
         serialized_coffee_type = serialize(coffee_type, get_coffee_type_fields())
         json_coffee_type = json.dumps(serialized_coffee_type)
         response = get_post_response(obj=coffee_type, body=json_coffee_type, content_type='application/json', api='/{rsc}/types'.format(rsc=API_PREFIX))
@@ -82,7 +84,7 @@ class CoffeeTypeResource(Resource):
 class CoffeeBrandListResource(Resource):
     def __init__(self):
         self.controller = CoffeeBrandController()
-    
+
     @token_required()
     @swag_from('/resources/coffee/description/coffee_brand_list_get.yml')
     @marshal_with(get_coffee_brand_fields())
@@ -92,7 +94,7 @@ class CoffeeBrandListResource(Resource):
     @token_required(roles=['Administrator'])
     @swag_from('/resources/coffee/description/coffee_brand_list_post.yml')
     def post(self, current_user: User) -> CoffeeBrand:
-        coffee_brand = self.controller.create_coffee_brand(current_user)
+        coffee_brand = self.controller.create(current_user)
         serialized_coffee_brand = serialize(coffee_brand, get_coffee_brand_fields())
         json_coffee_brand = json.dumps(serialized_coffee_brand)
         response = get_post_response(obj=coffee_brand, body=json_coffee_brand, content_type='application/json', api='/{rsc}/brands'.format(rsc=API_PREFIX))
