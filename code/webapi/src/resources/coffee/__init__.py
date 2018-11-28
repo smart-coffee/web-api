@@ -68,6 +68,18 @@ class CoffeeTypeListResource(Resource):
         return response
 
 
+class CoffeeTypeResource(Resource):
+    def __init__(self):
+        self.controller = CoffeeTypeController()
+
+    @token_required()
+    @swag_from('/resources/coffee/description/coffee_type_get.yml')
+    @marshal_with(get_coffee_type_fields())
+    def get(self, coffee_type_id, current_user: User) -> CoffeeType:
+        return self.controller.get_by_id(coffee_type_id, current_user)
+
+
 api.add_resource(CoffeeMachineListResource, '/{rsc}/machines'.format(rsc=API_PREFIX))
 api.add_resource(CoffeeMachineResource, '/{rsc}/machines/<int:coffee_machine_id>'.format(rsc=API_PREFIX))
 api.add_resource(CoffeeTypeListResource, '/{rsc}/types'.format(rsc=API_PREFIX))
+api.add_resource(CoffeeTypeResource, '/{rsc}/types/<int:coffee_type_id>'.format(rsc=API_PREFIX))
