@@ -29,7 +29,7 @@ class CurrentUserResource(Resource):
     @swag_from('/resources/users/description/current_user_put.yml')
     @marshal_with(get_registered_user_details())
     def put(self, current_user: User):
-        return self.controller.edit_current_user(current_user)
+        return self.controller.edit(current_user)
 
 
 class PublicUserResource(Resource):
@@ -40,7 +40,7 @@ class PublicUserResource(Resource):
     # Marshal will not work because of 'Response' object
     #@marshal_with(get_registered_user_details())
     def post(self):
-        new_user = self.controller.create_user()
+        new_user = self.controller.create()
         serialized_user = serialize(new_user, get_registered_user_details())
         json_user = json.dumps(serialized_user)
         response = get_post_response(obj=new_user, body=json_user, content_type='application/json', api='/public/{rsc}'.format(rsc=API_PREFIX))

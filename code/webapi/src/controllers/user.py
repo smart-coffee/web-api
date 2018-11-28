@@ -10,6 +10,7 @@ from models import User
 from config.flask_config import ResourceNotFound, ResourceException
 from controllers.request_model import get_edit_user_request_fields, get_register_user_request_fields
 from controllers.fixture_functions import run_user_fixture
+from controllers.base_controller import _BaseController
 from utils.http import get_validated_request_body_as_json
 from config.logger import logging, get_logger_name
 from config import FLASK_APP, DB
@@ -17,21 +18,9 @@ from config import FLASK_APP, DB
 logger = logging.getLogger(get_logger_name(__name__))
 
 
-class UserController:
-
-    def get_by_id(self, resource_id: str, current_user:User) -> User:
-        _user = User.query.filter_by(public_id=resource_id).first()
-        if not _user:
-            raise ResourceNotFound('User not found')
-        run_user_fixture(_user)
-        return _user
-
-    def get_list(self, current_user:User) -> List[User]:
-        _users = User.query.all()
-        for _user in _users:
-            if _user:
-                run_user_fixture(_user)
-        return _users
+class UserController(_BaseController):
+    def __init__(self):
+        super(UserController, self).__init__(model_class=User, resource_name='User', fixture_function=run_user_fixture, create_request_fields=get_register_user_request_fields(), edit_request_fields=get_edit_user_request_fields(), id_field='public_id')
     
     def get_by_username(self, username: str, current_user: User=None) -> User:
         _user = User.query.filter_by(name=username).first()
@@ -40,45 +29,19 @@ class UserController:
         run_user_fixture(_user)
         return _user
 
-    def edit_current_user(self, current_user:User) -> User:
-        data = get_validated_request_body_as_json(template=get_edit_user_request_fields())
-
-        self._try_edit_user_password(data=data, user=current_user)
-        self._try_edit_user_email(data=data, user=current_user)
-        self._try_edit_user_name(data=data, user=current_user)
-
-        session = DB.session
-        try:
-            session.commit()
-        except SQLAlchemyError as err:
-            logger.error('Failed to edit current user: {}'.format(str(err)))
-            session.rollback()
-            raise err
-        logger.info('Current user edited.')
-        run_user_fixture(current_user)
-        return current_user
-    
-    def create_user(self) -> User:
-        data = get_validated_request_body_as_json(template=get_register_user_request_fields())
-
+    def create_object(self, data: dict) -> User:
         new_user = User()
         new_user.email = self._get_validated_email(data['email'])
         new_user.name = self._get_validated_user_name(data['name'])
         new_user.password = self._encode_password(data['password'])
         new_user.public_id = self._generate_new_public_id()
-
-        logger.debug('New transient user created: {0}, {1}, {2}'.format(new_user.name, new_user.email, new_user.public_id))
-
-        session = DB.session
-        try:
-            session.add(new_user)
-            session.commit()
-        except SQLAlchemyError as err:
-            logger.error('Failed to register user: {}'.format(str(err)))
-            session.rollback()
-            raise err
-        logger.info('User {name} created ({id}).'.format(name=new_user.name, id=new_user.public_id))
         return new_user
+
+    def edit_object(self, object_to_edit: User, data: dict) -> User:
+        self._try_edit_user_password(data=data, user=object_to_edit)
+        self._try_edit_user_email(data=data, user=object_to_edit)
+        self._try_edit_user_name(data=data, user=object_to_edit)
+        return object_to_edit
 
     def _try_edit_user_password(self, data: dict, user: User):
         new_password = data['new_password']
