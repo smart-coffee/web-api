@@ -1,11 +1,10 @@
 from typing import List
 
-from models import CoffeeMachine, User, CoffeeType, CoffeeBrand
+from models import CoffeeMachine, CoffeeType, CoffeeBrand
 from controllers.base_controller import _BaseController
 from controllers.fixture_functions import run_coffee_machine_fixture, run_coffee_type_fixture, run_coffee_brand_fixture
 from controllers.request_model import get_create_coffee_machine_request_fields, get_create_coffee_type_request_fields, get_create_coffee_brand_request_fields
 from config.logger import logging, get_logger_name
-from utils.http import get_validated_request_body_as_json
 
 
 logger = logging.getLogger(get_logger_name(__name__))
