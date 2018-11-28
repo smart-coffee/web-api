@@ -13,6 +13,7 @@ from sqlalchemy.orm import class_mapper
 from config import get_secret_key, FLASK_APP
 from config.flask_config import AuthenticationFailed, ForbiddenResourceException
 from models import User, Role
+from utils.basic import is_dict_structure_equal
 
 
 CODE = 201
@@ -53,6 +54,12 @@ def get_token_response(body, content_type='application/json'):
 
     return response
 
+
+def get_validated_request_body_as_json(template: dict):
+    _data = request.get_json()
+    if not is_dict_structure_equal(template, _data):
+        raise ResourceException('Request body contains unknown key value pairs.')
+    return _data
 
 def token_required(roles:List[str]=None):
     def decorator(func):

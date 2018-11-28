@@ -40,3 +40,15 @@ def get_register_user_request_fields():
         'password': fields.String
     }
     return _user_request_fields
+
+
+@SWAG.definition('CreateCoffeeMachineRequest')
+def get_create_coffee_machine_request_fields():
+    """
+    file: /controllers/request_model/create_coffee_machine_request.yml
+    """
+    _create_coffee_machine_request_fields = {
+        'name': fields.String,
+        'repository': fields.String
+    }
+    return _create_coffee_machine_request_fields

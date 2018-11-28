@@ -28,6 +28,19 @@ def get_role_fields():
     return _role_fields
 
 
+@SWAG.definition('CoffeeMachine')
+def get_coffee_machine_fields():
+    """
+    file: /controllers/response_model/coffee_machine.yml
+    """
+    _coffee_machine_fields = {
+        'id': fields.Integer,
+        'name': fields.String,
+        'repository': fields.String
+    }
+    return _coffee_machine_fields
+
+
 @SWAG.definition('Image')
 def get_image_fields():
     """

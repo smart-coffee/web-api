@@ -1,0 +1,13 @@
+CreateCoffeeMachineRequest object
+---
+type: object
+required:
+  - name
+  - repository
+properties:
+  name:
+    type: string
+    example: Winston
+  repository:
+    type: string
+    example: hidden-firefly

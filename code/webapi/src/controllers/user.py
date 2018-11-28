@@ -10,7 +10,7 @@ from models import User
 from config.flask_config import ResourceNotFound, ResourceException
 from controllers.request_model import get_edit_user_request_fields, get_register_user_request_fields
 from controllers.fixture_functions import run_user_fixture
-from utils.basic import is_dict_structure_equal
+from utils.http import get_validated_request_body_as_json
 from config.logger import logging, get_logger_name
 from config import FLASK_APP, DB
 
@@ -41,7 +41,7 @@ class UserController:
         return _user
 
     def edit_current_user(self, current_user:User) -> User:
-        data = self._get_validated_request_body_as_json(template=get_edit_user_request_fields())
+        data = self.get_validated_request_body_as_json(template=get_edit_user_request_fields())
 
         self._try_edit_user_password(data=data, user=current_user)
         self._try_edit_user_email(data=data, user=current_user)
@@ -59,7 +59,7 @@ class UserController:
         return current_user
     
     def create_user(self) -> User:
-        data = self._get_validated_request_body_as_json(template=get_register_user_request_fields())
+        data = self.get_validated_request_body_as_json(template=get_register_user_request_fields())
 
         new_user = User()
         new_user.email = self._get_validated_email(data['email'])
@@ -79,13 +79,6 @@ class UserController:
             raise err
         logger.info('User {name} created ({id}).'.format(name=new_user.name, id=new_user.public_id))
         return new_user
-
-    @staticmethod
-    def _get_validated_request_body_as_json(template: dict):
-        _data = request.get_json()
-        if not is_dict_structure_equal(template, _data):
-            raise ResourceException('Request body contains unknown key value pairs.')
-        return _data
 
     @staticmethod
     def _try_edit_user_password(data: dict, user: User):

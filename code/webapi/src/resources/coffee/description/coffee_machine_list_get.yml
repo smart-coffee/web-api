@@ -1,7 +1,7 @@
-Get a the currently logged in User
+Get all available Coffee Machines
 ---
 tags:
-  - user
+  - coffee
 produces:
   - application/json
   - application/xml
@@ -17,5 +17,7 @@ responses:
     schema:
       type: object
       properties:
-        user:
-          $ref: '#/definitions/User'
+        roles:
+          type: array
+          items:
+            $ref: '#/definitions/CoffeeMachine'

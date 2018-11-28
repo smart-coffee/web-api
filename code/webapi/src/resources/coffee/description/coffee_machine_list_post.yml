@@ -1,7 +1,7 @@
-Edit the currently logged in User
+Create a new Coffee Machine
 ---
 tags:
-  - user
+  - coffee
 consumes:
   - application/json
 produces:
@@ -15,15 +15,15 @@ parameters:
     required: true
   - in: body
     name: body
-    description: New User
+    description: New Coffee Machine
     required: true
     schema:
-      $ref: '#/definitions/UserRequest'
+      $ref: '#/definitions/CreateCoffeeMachineRequest'
 responses:
-  200:
-    description: OK
+  201:
+    description: Created.
     schema:
       type: object
       properties:
         user:
-          $ref: '#/definitions/User'
+          $ref: '#/definitions/CoffeeMachine'

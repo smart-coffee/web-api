@@ -115,6 +115,7 @@ class CoffeeMachine(DB.Model):
 	
 	# Attributes
 	name = DB.Column(DB.String(50), unique=True, nullable=False)
+	repository = DB.Column(DB.String(50), unique=True, nullable=False)
 	
 	# Relationships: 1 .. n
 	jobs = DB.relationship('Job', back_populates='coffee_machine')

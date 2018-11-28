@@ -1,0 +1,17 @@
+Coffee Machine object
+---
+type: object
+required:
+  - id
+  - name
+  - repository
+properties:
+  id:
+    type: integer
+    example: 42
+  name:
+    type: string
+    example: Winston
+  repository:
+    type: string
+    example: hidden-firefly
