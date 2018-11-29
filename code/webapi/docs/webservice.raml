@@ -112,8 +112,8 @@ securitySchemes:
     delete:
       description: Löscht den Nutzeraccount mit der angegebenen öffentlichen ID.
       responses:
-        200:
-          description: Ok. Nutzeraccount gelöscht.
+        204:
+          description: No Content. Nutzeraccount gelöscht.
     /roles:
       securedBy: [ jwt ]
       get:
@@ -183,8 +183,8 @@ securitySchemes:
           description: ID des Auftrags.
           example: 42
       responses:
-        200:
-          description: Ok. Auftrag gelöscht.
+        204:
+          description: No Content. Auftrag gelöscht.
 
 /coffee:
   /products:
