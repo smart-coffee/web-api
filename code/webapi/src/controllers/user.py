@@ -30,7 +30,7 @@ class CurrentUserController(_BaseController):
         run_user_fixture(_user)
         return _user
 
-    def edit_object(self, object_to_edit: User, data: dict) -> User:
+    def edit_object(self, object_to_edit: User, data: dict, current_user: User) -> User:
         self.tools._try_edit_user_password(data=data, user=object_to_edit)
         self.tools._try_edit_user_email(data=data, user=object_to_edit)
         self.tools._try_edit_user_name(data=data, user=object_to_edit)
@@ -42,7 +42,7 @@ class PublicUserController(_BaseController):
         super(PublicUserController, self).__init__(model_class=User, resource_name='User', fixture_function=run_user_fixture, create_request_fields=get_register_user_request_fields(), id_field='public_id')
         self.tools = UserTools() 
 
-    def create_object(self, data: dict) -> User:
+    def create_object(self, data: dict, current_user: User) -> User:
         new_user = User()
         new_user.email = self.tools._get_validated_email(data['email'])
         new_user.name = self.tools._get_validated_user_name(data['name'])

@@ -107,11 +107,10 @@ def new_alchemy_encoder():
 def serialize(model, column_filter:dict=None):
     """Transforms a model into a dictionary which can be dumped to JSON."""
     # first we get the names of all the columns on your model
-    columns = [c.key for c in class_mapper(model.__class__).columns]
-
-    # then we filter the columns
-    filter_list = column_filter.keys()
-    columns = list(set(columns) & set(filter_list))
+    if not column_filter:
+        columns = [c.key for c in class_mapper(model.__class__).columns]
+    else:
+        columns = column_filter.keys()
 
     # then we return their values in a dict
     values = dict((c, getattr(model, c)) for c in columns)

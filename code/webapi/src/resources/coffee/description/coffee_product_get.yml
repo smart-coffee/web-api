@@ -1,0 +1,23 @@
+Get a Coffee Product by ID
+---
+tags:
+  - coffee
+produces:
+  - application/json
+  - application/xml
+parameters:
+  - in: header
+    name: x-access-token
+    description: JWT received after succussful login.
+    type: string
+    required: true
+  - in: path
+    name: coffee_product_id
+    description: ID of the Coffee Product
+    type: integer
+    required: true
+responses:
+  200:
+    description: OK
+    schema:
+      $ref: '#/definitions/CoffeeProduct'

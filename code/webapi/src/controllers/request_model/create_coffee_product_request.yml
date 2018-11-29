@@ -1,0 +1,17 @@
+CreateCoffeeProductRequest object
+---
+type: object
+required:
+  - name
+  - coffee_brand_id
+  - coffee_type_id
+properties:
+  name:
+    type: string
+    example: Dallmayr Prodomo
+  coffee_brand_id:
+    type: integer
+    example: 42
+  coffee_type_id:
+    type: integer
+    example: 42

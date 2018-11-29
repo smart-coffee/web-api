@@ -41,7 +41,7 @@ class _BaseController:
     def create(self, current_user: User=None) -> object:
         data = get_validated_request_body_as_json(self.create_request_fields)
 
-        obj = self.create_object(data)
+        obj = self.create_object(data, current_user)
 
         session = DB.session
         try:
@@ -55,13 +55,13 @@ class _BaseController:
         self.fixture_function(obj)
         return obj
 
-    def create_object(self, data: dict) -> object:
+    def create_object(self, data: dict, current_user: User) -> object:
         raise NotImplementedError()
 
     def edit(self, obj, current_user: User=None) -> object:
         data = get_validated_request_body_as_json(template=self.edit_request_fields)
 
-        obj = self.edit_object(obj, data)
+        obj = self.edit_object(obj, data, current_user)
 
         session = DB.session
         try:
@@ -74,5 +74,5 @@ class _BaseController:
         self.fixture_function(obj)
         return obj
     
-    def edit_object(self, object_to_edit, data: dict) -> object:
+    def edit_object(self, object_to_edit, data: dict, current_user: User) -> object:
         raise NotImplementedError()

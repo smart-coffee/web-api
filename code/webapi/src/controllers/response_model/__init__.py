@@ -74,3 +74,17 @@ def get_coffee_brand_fields():
         'name': fields.String
     }
     return _coffee_brand_fields
+
+
+@SWAG.definition('CoffeeProduct')
+def get_coffee_product_fields():
+    """
+    file: /controllers/response_model/coffee_product.yml
+    """
+    _coffee_product_fields = {
+        'id': fields.Integer,
+        'name': fields.String,
+        'coffee_brand_id': fields.Integer,
+        'coffee_type_id': fields.Integer
+    }
+    return _coffee_product_fields
