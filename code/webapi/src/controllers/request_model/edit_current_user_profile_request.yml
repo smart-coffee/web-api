@@ -4,7 +4,7 @@ type: object
 required:
   - id
   - name
-  - coffee_strenght_in_percent
+  - coffee_strength_in_percent
   - water_in_percent
 properties:
   id:
@@ -13,7 +13,7 @@ properties:
   name:
     type: string
     example: Morning
-  coffee_strenght_in_percent:
+  coffee_strength_in_percent:
     type: integer
     example: 42
   water_in_percent:

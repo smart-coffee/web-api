@@ -1,4 +1,4 @@
-Get a the currently logged in User
+Get a Profile of a User by ID
 ---
 tags:
   - users
@@ -11,8 +11,13 @@ parameters:
     description: JWT received after succussful login.
     type: string
     required: true
+  - in: path
+    name: profile_id
+    description: ID of the Profile
+    type: integer
+    required: true
 responses:
   200:
     description: OK
     schema:
-      $ref: '#/definitions/User'
+      $ref: '#/definitions/Profile'

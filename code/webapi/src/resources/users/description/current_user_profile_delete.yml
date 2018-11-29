@@ -1,7 +1,9 @@
-Get a the currently logged in User
+Delete a Profile from the logged in User
 ---
 tags:
   - users
+consumes:
+  - application/json
 produces:
   - application/json
   - application/xml
@@ -11,8 +13,11 @@ parameters:
     description: JWT received after succussful login.
     type: string
     required: true
+  - in: path
+    name: profile_id
+    description: ID of the Profile
+    type: integer
+    required: true
 responses:
-  200:
-    description: OK
-    schema:
-      $ref: '#/definitions/User'
+  204:
+    description: No Content

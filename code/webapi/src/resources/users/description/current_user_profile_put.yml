@@ -1,4 +1,4 @@
-Edit the currently logged in User
+Edit a Profile from the logged in User
 ---
 tags:
   - users
@@ -13,14 +13,19 @@ parameters:
     description: JWT received after succussful login.
     type: string
     required: true
+  - in: path
+    name: profile_id
+    description: ID of the Profile
+    type: integer
+    required: true
   - in: body
     name: body
-    description: New User
+    description: New Profile
     required: true
     schema:
-      $ref: '#/definitions/EditUserRequest'
+      $ref: '#/definitions/EditCurrentUserProfileRequest'
 responses:
   200:
     description: OK
     schema:
-      $ref: '#/definitions/User'
+      $ref: '#/definitions/Profile'

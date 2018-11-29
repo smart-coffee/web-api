@@ -7,7 +7,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from email_validator import validate_email, EmailNotValidError
 
 from models import User, Profile
-from config.flask_config import ResourceNotFound, ResourceException
+from config.flask_config import ResourceNotFound, ResourceException, ForbiddenResourceException
 from controllers.request_model import get_edit_user_request_fields, get_register_user_request_fields, get_create_current_user_profile_request_fields, get_edit_current_user_profile_request_fields
 from controllers.fixture_functions import run_user_fixture, run_profile_fixture
 from controllers.base_controller import _BaseController
@@ -32,6 +32,8 @@ class CurrentUserController(_BaseController):
         return _user
 
     def edit_object(self, object_to_edit: User, data: dict, current_user: User) -> User:
+        if object_to_edit.public_id != current_user.public_id:
+            raise ForbiddenResourceException('User {0} can not edit user {1}'.format(current_user.public_id, object_to_edit.public_id))
         self.tools._try_edit_user_password(data=data, user=object_to_edit)
         self.tools._try_edit_user_email(data=data, user=object_to_edit)
         self.tools._try_edit_user_name(data=data, user=object_to_edit)
@@ -43,6 +45,20 @@ class CurrentUserProfileController(_BaseController):
         super(CurrentUserProfileController, self).__init__(model_class=Profile, resource_name='Profile', fixture_function=run_profile_fixture, create_request_fields=get_create_current_user_profile_request_fields(), edit_request_fields=get_edit_current_user_profile_request_fields())
         self.tools = UserTools()
     
+    def get_single_statement(self, criteria, current_user: User) -> Profile:
+        profile = super().get_single_statement(criteria, current_user)
+        if not profile:
+            return None
+        return profile if profile.user.id == current_user.id else None
+    
+    def get_list_statement(self, current_user: User) -> List[Profile]:
+        profiles = super().get_list_statement(current_user)
+        user_profiles = []
+        for p in profiles:
+            if p.user.id == current_user.id:
+                user_profiles.append(p)
+        return user_profiles
+    
     def create_object(self, data: dict, current_user: User) -> Profile:
         profile = Profile()
         profile.name = data['name']
@@ -50,6 +66,14 @@ class CurrentUserProfileController(_BaseController):
         profile.coffee_strength_in_percent = data['coffee_strength_in_percent']
         profile.water_in_percent = data['water_in_percent']
         return profile
+    
+    def edit_object(self, object_to_edit: Profile, data: dict, current_user: User) -> Profile:
+        if object_to_edit.user.id != current_user.id:
+            raise ForbiddenResourceException('User {0} can not edit profile {1}'.format(current_user.public_id, object_to_edit.id))
+        object_to_edit.name = data['name']
+        object_to_edit.coffee_strength_in_percent = data['coffee_strength_in_percent']
+        object_to_edit.water_in_percent = data['water_in_percent']
+        return object_to_edit
 
 
 class PublicUserController(_BaseController):

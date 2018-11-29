@@ -8,7 +8,7 @@ from flask_restful import Api, marshal_with, Resource
 from controllers.user import CurrentUserController, PublicUserController, CurrentUserProfileController
 from models import User, Profile
 from controllers.response_model import get_registered_user_details, get_profile_fields
-from utils.http import token_required, get_post_response, serialize
+from utils.http import token_required, get_post_response, get_delete_response, serialize
 
 
 API_PREFIX = 'users'
@@ -30,7 +30,7 @@ class CurrentUserResource(Resource):
     @swag_from('/resources/users/description/current_user_put.yml')
     @marshal_with(get_registered_user_details())
     def put(self, current_user: User):
-        return self.controller.edit(current_user)
+        return self.controller.edit(resource_id=current_user.get_id(), current_user=current_user)
 
 
 class CurrentUserProfileListResource(Resource):
@@ -53,6 +53,29 @@ class CurrentUserProfileListResource(Resource):
         return response
 
 
+class CurrentUserProfileResource(Resource):
+    def __init__(self):
+        self.controller = CurrentUserProfileController()
+
+    @token_required()
+    @swag_from('/resources/users/description/current_user_profile_get.yml')
+    @marshal_with(get_profile_fields())
+    def get(self, profile_id, current_user: User) -> Profile:
+        return self.controller.get_by_id(profile_id, current_user)
+
+    @token_required()
+    @swag_from('/resources/users/description/current_user_profile_put.yml')
+    @marshal_with(get_profile_fields())
+    def put(self, profile_id, current_user: User) -> Profile:
+        return self.controller.edit(resource_id=profile_id, current_user=current_user)
+
+    @token_required()
+    @swag_from('/resources/users/description/current_user_profile_delete.yml')
+    def delete(self, profile_id, current_user: User):
+        self.controller.delete(resource_id=profile_id, current_user=current_user)
+        return get_delete_response()
+        
+
 class PublicUserResource(Resource):
     def __init__(self):
         self.controller = PublicUserController()
@@ -72,3 +95,4 @@ class PublicUserResource(Resource):
 api.add_resource(CurrentUserResource, '/{rsc}/current'.format(rsc=API_PREFIX))
 api.add_resource(PublicUserResource, '/public/{rsc}'.format(rsc=API_PREFIX))
 api.add_resource(CurrentUserProfileListResource, '/{rsc}/current/profiles'.format(rsc=API_PREFIX))
+api.add_resource(CurrentUserProfileResource, '/{rsc}/current/profiles/<int:profile_id>'.format(rsc=API_PREFIX))

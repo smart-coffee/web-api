@@ -45,7 +45,7 @@ class Profile(DB.Model):
 	id = DB.Column(DB.Integer, primary_key=True)
 	
 	# Attributes
-	name = DB.Column(DB.String(30), unique=True, nullable=False)
+	name = DB.Column(DB.String(30), nullable=False)
 	coffee_strength_in_percent = DB.Column(DB.Integer, nullable=False)
 	water_in_percent = DB.Column(DB.Integer, nullable=False)
 
@@ -92,7 +92,7 @@ class CoffeeProduct(DB.Model):
 	id = DB.Column(DB.Integer, primary_key=True)
 	
 	# Attributes
-	name = DB.Column(DB.String(50), unique=True, nullable=False)
+	name = DB.Column(DB.String(50), nullable=False)
 
 	# Foreign Keys
 	coffee_type_id_fk = DB.Column(DB.Integer, DB.ForeignKey('coffeetype.id', name='fk_coffeeproduct_coffee_type'))
@@ -114,7 +114,7 @@ class CoffeeMachine(DB.Model):
 	id = DB.Column(DB.Integer, primary_key=True)
 	
 	# Attributes
-	name = DB.Column(DB.String(50), unique=True, nullable=False)
+	name = DB.Column(DB.String(50), nullable=False)
 	repository = DB.Column(DB.String(50), unique=True, nullable=False)
 	
 	# Relationships: 1 .. n
