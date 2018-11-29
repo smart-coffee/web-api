@@ -1,0 +1,20 @@
+Get all available Profiles of the logged in User
+---
+tags:
+  - users
+produces:
+  - application/json
+  - application/xml
+parameters:
+  - in: header
+    name: x-access-token
+    description: JWT received after succussful login.
+    type: string
+    required: true
+responses:
+  200:
+    description: OK
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/Profile'

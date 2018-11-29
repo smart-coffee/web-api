@@ -1,0 +1,21 @@
+EditCurrentUserProfileRequest object
+---
+type: object
+required:
+  - id
+  - name
+  - coffee_strenght_in_percent
+  - water_in_percent
+properties:
+  id:
+    type: integer
+    example: 42
+  name:
+    type: string
+    example: Morning
+  coffee_strenght_in_percent:
+    type: integer
+    example: 42
+  water_in_percent:
+    type: integer
+    example: 42

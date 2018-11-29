@@ -88,3 +88,18 @@ def get_coffee_product_fields():
         'coffee_type_id': fields.Integer
     }
     return _coffee_product_fields
+
+
+@SWAG.definition('Profile')
+def get_profile_fields():
+    """
+    file: /controllers/response_model/profile.yml
+    """
+    _profile_fields = {
+        'id': fields.Integer,
+        'name': fields.String,
+        'coffee_strength_in_percent': fields.Integer,
+        'water_in_percent': fields.Integer,
+        'user_id': fields.Integer
+    }
+    return _profile_fields

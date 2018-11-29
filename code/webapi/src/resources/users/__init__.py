@@ -1,12 +1,13 @@
 import json
 
+from typing import List
 from flasgger import swag_from
 from flask import Blueprint
 from flask_restful import Api, marshal_with, Resource
 
-from controllers.user import CurrentUserController, PublicUserController
-from models import User
-from controllers.response_model import get_registered_user_details
+from controllers.user import CurrentUserController, PublicUserController, CurrentUserProfileController
+from models import User, Profile
+from controllers.response_model import get_registered_user_details, get_profile_fields
 from utils.http import token_required, get_post_response, serialize
 
 
@@ -32,6 +33,26 @@ class CurrentUserResource(Resource):
         return self.controller.edit(current_user)
 
 
+class CurrentUserProfileListResource(Resource):
+    def __init__(self):
+        self.controller = CurrentUserProfileController()
+
+    @token_required()
+    @swag_from('/resources/users/description/current_user_profile_list_get.yml')
+    @marshal_with(get_profile_fields())
+    def get(self, current_user: User) -> List[Profile]:
+        return self.controller.get_list(current_user)
+
+    @token_required()
+    @swag_from('/resources/users/description/current_user_profile_list_post.yml')
+    def post(self, current_user: User) -> Profile:
+        profile = self.controller.create(current_user)
+        serialized_profile = serialize(profile, get_profile_fields())
+        json_profile = json.dumps(serialized_profile)
+        response = get_post_response(obj=profile, body=json_profile, content_type='application/json', api='/{rsc}/current/profiles'.format(rsc=API_PREFIX))
+        return response
+
+
 class PublicUserResource(Resource):
     def __init__(self):
         self.controller = PublicUserController()
@@ -50,3 +71,4 @@ class PublicUserResource(Resource):
 
 api.add_resource(CurrentUserResource, '/{rsc}/current'.format(rsc=API_PREFIX))
 api.add_resource(PublicUserResource, '/public/{rsc}'.format(rsc=API_PREFIX))
+api.add_resource(CurrentUserProfileListResource, '/{rsc}/current/profiles'.format(rsc=API_PREFIX))

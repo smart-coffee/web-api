@@ -1,0 +1,25 @@
+Profile object
+---
+type: object
+required:
+  - id
+  - name
+  - coffee_strength_in_percent
+  - water_in_percent
+  - user_id
+properties:
+  id:
+    type: integer
+    example: 42
+  name:
+    type: string
+    example: Arabica
+  coffee_strength_in_percent:
+    type: integer
+    example: 50
+  water_in_percent:
+    type: integer
+    example: 33
+  user_id:
+    type: integer
+    example: 42
