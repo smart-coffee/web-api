@@ -1,0 +1,23 @@
+Get a Job by ID
+---
+tags:
+  - jobs
+produces:
+  - application/json
+  - application/xml
+parameters:
+  - in: header
+    name: x-access-token
+    description: JWT received after succussful login.
+    type: string
+    required: true
+  - in: path
+    name: job_id
+    description: ID of the Job
+    type: integer
+    required: true
+responses:
+  200:
+    description: OK
+    schema:
+      $ref: '#/definitions/Job'
