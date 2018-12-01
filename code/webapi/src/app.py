@@ -5,7 +5,7 @@ from config import FLASK_APP
 from config.environment_tools import get_cert, get_key
 from config.flask_config import FlaskExceptionConfig, post_configuration, register_blueprints
 
-from resources import USER_BP, AUTHENTICATION_BP, ROLE_BP, COFFEE_BP
+from resources import USER_BP, AUTHENTICATION_BP, ROLE_BP, COFFEE_BP, JOB_BP
 
 
 def start_app(app: Flask):
@@ -15,7 +15,8 @@ def start_app(app: Flask):
         USER_BP,
         AUTHENTICATION_BP,
         ROLE_BP,
-        COFFEE_BP
+        COFFEE_BP,
+        JOB_BP
     ]
     _configs = [
         _EXCEPTION_CONF

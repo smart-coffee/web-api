@@ -13,11 +13,11 @@ properties:
     required: false
     type: integer
     description: Datum, an dem der Auftrag beglichen wurde.
-  coffee_machine_name:
+  coffee_machine_id:
     required: true
-    type: string
-    description: Der Name der Kaffeemaschine, welche den Auftrag ausgeführt hat.
-    example: Winston
+    type: integer
+    description: Die ID der Kaffeemaschine, welche den Auftrag ausgeführt hat.
+    example: 42
   coffee_strength_in_percent:
     required: true
     type: integer
@@ -49,4 +49,9 @@ properties:
     required: true
     type: integer
     description: ID des Kaffeeproduktes, welches sich zum Zeitpunkt des Auftrags in der Kaffeemaschine befand.
-  
+    example: 42
+  user_id:
+    required: true
+    type: string
+    description: Public ID des Nutzeraccounts, für den der Job erstellt werden soll.
+    example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwdWJsaWNfaWQiOiJkMzg5MjRmYi05NDE3LTRhNTAtYjcxNS0wMWY4MDVjMjgwNjMiLCJleHAiOjE1NDI1NDE3NDV9.jbWsgjOFn6jEx0IGVoUaiqwt530_Fko8qgoMhGvl4mg

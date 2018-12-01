@@ -114,3 +114,20 @@ def get_edit_current_user_profile_request_fields():
         'water_in_percent': fields.Integer
     }
     return _edit_profile_fields
+
+
+@SWAG.definition('CreateJobRequest')
+def get_create_job_request_fields():
+    """
+    file: /controllers/request_model/create_job_request.yml
+    """
+    _create_job_fields = {
+        'coffee_strength_in_percent': fields.Integer,
+        'water_in_percent': fields.Integer,
+        'price': fields.Integer,
+        'doses': fields.Integer,
+        'coffee_machine_id': fields.Integer,
+        'coffee_product_id': fields.Integer,
+        'user_id': fields.String
+    }
+    return _create_job_fields

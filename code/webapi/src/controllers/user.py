@@ -90,6 +90,12 @@ class PublicUserController(_BaseController):
         return new_user
 
 
+class UserController(_BaseController):
+    def __init__(self):
+        super(UserController, self).__init__(model_class=User, resource_name='User', fixture_function=run_user_fixture, edit_request_fields=get_edit_user_request_fields(), id_field='public_id')
+        self.tools = UserTools()
+
+
 class UserTools:
     def _try_edit_user_password(self, data: dict, user: User):
         new_password = data['new_password']

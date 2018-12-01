@@ -51,10 +51,10 @@ class CoffeeProductController(_BaseController):
         coffee_product = CoffeeProduct()
         coffee_product.name = data['name']
 
-        coffee_brand = self.brand_controller.get_by_id(data['coffee_brand_id'], current_user)
+        coffee_brand = self.brand_controller.get_by_id(data['coffee_brand_id'], current_user, False)
         coffee_product.coffee_brand = coffee_brand
 
-        coffee_type = self.type_controller.get_by_id(data['coffee_type_id'], current_user)
+        coffee_type = self.type_controller.get_by_id(data['coffee_type_id'], current_user, False)
         coffee_product.coffee_type = coffee_type
 
         return coffee_product

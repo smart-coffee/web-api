@@ -1,5 +1,5 @@
 from config.flask_config import ResourceNotFound
-from models import User, Role, CoffeeMachine, CoffeeType, CoffeeBrand, CoffeeProduct, Profile
+from models import User, Role, CoffeeMachine, CoffeeType, CoffeeBrand, CoffeeProduct, Profile, Job
 
 
 def run_user_fixture(user: User):
@@ -23,3 +23,9 @@ def run_coffee_product_fixture(coffee_product: CoffeeProduct):
 
 def run_profile_fixture(profile: Profile):
     profile.user_id = profile.user_id_fk
+
+def run_job_fixture(job: Job):
+    job.coffee_machine_id = job.coffee_machine_id_fk
+    job.coffee_product_id = job.coffee_product_id_fk
+    user = User.query.filter_by(id=job.user_id_fk).first()
+    job.user_id = user.public_id

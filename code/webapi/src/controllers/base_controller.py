@@ -21,9 +21,9 @@ class _BaseController:
         self.edit_request_fields = edit_request_fields
         self.id_field = id_field
     
-    def get_by_id(self, resource_id, current_user: User) -> object:
+    def get_by_id(self, resource_id, current_user: User, autoflush=False) -> object:
         criteria= { self.id_field:resource_id }
-        obj = self.get_single_statement(criteria, current_user)
+        obj = self.get_single_statement(criteria, current_user, autoflush)
         if not obj:
             logger.error('{user} tried to get {resource_name} {instance_name} and failed.'.format(user=current_user.id, resource_name=self.resource_name, instance_name=resource_id))
             raise ResourceNotFound('{resource_name} not found'.format(resource_name=self.resource_name))
@@ -31,8 +31,13 @@ class _BaseController:
         logger.debug('User {user} requested {resource_name} {instance_name}.'.format(user=current_user.id, resource_name=self.resource_name, instance_name=obj.get_id()))
         return obj
 
-    def get_single_statement(self, criteria, current_user: User) -> object:
-        return self.model_class.query.filter_by(**criteria).first()
+    def get_single_statement(self, criteria, current_user: User, autoflush: bool) -> object:
+        if autoflush == False:
+            session = DB.session
+            with session.no_autoflush:
+                return session.query(self.model_class).filter_by(**criteria).first()
+        else:
+            return self.model_class.query.filter_by(**criteria).first()
 
     def get_list(self, current_user: User) -> List[object]:
         obj_list = self.get_list_statement(current_user)
