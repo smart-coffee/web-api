@@ -9,7 +9,7 @@ from flask_restful import Api, marshal_with, Resource
 from controllers.job import JobController
 from models import User, Job
 from controllers.response_model import get_job_fields
-from utils.http import token_required, get_post_response, serialize
+from utils.http import token_required, get_post_response, serialize, get_delete_response
 
 
 API_PREFIX = 'jobs'
@@ -46,6 +46,13 @@ class JobResource(Resource):
     @marshal_with(get_job_fields())
     def get(self, job_id: int, current_user: User) -> Job:
         return self.controller.get_by_id(job_id, current_user)
+    
+
+    @token_required(roles=['Administrator'])
+    @swag_from('/resources/jobs/description/jobs_delete.yml')
+    def delete(self, job_id, current_user: User):
+        self.controller.delete(resource_id=job_id, current_user=current_user)
+        return get_delete_response()
 
 
 api.add_resource(JobListResource, '/{rsc}'.format(rsc=API_PREFIX))
