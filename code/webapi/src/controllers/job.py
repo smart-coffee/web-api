@@ -9,7 +9,7 @@ from controllers.base_controller import _BaseController
 from controllers.coffee import CoffeeMachineController, CoffeeProductController
 from controllers.user import UserController
 from controllers.fixture_functions import run_job_fixture
-from controllers.request_model import get_create_job_request_fields
+from controllers.request_model import get_create_job_request_fields, get_edit_job_request_fields
 from config.logger import logging, get_logger_name
 
 
@@ -18,7 +18,7 @@ logger = logging.getLogger(get_logger_name(__name__))
 
 class JobController(_BaseController):
     def __init__(self):
-        super(JobController, self).__init__(model_class=Job, resource_name='Job', fixture_function=run_job_fixture, create_request_fields=get_create_job_request_fields())
+        super(JobController, self).__init__(model_class=Job, resource_name='Job', fixture_function=run_job_fixture, create_request_fields=get_create_job_request_fields(), edit_request_fields=get_edit_job_request_fields())
         self.coffee_machine_controller = CoffeeMachineController()
         self.coffee_product_controller = CoffeeProductController()
         self.user_controller = UserController()
@@ -67,3 +67,22 @@ class JobController(_BaseController):
         job.user = user
 
         return job
+    
+    def edit_object(self, object_to_edit: Job, data: dict, current_user: User) -> Job:
+        object_to_edit.create_date = data['create_date']
+        object_to_edit.square_date = data['square_date']
+        object_to_edit.coffee_strength_in_percent = data['coffee_strength_in_percent']
+        object_to_edit.water_in_percent = data['water_in_percent']
+        object_to_edit.price = data['price']
+        object_to_edit.doses = data['doses']
+
+        coffee_machine = self.coffee_machine_controller.get_by_id(data['coffee_machine_id'], current_user, False)
+        object_to_edit.coffee_machine = coffee_machine
+
+        coffee_product = self.coffee_product_controller.get_by_id(data['coffee_product_id'], current_user, False)
+        object_to_edit.coffee_product = coffee_product
+
+        user = self.user_controller.get_by_id(data['user_id'], current_user, False)
+        object_to_edit.user = user
+
+        return object_to_edit

@@ -131,3 +131,23 @@ def get_create_job_request_fields():
         'user_id': fields.String
     }
     return _create_job_fields
+
+
+@SWAG.definition('EditJobRequest')
+def get_edit_job_request_fields():
+    """
+    file: /controllers/request_model/edit_job_request.yml
+    """
+    _job_fields = {
+        'id': fields.Integer,
+        'create_date': fields.Integer,
+        'square_date': fields.Integer,
+        'coffee_strength_in_percent': fields.Integer,
+        'water_in_percent': fields.Integer,
+        'price': fields.Integer,
+        'doses': fields.Integer,
+        'coffee_machine_id': fields.Integer,
+        'coffee_product_id': fields.Integer,
+        'user_id': fields.String
+    }
+    return _job_fields

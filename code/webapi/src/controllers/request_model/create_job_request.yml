@@ -8,7 +8,7 @@ required:
   - doses
   - coffee_machine_id
   - coffee_product_id
-  - used_id
+  - user_id
 properties:
   coffee_strength_in_percent:
     type: integer
