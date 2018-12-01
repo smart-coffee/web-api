@@ -12,7 +12,7 @@ from controllers.response_model import get_job_fields
 from utils.http import token_required, get_post_response, serialize
 
 
-API_PREFIX = 'job'
+API_PREFIX = 'jobs'
 JOB_BP = Blueprint('{rsc}_api'.format(rsc=API_PREFIX), __name__)
 api = Api(JOB_BP)
 
@@ -37,4 +37,16 @@ class JobListResource(Resource):
         return response
 
 
+class JobResource(Resource):
+    def __init__(self):
+        self.controller = JobController()
+
+    @token_required(roles=['Administrator'])
+    @swag_from('/resources/jobs/description/jobs_get.yml')
+    @marshal_with(get_job_fields())
+    def get(self, job_id: int, current_user: User) -> Job:
+        return self.controller.get_by_id(job_id, current_user)
+
+
 api.add_resource(JobListResource, '/{rsc}'.format(rsc=API_PREFIX))
+api.add_resource(JobResource, '/{rsc}/<int:job_id>'.format(rsc=API_PREFIX))
