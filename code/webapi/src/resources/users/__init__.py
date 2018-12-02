@@ -176,6 +176,17 @@ class UserProfileListResource(Resource):
         return response      
 
 
+class UserProfileResource(Resource):
+    def __init__(self):
+        self.controller = UserProfileController()
+    
+    @token_required(roles=['Administrator'])
+    @swag_from('/resources/users/description/users_profile_get.yml')
+    @marshal_with(get_profile_fields())
+    def get(self, public_id, profile_id, current_user:User) -> Profile:
+        return self.controller.get_by_id(profile_id, current_user, public_id=public_id, profile_id=profile_id)
+
+
 api.add_resource(CurrentUserResource, '/{rsc}/current'.format(rsc=API_PREFIX))
 api.add_resource(PublicUserResource, '/public/{rsc}'.format(rsc=API_PREFIX))
 api.add_resource(CurrentUserProfileListResource, '/{rsc}/current/profiles'.format(rsc=API_PREFIX))
@@ -184,3 +195,4 @@ api.add_resource(CurrentUserJobListResource, '/{rsc}/current/jobs'.format(rsc=AP
 api.add_resource(UserListResource, '/{rsc}'.format(rsc=API_PREFIX))
 api.add_resource(UserResource, '/{rsc}/<string:public_id>'.format(rsc=API_PREFIX))
 api.add_resource(UserProfileListResource, '/{rsc}/<string:public_id>/profiles'.format(rsc=API_PREFIX))
+api.add_resource(UserProfileResource, '/{rsc}/<string:public_id>/profiles/<int:profile_id>'.format(rsc=API_PREFIX))

@@ -140,6 +140,12 @@ class UserProfileController(_BaseController):
         super(UserProfileController, self).__init__(model_class=Profile, resource_name='Profile', fixture_function=run_profile_fixture, create_request_fields=get_create_user_profile_request_fields())
         self.tools = UserTools()
     
+    def validate_single_result(self, result: Profile, **kwargs):
+        acutal_public_id = result.user.public_id
+        expected_public_id = kwargs['public_id']
+        if acutal_public_id != expected_public_id:
+            raise ForbiddenResourceException('Tried to get a profile that belongs to user {0} as user {1}'.format(acutal_public_id, expected_public_id))
+    
     def get_list_statement(self, current_user: User, **kwargs) -> List[Profile]:
         user = self._get_user(**kwargs)
         return user.profiles
