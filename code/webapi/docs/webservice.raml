@@ -23,7 +23,7 @@ types:
   user-register: !include types/user-register.raml
   user: !include types/user.raml
   user-edit: !include types/user-edit.raml
-  user-edit-roles: !include types/user-edit-roles.raml
+#  user-edit-roles: !include types/user-edit-roles.raml
   userrequest-edit: !include types/userrequest-edit.raml
   userrole: !include types/userrole.raml
 
@@ -124,15 +124,15 @@ securitySchemes:
             description: Ok.
             body:
               type: userrole[]
-      put:
-        description: Bearbeitet Nutzerrollen des Nutzeraccounts mit der angegebenen öffentlichen ID.
-        body:
-          type: user-edit-roles
-        responses:
-          200:
-            description: Ok. Nutzerrollen bearbeitet.
-            body:
-              type: userrole[]
+      # put:
+      #   description: Bearbeitet Nutzerrollen des Nutzeraccounts mit der angegebenen öffentlichen ID.
+      #   body:
+      #     type: user-edit-roles
+      #   responses:
+      #     200:
+      #       description: Ok. Nutzerrollen bearbeitet.
+      #       body:
+      #         type: userrole[]
     /profiles: !include resources/coffee-profiles.raml
   /current:
     securedBy: [ jwt ]
