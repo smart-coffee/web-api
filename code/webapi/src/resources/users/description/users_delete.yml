@@ -1,0 +1,23 @@
+Delete a User Account by its public ID
+---
+tags:
+  - users
+consumes:
+  - application/json
+produces:
+  - application/json
+  - application/xml
+parameters:
+  - in: header
+    name: x-access-token
+    description: JWT received after succussful login.
+    type: string
+    required: true
+  - in: path
+    name: public_id
+    description: Public ID of the User Account
+    type: string
+    required: true
+responses:
+  204:
+    description: No Content

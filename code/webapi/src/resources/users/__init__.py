@@ -146,7 +146,7 @@ class UserResource(Resource):
     @swag_from('/resources/users/description/users_delete.yml')
     def delete(self, public_id: str, current_user: User):
         self.controller.delete(public_id, current_user)
-        return get_post_response()
+        return get_delete_response()
 
 
 api.add_resource(CurrentUserResource, '/{rsc}/current'.format(rsc=API_PREFIX))

@@ -6,7 +6,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from werkzeug.security import check_password_hash, generate_password_hash
 from email_validator import validate_email, EmailNotValidError, EmailSyntaxError
 
-from models import User, Profile, Role
+from models import User, Profile, Role, Job
 from config.flask_config import ResourceNotFound, ResourceException, ForbiddenResourceException
 from controllers.request_model import get_edit_user_request_fields, get_register_user_request_fields, get_create_current_user_profile_request_fields, get_edit_current_user_profile_request_fields, get_create_user_request_fields
 from controllers.fixture_functions import run_user_fixture, run_profile_fixture
@@ -113,6 +113,10 @@ class UserController(_BaseController):
 
         return new_user
 
+    def delete_orphan_records(self, criteria, current_user: User):
+        user = User.query.filter_by(**criteria).first()
+        Profile.query.filter_by(user_id_fk=user.id).delete()
+        Job.query.filter_by(user_id_fk=user.id).delete()
 
 class UserTools:
     def _try_edit_user_password(self, data: dict, user: User):

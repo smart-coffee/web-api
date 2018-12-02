@@ -92,6 +92,7 @@ class _BaseController:
     def delete(self, resource_id, current_user: User=None):
         obj_by_id = self.get_by_id(resource_id=resource_id, current_user=current_user)
         criteria= { self.id_field:resource_id }
+        self.delete_orphan_records(criteria, current_user)
         self.model_class.query.filter_by(**criteria).delete()
 
         session = DB.session
@@ -103,3 +104,5 @@ class _BaseController:
             raise err
         logger.info('{resource_name} {id} deleted.'.format(resource_name=self.resource_name, id=resource_id))
 
+    def delete_orphan_records(self, criteria, current_user: User):
+        pass
