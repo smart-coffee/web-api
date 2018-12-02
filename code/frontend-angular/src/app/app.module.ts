@@ -25,6 +25,7 @@ import { CoffeeMachineInfoComponent } from './components/coffee-machine-info/cof
 import { APP_BASE_HREF } from '@angular/common';
 import { FormRangeInputComponent } from './components/form-range-input/form-range-input.component';
 import { FormsModule } from '@angular/forms';
+import { NgxFormComponentsModule } from 'ngx-form-components';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    NgxFormComponentsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     AppRoutingModule
   ],

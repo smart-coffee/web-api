@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IRangeInputObject } from '../../shared/interfaces/form-input-objects';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';

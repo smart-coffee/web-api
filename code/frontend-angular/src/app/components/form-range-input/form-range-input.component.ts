@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { IRangeInputObject } from '../../shared/interfaces/form-input-objects';
 
 @Component({
   selector: 'app-form-range-input',
   templateUrl: './form-range-input.component.html',
-  styleUrls: ['./form-range-input.component.scss']
+  styleUrls: ['./form-range-input.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class FormRangeInputComponent implements OnInit {
 
@@ -23,12 +24,14 @@ export class FormRangeInputComponent implements OnInit {
   minVal: number;
   maxVal: number;
   unit: string;
+  highlighterBarClass: string;
 
-  constructor() { }
+  constructor() {
+
+  }
 
   ngOnInit() {
     this.localValue = this.value;
-
     if (this.type === 'water') {
       this.minVal = 15;
       this.maxVal = 235;
@@ -38,6 +41,7 @@ export class FormRangeInputComponent implements OnInit {
       this.maxVal = 100;
       this.unit = '%';
     }
+    this.highlighterBarClass = `sc-range-input__highlighter-bar--${this.type}`;
   }
 
   rangeValChanged (value: any) {
@@ -47,7 +51,9 @@ export class FormRangeInputComponent implements OnInit {
       value: value
     };
 
-    // pass input value to parent
-    this.rangeChange.emit(this.inputObject);
+    // pass input value to parent in a timeout, because otherwise ... it throws an error
+    setTimeout(() => {
+      this.rangeChange.emit(this.inputObject);
+    }, 0);
   }
 }

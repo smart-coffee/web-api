@@ -9,14 +9,14 @@
   &__layout-container {
     margin-top: 2%;
     display: flex;
-    align-content: center;
+    align-items: center;
   }
 
   &__range-wrapper {
     flex-grow: 100;
     display: flex;
-    align-items: center;
-    margin: 0 3%;
+    //align-items: center;
+    //margin: 0 3%;
   }
 
   &__range-value-text {
@@ -24,65 +24,37 @@
     border: 1px solid $color-text-dark;
     border-radius: 500px;
     width: 42px;
+    height: $font-lnheight-input-2;
     padding: 0 10px;
     text-align: center;
     background-color: $color-primary;
   }
 
-  &__range-wrapper--coffee > &__input {
-    -webkit-appearance: none;
-    height: 4px;
-    border-radius: 4px;
+  &__input {
     width: 100%;
-    background: -moz-linear-gradient(left, $color-gradient-coffee-start 0%, $color-gradient-coffee-end 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(left, $color-gradient-coffee-start 0%,$color-gradient-coffee-end 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to right, $color-gradient-coffee-start 0%,$color-gradient-coffee-end 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   }
 
-  &__range-wrapper--water > &__input {
-    -webkit-appearance: none;
-    height: 4px;
-    border-radius: 4px;
-    width: 100%;
-    background: -moz-linear-gradient(left, $color-gradient-water-start 0%, $color-gradient-water-end 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(left, $color-gradient-water-start 0%,$color-gradient-water-end 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to right, $color-gradient-water-start 0%,$color-gradient-water-end 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
+  &__highlighter-bar--coffee {
+    background: -moz-linear-gradient(left, $color-gradient-coffee-start 0%, $color-gradient-coffee-end 100%);
+    background: -webkit-linear-gradient(left, $color-gradient-coffee-start 0%,$color-gradient-coffee-end 100%);
+    background: linear-gradient(to right, $color-gradient-coffee-start 0%,$color-gradient-coffee-end 100%);
   }
-}
 
-input[type="range"]::-webkit-slider-thumb{
-  -webkit-appearance: none;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 2px 4px rgba(0,0,0,.2);
-  cursor: pointer;
-}
 
-input[type="range"]::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 2px 4px rgba(0,0,0,.2);
-  cursor: pointer;
-}
 
-.sc-range-input__range-wrapper--coffee > input[type="range"]::-moz-range-track {
-  height: 4px;
-  border-radius: 4px;
-  cursor: pointer;
-  background: -moz-linear-gradient(left, $color-gradient-coffee-start 0%, $color-gradient-coffee-end 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(left, $color-gradient-coffee-start 0%,$color-gradient-coffee-end 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to right, $color-gradient-coffee-start 0%,$color-gradient-coffee-end 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-}
+  &__highlighter-bar--water {
+    background: -moz-linear-gradient(left, $color-gradient-water-start 0%, $color-gradient-water-end 100%);
+    background: -webkit-linear-gradient(left, $color-gradient-water-start 0%,$color-gradient-water-end 100%);
+    background: linear-gradient(to right, $color-gradient-water-start 0%,$color-gradient-water-end 100%);
+  }
 
-.sc-range-input__range-wrapper--water > input[type="range"]::-moz-range-track {
-  height: 4px;
-  border-radius: 4px;
-  cursor: pointer;
-  background: -moz-linear-gradient(left, $color-gradient-water-start 0%, $color-gradient-water-end 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(left, $color-gradient-water-start 0%,$color-gradient-water-end 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to right, $color-gradient-water-start 0%,$color-gradient-water-end 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  &__slider-button {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,.2);
+    cursor: pointer;
+  }
 }
