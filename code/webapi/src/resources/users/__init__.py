@@ -164,6 +164,16 @@ class UserProfileListResource(Resource):
     @marshal_with(get_profile_fields())
     def get(self, public_id, current_user:User) -> List[Profile]:
         return self.controller.get_list(current_user, public_id=public_id)
+    
+    @token_required(roles=['Administrator'])
+    @swag_from('/resources/users/description/users_profile_list_post.yml')
+    def post(self, public_id, current_user: User) -> Profile:
+        profile = self.controller.create(current_user, public_id=public_id)
+        public_id = profile.user.public_id
+        serialized_profile = serialize(profile, get_profile_fields())
+        json_profile = json.dumps(serialized_profile)
+        response = get_post_response(obj=profile, body=json_profile, content_type='application/json', api='/{rsc}/{public_id}/profiles'.format(rsc=API_PREFIX, public_id=public_id))
+        return response      
 
 
 api.add_resource(CurrentUserResource, '/{rsc}/current'.format(rsc=API_PREFIX))

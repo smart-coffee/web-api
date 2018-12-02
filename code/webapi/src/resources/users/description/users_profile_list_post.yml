@@ -1,0 +1,31 @@
+Create a new Job for a user
+---
+tags:
+  - users
+consumes:
+  - application/json
+produces:
+  - application/json
+  - application/xml
+parameters:
+  - in: header
+    name: x-access-token
+    description: JWT received after succussful login.
+    type: string
+    required: true
+  - in: path
+    name: public_id
+    description: Public ID of a User Account
+    type: string
+    required: true
+  - in: body
+    name: body
+    description: New Job
+    required: true
+    schema:
+      $ref: '#/definitions/CreateUserProfileRequest'
+responses:
+  201:
+    description: Created.
+    schema:
+      $ref: '#/definitions/Profile'
