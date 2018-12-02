@@ -8,7 +8,7 @@ from email_validator import validate_email, EmailNotValidError, EmailSyntaxError
 
 from models import User, Profile, Role, Job
 from config.flask_config import ResourceNotFound, ResourceException, ForbiddenResourceException
-from controllers.request_model import get_edit_current_user_request_fields, get_register_user_request_fields, get_create_current_user_profile_request_fields, get_edit_current_user_profile_request_fields, get_create_user_request_fields, get_edit_user_request_fields
+from controllers.request_model import get_edit_current_user_request_fields, get_register_user_request_fields, get_create_current_user_profile_request_fields, get_edit_current_user_profile_request_fields, get_create_user_request_fields, get_edit_user_request_fields, get_create_user_profile_request_fields
 from controllers.fixture_functions import run_user_fixture, run_profile_fixture
 from controllers.base_controller import _BaseController
 from utils.http import get_validated_request_body_as_json
@@ -133,6 +133,34 @@ class UserController(_BaseController):
         user = User.query.filter_by(**criteria).first()
         Profile.query.filter_by(user_id_fk=user.id).delete()
         Job.query.filter_by(user_id_fk=user.id).delete()
+
+
+class UserProfileController(_BaseController):
+    def __init__(self):
+        super(UserProfileController, self).__init__(model_class=Profile, resource_name='Profile', fixture_function=run_profile_fixture, create_request_fields=get_create_user_profile_request_fields())
+        self.tools = UserTools()
+    
+    def get_list_statement(self, current_user: User, **kwargs) -> List[Profile]:
+        user = self._get_user(**kwargs)
+        return user.profiles
+
+    def create_object(self, data: dict, current_user: User, **kwargs) -> Profile:
+        profile = Profile()
+        profile.name = data['name']
+        profile.user = self._get_user(**kwargs)
+        profile.coffee_strength_in_percent = data['coffee_strength_in_percent']
+        profile.water_in_percent = data['water_in_percent']
+        return profile
+
+    def _get_user(self, **kwargs):
+        public_id = kwargs['public_id']
+        if public_id is None:
+            raise ResourceException('Public ID is missing.')
+        user = User.query.filter_by(public_id=public_id).first()
+        if user is None:
+            raise ResourceNotFound('User with public id {} not found.'.format(public_id))
+        return user
+
 
 class UserTools:
     def _try_edit_user_password(self, data: dict, user: User):

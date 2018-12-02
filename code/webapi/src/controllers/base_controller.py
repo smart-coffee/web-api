@@ -39,20 +39,20 @@ class _BaseController:
         else:
             return self.model_class.query.filter_by(**criteria).first()
 
-    def get_list(self, current_user: User) -> List[object]:
-        obj_list = self.get_list_statement(current_user)
+    def get_list(self, current_user: User, **kwargs) -> List[object]:
+        obj_list = self.get_list_statement(current_user, **kwargs)
         for obj in obj_list:
             if obj:
                 self.fixture_function(obj)
         return obj_list
     
-    def get_list_statement(self, current_user: User) -> List[object]:
+    def get_list_statement(self, current_user: User, **kwargs) -> List[object]:
         return self.model_class.query.all()
 
-    def create(self, current_user: User=None) -> object:
+    def create(self, current_user: User=None, **kwargs) -> object:
         data = get_validated_request_body_as_json(self.create_request_fields)
 
-        obj = self.create_object(data, current_user)
+        obj = self.create_object(data, current_user, **kwargs)
 
         session = DB.session
         try:
@@ -66,7 +66,7 @@ class _BaseController:
         self.fixture_function(obj)
         return obj
 
-    def create_object(self, data: dict, current_user: User) -> object:
+    def create_object(self, data: dict, current_user: User, **kwargs) -> object:
         raise NotImplementedError()
 
     def edit(self, resource_id, current_user: User=None) -> object:

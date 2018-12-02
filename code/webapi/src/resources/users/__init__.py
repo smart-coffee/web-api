@@ -5,7 +5,7 @@ from flasgger import swag_from
 from flask import Blueprint
 from flask_restful import Api, marshal_with, Resource
 
-from controllers.user import CurrentUserController, PublicUserController, CurrentUserProfileController, UserController
+from controllers.user import CurrentUserController, PublicUserController, CurrentUserProfileController, UserController, UserProfileController
 from controllers.job import CurrentUserJobController
 from models import User, Profile, Job
 from controllers.response_model import get_registered_user_details, get_profile_fields, get_job_fields
@@ -155,6 +155,17 @@ class UserResource(Resource):
         return get_delete_response()
 
 
+class UserProfileListResource(Resource):
+    def __init__(self):
+        self.controller = UserProfileController()
+    
+    @token_required(roles=['Administrator'])
+    @swag_from('/resources/users/description/users_profile_list_get.yml')
+    @marshal_with(get_profile_fields())
+    def get(self, public_id, current_user:User) -> List[Profile]:
+        return self.controller.get_list(current_user, public_id=public_id)
+
+
 api.add_resource(CurrentUserResource, '/{rsc}/current'.format(rsc=API_PREFIX))
 api.add_resource(PublicUserResource, '/public/{rsc}'.format(rsc=API_PREFIX))
 api.add_resource(CurrentUserProfileListResource, '/{rsc}/current/profiles'.format(rsc=API_PREFIX))
@@ -162,3 +173,4 @@ api.add_resource(CurrentUserProfileResource, '/{rsc}/current/profiles/<int:profi
 api.add_resource(CurrentUserJobListResource, '/{rsc}/current/jobs'.format(rsc=API_PREFIX))
 api.add_resource(UserListResource, '/{rsc}'.format(rsc=API_PREFIX))
 api.add_resource(UserResource, '/{rsc}/<string:public_id>'.format(rsc=API_PREFIX))
+api.add_resource(UserProfileListResource, '/{rsc}/<string:public_id>/profiles'.format(rsc=API_PREFIX))
