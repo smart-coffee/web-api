@@ -8,7 +8,7 @@ from email_validator import validate_email, EmailNotValidError, EmailSyntaxError
 
 from models import User, Profile, Role, Job
 from config.flask_config import ResourceNotFound, ResourceException, ForbiddenResourceException
-from controllers.request_model import get_edit_user_request_fields, get_register_user_request_fields, get_create_current_user_profile_request_fields, get_edit_current_user_profile_request_fields, get_create_user_request_fields
+from controllers.request_model import get_edit_current_user_request_fields, get_register_user_request_fields, get_create_current_user_profile_request_fields, get_edit_current_user_profile_request_fields, get_create_user_request_fields, get_edit_user_request_fields
 from controllers.fixture_functions import run_user_fixture, run_profile_fixture
 from controllers.base_controller import _BaseController
 from utils.http import get_validated_request_body_as_json
@@ -21,7 +21,7 @@ logger = logging.getLogger(get_logger_name(__name__))
 
 class CurrentUserController(_BaseController):
     def __init__(self):
-        super(CurrentUserController, self).__init__(model_class=User, resource_name='User', fixture_function=run_user_fixture, edit_request_fields=get_edit_user_request_fields(), id_field='public_id')
+        super(CurrentUserController, self).__init__(model_class=User, resource_name='User', fixture_function=run_user_fixture, edit_request_fields=get_edit_current_user_request_fields(), id_field='public_id')
         self.tools = UserTools()
 
     def get_by_username(self, username: str, current_user: User=None) -> User:
@@ -104,7 +104,6 @@ class UserController(_BaseController):
 
         roles = data['roles']
         if (not (roles is None)) and len(roles) > 0:
-
             role_id = roles[0]
             role = Role.query.filter_by(id=role_id).first()
             if role is None:
@@ -112,6 +111,23 @@ class UserController(_BaseController):
             new_user.role = role
 
         return new_user
+    
+    def edit_object(self, object_to_edit: User, data: dict, current_user: User) -> User:
+        object_to_edit.password = self.tools._encode_password(data['password'])
+        self.tools._try_edit_user_email(data=data, user=object_to_edit)
+        self.tools._try_edit_user_name(data=data, user=object_to_edit)
+
+        roles = data['roles']
+        if (not (roles is None)) and len(roles) > 0:
+            role_id = roles[0]
+            role = Role.query.filter_by(id=role_id).first()
+            if role is None:
+                raise ResourceNotFound('Given role with id {} not found.'.format(role_id))
+            object_to_edit.role = role
+        else:
+            object_to_edit.role = None
+
+        return object_to_edit
 
     def delete_orphan_records(self, criteria, current_user: User):
         user = User.query.filter_by(**criteria).first()

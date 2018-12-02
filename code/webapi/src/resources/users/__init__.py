@@ -143,6 +143,12 @@ class UserResource(Resource):
         return self.controller.get_by_id(public_id, current_user)
     
     @token_required(roles=['Administrator'])
+    @swag_from('/resources/users/description/users_put.yml')
+    @marshal_with(get_registered_user_details())
+    def put(self, public_id: str, current_user: User) -> User:
+        return self.controller.edit(public_id, current_user)
+
+    @token_required(roles=['Administrator'])
     @swag_from('/resources/users/description/users_delete.yml')
     def delete(self, public_id: str, current_user: User):
         self.controller.delete(public_id, current_user)

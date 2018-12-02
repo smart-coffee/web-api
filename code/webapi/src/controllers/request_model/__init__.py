@@ -15,10 +15,10 @@ def get_credentials_fields():
     return _credentials_fields
 
 
-@SWAG.definition('EditUserRequest')
-def get_edit_user_request_fields():
+@SWAG.definition('EditCurrentUserRequest')
+def get_edit_current_user_request_fields():
     """
-    file: /controllers/request_model/edit_user_request.yml
+    file: /controllers/request_model/edit_current_user_request.yml
     """
     _user_request_fields = {
         'name': fields.String,
@@ -175,6 +175,21 @@ def get_create_user_request_fields():
     file: /controllers/request_model/create_user_request.yml
     """
     _user_request_fields = {
+        'name': fields.String,
+        'email': fields.String,
+        'password': fields.String,
+        'roles': fields.List(fields.Integer)
+    }
+    return _user_request_fields
+
+
+@SWAG.definition('EditUserRequest')
+def get_edit_user_request_fields():
+    """
+    file: /controllers/request_model/edit_user_request.yml
+    """
+    _user_request_fields = {
+        'public_id': fields.String,
         'name': fields.String,
         'email': fields.String,
         'password': fields.String,

@@ -1,4 +1,4 @@
-Edit the currently logged in User
+Edit an existing User Account
 ---
 tags:
   - users
@@ -13,14 +13,19 @@ parameters:
     description: JWT received after succussful login.
     type: string
     required: true
+  - in: path
+    name: public_id
+    description: Public ID of a User Account
+    type: string
+    required: true
   - in: body
     name: body
     description: New User
     required: true
     schema:
-      $ref: '#/definitions/EditCurrentUserRequest'
+      $ref: '#/definitions/EditUserRequest'
 responses:
-  200:
-    description: OK
+  201:
+    description: Created.
     schema:
       $ref: '#/definitions/User'
