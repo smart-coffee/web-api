@@ -191,6 +191,12 @@ class UserProfileResource(Resource):
     @marshal_with(get_profile_fields())
     def put(self, public_id:str, profile_id:int, current_user:User) -> Profile:
         return self.controller.edit(profile_id, current_user, public_id=public_id)
+    
+    @token_required(roles=['Administrator'])
+    @swag_from('/resources/users/description/users_profile_delete.yml')
+    def delete(self, public_id: str, profile_id: int, current_user: User):
+        self.controller.delete(profile_id, current_user, public_id=public_id)
+        return get_delete_response()
 
 
 

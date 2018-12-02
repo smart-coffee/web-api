@@ -1,0 +1,28 @@
+Delete a Profile of a User Account by its ID
+---
+tags:
+  - users
+consumes:
+  - application/json
+produces:
+  - application/json
+  - application/xml
+parameters:
+  - in: header
+    name: x-access-token
+    description: JWT received after succussful login.
+    type: string
+    required: true
+  - in: path
+    name: public_id
+    description: Public ID of the User Account
+    type: string
+    required: true
+  - in: path
+    name: profile_id
+    description: ID of a Profile
+    type: integer
+    required: true
+responses:
+  204:
+    description: No Content
