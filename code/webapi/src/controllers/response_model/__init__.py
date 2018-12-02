@@ -100,7 +100,7 @@ def get_profile_fields():
         'name': fields.String,
         'coffee_strength_in_percent': fields.Integer,
         'water_in_percent': fields.Integer,
-        'user_id': fields.Integer
+        'user_id': fields.String
     }
     return _profile_fields
 

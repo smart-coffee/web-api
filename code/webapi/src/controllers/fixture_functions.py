@@ -22,7 +22,8 @@ def run_coffee_product_fixture(coffee_product: CoffeeProduct):
     coffee_product.coffee_type_id = coffee_product.coffee_type_id_fk
 
 def run_profile_fixture(profile: Profile):
-    profile.user_id = profile.user_id_fk
+    user = User.query.filter_by(id=profile.user_id_fk).first()
+    profile.user_id = user.public_id
 
 def run_job_fixture(job: Job):
     job.coffee_machine_id = job.coffee_machine_id_fk
