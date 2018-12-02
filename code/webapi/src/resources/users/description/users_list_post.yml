@@ -1,0 +1,26 @@
+Create a new User Account
+---
+tags:
+  - users
+consumes:
+  - application/json
+produces:
+  - application/json
+  - application/xml
+parameters:
+  - in: header
+    name: x-access-token
+    description: JWT received after succussful login.
+    type: string
+    required: true
+  - in: body
+    name: body
+    description: New User
+    required: true
+    schema:
+      $ref: '#/definitions/CreateUserRequest'
+responses:
+  201:
+    description: Created.
+    schema:
+      $ref: '#/definitions/User'

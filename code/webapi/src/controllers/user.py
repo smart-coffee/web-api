@@ -4,11 +4,11 @@ from typing import List
 from flask import request
 from sqlalchemy.exc import SQLAlchemyError
 from werkzeug.security import check_password_hash, generate_password_hash
-from email_validator import validate_email, EmailNotValidError
+from email_validator import validate_email, EmailNotValidError, EmailSyntaxError
 
-from models import User, Profile
+from models import User, Profile, Role
 from config.flask_config import ResourceNotFound, ResourceException, ForbiddenResourceException
-from controllers.request_model import get_edit_user_request_fields, get_register_user_request_fields, get_create_current_user_profile_request_fields, get_edit_current_user_profile_request_fields
+from controllers.request_model import get_edit_user_request_fields, get_register_user_request_fields, get_create_current_user_profile_request_fields, get_edit_current_user_profile_request_fields, get_create_user_request_fields
 from controllers.fixture_functions import run_user_fixture, run_profile_fixture
 from controllers.base_controller import _BaseController
 from utils.http import get_validated_request_body_as_json
@@ -92,8 +92,26 @@ class PublicUserController(_BaseController):
 
 class UserController(_BaseController):
     def __init__(self):
-        super(UserController, self).__init__(model_class=User, resource_name='User', fixture_function=run_user_fixture, edit_request_fields=get_edit_user_request_fields(), id_field='public_id')
+        super(UserController, self).__init__(model_class=User, resource_name='User', fixture_function=run_user_fixture, create_request_fields=get_create_user_request_fields(), edit_request_fields=get_edit_user_request_fields(), id_field='public_id')
         self.tools = UserTools()
+
+    def create_object(self, data: dict, current_user: User) -> User:
+        new_user = User()
+        new_user.email = self.tools._get_validated_email(data['email'])
+        new_user.name = self.tools._get_validated_user_name(data['name'])
+        new_user.password = self.tools._encode_password(data['password'])
+        new_user.public_id = self.tools._generate_new_public_id()
+
+        roles = data['roles']
+        if (not (roles is None)) and len(roles) > 0:
+
+            role_id = roles[0]
+            role = Role.query.filter_by(id=role_id).first()
+            if role is None:
+                raise ResourceNotFound('Given role with id {} not found.'.format(role_id))
+            new_user.role = role
+
+        return new_user
 
 
 class UserTools:
@@ -134,10 +152,8 @@ class UserTools:
 
         if email and email != user.email:
             logger.debug('Trying to change email of user {0} to {1}'.format(user.public_id, email))
-            try:
-                user.email = self._get_validated_email(email)
-            except EmailNotValidError as err:
-                raise ResourceException('Email {0} is not in a valid format: {1}'.format(email, str(err)))
+            user.email = self._get_validated_email(email)
+            
 
     def _try_edit_user_name(self, data: dict, user: User):
         name = data['name']
@@ -150,7 +166,12 @@ class UserTools:
     def _get_validated_email(email:str) -> str:
         if not email:
             raise ResourceException('Email is missing.')
-        validated_email = validate_email(email)
+        try:
+            validated_email = validate_email(email)
+        except EmailNotValidError as err:
+            raise ResourceException('Email {0} is not in a valid format: {1}'.format(email, str(err)))
+        except EmailSyntaxError as err:
+            raise ResourceException('Email {0} is not in a valid syntax: {1}'.format(email, str(err)))
         return validated_email['email']
     
     @staticmethod

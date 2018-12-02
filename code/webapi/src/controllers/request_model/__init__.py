@@ -167,3 +167,17 @@ def get_create_current_user_job_request_fields():
         'coffee_product_id': fields.Integer
     }
     return _create_job_fields
+
+
+@SWAG.definition('CreateUserRequest')
+def get_create_user_request_fields():
+    """
+    file: /controllers/request_model/create_user_request.yml
+    """
+    _user_request_fields = {
+        'name': fields.String,
+        'email': fields.String,
+        'password': fields.String,
+        'roles': fields.List(fields.Integer)
+    }
+    return _user_request_fields

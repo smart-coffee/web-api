@@ -5,7 +5,7 @@ from flasgger import swag_from
 from flask import Blueprint
 from flask_restful import Api, marshal_with, Resource
 
-from controllers.user import CurrentUserController, PublicUserController, CurrentUserProfileController
+from controllers.user import CurrentUserController, PublicUserController, CurrentUserProfileController, UserController
 from controllers.job import CurrentUserJobController
 from models import User, Profile, Job
 from controllers.response_model import get_registered_user_details, get_profile_fields, get_job_fields
@@ -112,8 +112,28 @@ class CurrentUserJobListResource(Resource):
         return response
 
 
+class UserListResource(Resource):
+    def __init__(self):
+        self.controller = UserController()
+    
+    @token_required(roles=['Administrator'])
+    @swag_from('/resources/users/description/users_list_get.yml')
+    @marshal_with(get_registered_user_details())
+    def get(self, current_user: User) -> List[User]:
+        return self.controller.get_list(current_user)
+    
+    @token_required(roles=['Administrator'])
+    @swag_from('/resources/users/description/users_list_post.yml')
+    def post(self, current_user: User) -> User:
+        user = self.controller.create(current_user)
+        serialized_user = serialize(user, get_registered_user_details())
+        json_user = json.dumps(serialized_user)
+        response = get_post_response(obj=user, body=json_user, content_type='application/json', api='/{rsc}'.format(rsc=API_PREFIX))
+        return response
+
 api.add_resource(CurrentUserResource, '/{rsc}/current'.format(rsc=API_PREFIX))
 api.add_resource(PublicUserResource, '/public/{rsc}'.format(rsc=API_PREFIX))
 api.add_resource(CurrentUserProfileListResource, '/{rsc}/current/profiles'.format(rsc=API_PREFIX))
 api.add_resource(CurrentUserProfileResource, '/{rsc}/current/profiles/<int:profile_id>'.format(rsc=API_PREFIX))
 api.add_resource(CurrentUserJobListResource, '/{rsc}/current/jobs'.format(rsc=API_PREFIX))
+api.add_resource(UserListResource, '/{rsc}'.format(rsc=API_PREFIX))
