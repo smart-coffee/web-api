@@ -10,6 +10,7 @@
 
 
 docker/
+!docker/docker-entrypoint.sh
 logs/
 venv/
 __pycache__/
