@@ -141,6 +141,12 @@ class UserResource(Resource):
     @marshal_with(get_registered_user_details())
     def get(self, public_id: str, current_user: User) -> List[User]:
         return self.controller.get_by_id(public_id, current_user)
+    
+    @token_required(roles=['Administrator'])
+    @swag_from('/resources/users/description/users_delete.yml')
+    def delete(self, public_id: str, current_user: User):
+        self.controller.delete(public_id, current_user)
+        return get_post_response()
 
 
 api.add_resource(CurrentUserResource, '/{rsc}/current'.format(rsc=API_PREFIX))
