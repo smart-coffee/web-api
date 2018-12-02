@@ -6,8 +6,9 @@ from flask import Blueprint
 from flask_restful import Api, marshal_with, Resource
 
 from controllers.user import CurrentUserController, PublicUserController, CurrentUserProfileController
-from models import User, Profile
-from controllers.response_model import get_registered_user_details, get_profile_fields
+from controllers.job import CurrentUserJobController
+from models import User, Profile, Job
+from controllers.response_model import get_registered_user_details, get_profile_fields, get_job_fields
 from utils.http import token_required, get_post_response, get_delete_response, serialize
 
 
@@ -91,8 +92,28 @@ class PublicUserResource(Resource):
         return response
 
 
+class CurrentUserJobListResource(Resource):
+    def __init__(self):
+        self.controller = CurrentUserJobController()
+    
+    @token_required()
+    @swag_from('/resources/users/description/current_user_jobs_list_get.yml')
+    @marshal_with(get_job_fields())
+    def get(self, current_user: User) -> List[Job]:
+        return self.controller.get_list(current_user)
+
+    @token_required()
+    @swag_from('/resources/users/description/current_user_jobs_list_post.yml')
+    def post(self, current_user: User) -> Job:
+        job = self.controller.create(current_user)
+        serialized_job = serialize(job, get_job_fields())
+        json_job = json.dumps(serialized_job)
+        response = get_post_response(obj=job, body=json_job, content_type='application/json', api='/{rsc}/current/jobs'.format(rsc=API_PREFIX))
+        return response
+
 
 api.add_resource(CurrentUserResource, '/{rsc}/current'.format(rsc=API_PREFIX))
 api.add_resource(PublicUserResource, '/public/{rsc}'.format(rsc=API_PREFIX))
 api.add_resource(CurrentUserProfileListResource, '/{rsc}/current/profiles'.format(rsc=API_PREFIX))
 api.add_resource(CurrentUserProfileResource, '/{rsc}/current/profiles/<int:profile_id>'.format(rsc=API_PREFIX))
+api.add_resource(CurrentUserJobListResource, '/{rsc}/current/jobs'.format(rsc=API_PREFIX))

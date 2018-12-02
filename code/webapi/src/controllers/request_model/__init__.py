@@ -151,3 +151,19 @@ def get_edit_job_request_fields():
         'user_id': fields.String
     }
     return _job_fields
+
+
+@SWAG.definition('CreateCurrentUserJobRequest')
+def get_create_current_user_job_request_fields():
+    """
+    file: /controllers/request_model/create_current_user_job_request.yml
+    """
+    _create_job_fields = {
+        'coffee_strength_in_percent': fields.Integer,
+        'water_in_percent': fields.Integer,
+        'price': fields.Integer,
+        'doses': fields.Integer,
+        'coffee_machine_id': fields.Integer,
+        'coffee_product_id': fields.Integer
+    }
+    return _create_job_fields

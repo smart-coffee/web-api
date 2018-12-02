@@ -9,7 +9,7 @@ from controllers.base_controller import _BaseController
 from controllers.coffee import CoffeeMachineController, CoffeeProductController
 from controllers.user import UserController
 from controllers.fixture_functions import run_job_fixture
-from controllers.request_model import get_create_job_request_fields, get_edit_job_request_fields
+from controllers.request_model import get_create_job_request_fields, get_edit_job_request_fields, get_create_current_user_job_request_fields
 from config.logger import logging, get_logger_name
 
 
@@ -63,7 +63,7 @@ class JobController(_BaseController):
         coffee_product = self.coffee_product_controller.get_by_id(data['coffee_product_id'], current_user, False)
         job.coffee_product = coffee_product
 
-        user = self.user_controller.get_by_id(data['user_id'], current_user, False)
+        user = self._get_user(current_user)
         job.user = user
 
         return job
@@ -82,7 +82,30 @@ class JobController(_BaseController):
         coffee_product = self.coffee_product_controller.get_by_id(data['coffee_product_id'], current_user, False)
         object_to_edit.coffee_product = coffee_product
 
-        user = self.user_controller.get_by_id(data['user_id'], current_user, False)
+        user = self._get_user(current_user)
         object_to_edit.user = user
 
         return object_to_edit
+    
+    def _get_user(self, current_user: User) -> User:
+        return self.user_controller.get_by_id(data['user_id'], current_user, False)
+
+
+class CurrentUserJobController(JobController):
+    def __init__(self):
+        super(CurrentUserJobController, self).__init__()
+        self.create_request_fields = get_create_current_user_job_request_fields()
+    
+    def get_list_statement(self, current_user: User) -> List[Job]:
+        jobs = super().get_list_statement(current_user)
+        jobs = [job for job in jobs if job.user.id == current_user.id]
+        return jobs
+
+    def _get_user(self, current_user: User) -> User:
+        return current_user
+    
+    def edit(self, resource_id, current_user: User=None) -> Job:
+        raise NotImplementedError()
+    
+    def delete(self, resource_id, current_user: User=None):
+        raise NotImplementedError
