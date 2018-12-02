@@ -1,0 +1,27 @@
+type: object
+properties:
+  public_id:
+    required: true
+    type: string
+    description: Öffentliche ID des Nutzeraccounts
+    example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwdWJsaWNfaWQiOiJkMzg5MjRmYi05NDE3LTRhNTAtYjcxNS0wMWY4MDVjMjgwNjMiLCJleHAiOjE1NDI1NDE3NDV9.jbWsgjOFn6jEx0IGVoUaiqwt530_Fko8qgoMhGvl4mg
+  name:
+    required: true
+    type: string
+    description: Neuer Username des Nutzeraccounts
+    example: John
+  password:
+    required: true
+    type: string
+    description: Neues Password des Nutzeraccounts
+    example: somepassword
+  email:
+    required: true
+    type: string
+    description: Neue E-Mail-Adresse des Nutzeraccounts
+    example: John.Doe@domain.tld
+  roles:
+    required: true
+    type: integer[]
+    description: IDs der zugewiesenen Nutzerrollen des Nutzeraccounts
+    example: [ 1, 2 ]

@@ -134,7 +134,7 @@ class Job(DB.Model):
 	coffee_strength_in_percent = DB.Column(DB.Integer, nullable=False)
 	water_in_percent = DB.Column(DB.Integer, nullable=False)
 	price = DB.Column(DB.Integer, nullable=False)
-	doeses = DB.Column(DB.Integer, nullable=False)
+	doses = DB.Column(DB.Integer, nullable=False)
 	
 	# Foreign Keys
 	coffee_machine_id_fk = DB.Column(DB.Integer, DB.ForeignKey('coffeemachine.id', name='fk_job_coffee_machine'), nullable=False)

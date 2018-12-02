@@ -1,7 +1,7 @@
-Edit the currently logged in User
+Edit a Job
 ---
 tags:
-  - users
+  - jobs
 consumes:
   - application/json
 produces:
@@ -13,14 +13,19 @@ parameters:
     description: JWT received after succussful login.
     type: string
     required: true
+  - in: path
+    name: job_id
+    description: ID of the Job
+    type: integer
+    required: true
   - in: body
     name: body
-    description: New User
+    description: New Job
     required: true
     schema:
-      $ref: '#/definitions/EditCurrentUserRequest'
+      $ref: '#/definitions/EditJobRequest'
 responses:
   200:
     description: OK
     schema:
-      $ref: '#/definitions/User'
+      $ref: '#/definitions/Job'

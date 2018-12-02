@@ -2,20 +2,15 @@ EditUserRequest object
 ---
 type: object
 properties:
-  public_id:
-    type: string
-    example: b5386ca2-6c25-4308-a22a-4cf81c58af8b
   email:
     type: string
     example: a.b@s.de
   name:
     type: string
     example: John
-  password:
+  old_password:
     type: string
     example: somepassword
-  roles:
-    type: array
-    items:
-      type: Integer
-    example: [1]
+  new_password:
+    type: string
+    example: new_password

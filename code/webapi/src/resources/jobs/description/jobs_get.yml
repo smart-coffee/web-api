@@ -1,9 +1,7 @@
-Edit the currently logged in User
+Get a Job by ID
 ---
 tags:
-  - users
-consumes:
-  - application/json
+  - jobs
 produces:
   - application/json
   - application/xml
@@ -13,14 +11,13 @@ parameters:
     description: JWT received after succussful login.
     type: string
     required: true
-  - in: body
-    name: body
-    description: New User
+  - in: path
+    name: job_id
+    description: ID of the Job
+    type: integer
     required: true
-    schema:
-      $ref: '#/definitions/EditCurrentUserRequest'
 responses:
   200:
     description: OK
     schema:
-      $ref: '#/definitions/User'
+      $ref: '#/definitions/Job'

@@ -1,4 +1,4 @@
-Edit the currently logged in User
+Create a new Job for a user
 ---
 tags:
   - users
@@ -13,14 +13,19 @@ parameters:
     description: JWT received after succussful login.
     type: string
     required: true
+  - in: path
+    name: public_id
+    description: Public ID of a User Account
+    type: string
+    required: true
   - in: body
     name: body
-    description: New User
+    description: New Job
     required: true
     schema:
-      $ref: '#/definitions/EditCurrentUserRequest'
+      $ref: '#/definitions/CreateUserProfileRequest'
 responses:
-  200:
-    description: OK
+  201:
+    description: Created.
     schema:
-      $ref: '#/definitions/User'
+      $ref: '#/definitions/Profile'

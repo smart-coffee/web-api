@@ -1,9 +1,7 @@
-Edit the currently logged in User
+Get a User Account by its public ID
 ---
 tags:
   - users
-consumes:
-  - application/json
 produces:
   - application/json
   - application/xml
@@ -13,12 +11,11 @@ parameters:
     description: JWT received after succussful login.
     type: string
     required: true
-  - in: body
-    name: body
-    description: New User
+  - in: path
+    name: public_id
+    description: Public ID of a User Account
+    type: string
     required: true
-    schema:
-      $ref: '#/definitions/EditCurrentUserRequest'
 responses:
   200:
     description: OK

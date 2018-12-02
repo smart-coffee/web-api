@@ -1,9 +1,7 @@
-Edit the currently logged in User
+Get all User Accounts
 ---
 tags:
   - users
-consumes:
-  - application/json
 produces:
   - application/json
   - application/xml
@@ -13,14 +11,10 @@ parameters:
     description: JWT received after succussful login.
     type: string
     required: true
-  - in: body
-    name: body
-    description: New User
-    required: true
-    schema:
-      $ref: '#/definitions/EditCurrentUserRequest'
 responses:
   200:
     description: OK
     schema:
-      $ref: '#/definitions/User'
+      type: array
+      items:
+        $ref: '#/definitions/User'

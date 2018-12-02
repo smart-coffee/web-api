@@ -1,4 +1,4 @@
-Edit the currently logged in User
+Create a new User Account
 ---
 tags:
   - users
@@ -18,9 +18,9 @@ parameters:
     description: New User
     required: true
     schema:
-      $ref: '#/definitions/EditCurrentUserRequest'
+      $ref: '#/definitions/CreateUserRequest'
 responses:
-  200:
-    description: OK
+  201:
+    description: Created.
     schema:
       $ref: '#/definitions/User'

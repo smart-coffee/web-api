@@ -1,4 +1,7 @@
-from models import DB, User, Role, CoffeeMachine, CoffeeType, CoffeeBrand, CoffeeProduct, Profile
+import time
+import datetime
+
+from models import DB, User, Role, CoffeeMachine, CoffeeType, CoffeeBrand, CoffeeProduct, Profile, Job
 
 
 def reset_database():
@@ -36,9 +39,19 @@ def reset_database():
     profile.coffee_strength_in_percent = 42
     profile.user = user
 
-    DB.session.add(user)
-    DB.session.add(coffee_machine)
-    DB.session.add(coffee_product)
+    job = Job()
+    current_time = time.time()
+    job.create_date = current_time
+    job.coffee_strength_in_percent = 66
+    job.water_in_percent = 44
+    job.price = 10
+    job.doses = 1
+    job.user = user
+    job.coffee_machine = coffee_machine
+    job.coffee_product = coffee_product
+
+
+    DB.session.add(job)
     DB.session.commit()
 
 

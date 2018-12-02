@@ -11,7 +11,7 @@ from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.orm import class_mapper
 
 from config import get_secret_key, FLASK_APP
-from config.flask_config import AuthenticationFailed, ForbiddenResourceException
+from config.flask_config import AuthenticationFailed, ForbiddenResourceException, ResourceException
 from models import User, Role
 from utils.basic import is_dict_structure_equal
 
@@ -82,8 +82,8 @@ def token_required(roles:List[str]=None):
                     public_id=data['public_id']).first()
             except:
                 raise AuthenticationFailed('Token is invalid')
-            
-            if roles and not current_user.role.name in roles:
+
+            if not (roles is None) and (current_user.role is None or not current_user.role.name in roles):
                 raise ForbiddenResourceException('Access denied.')
 
             return func(current_user=current_user, *args, **kwargs)

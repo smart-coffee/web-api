@@ -1,10 +1,7 @@
-EditUserRequest object
+CreateUserRequest object
 ---
 type: object
 properties:
-  public_id:
-    type: string
-    example: b5386ca2-6c25-4308-a22a-4cf81c58af8b
   email:
     type: string
     example: a.b@s.de

@@ -1,0 +1,36 @@
+Edit a Profile of a User Account by its Profile ID
+---
+tags:
+  - users
+consumes:
+  - application/json
+produces:
+  - application/json
+  - application/xml
+parameters:
+  - in: header
+    name: x-access-token
+    description: JWT received after succussful login.
+    type: string
+    required: true
+  - in: path
+    name: public_id
+    description: Public ID of a User Account
+    type: string
+    required: true
+  - in: path
+    name: profile_id
+    description: ID of a Profile
+    type: integer
+    required: true
+  - in: body
+    name: body
+    description: New Profile
+    required: true
+    schema:
+      $ref: '#/definitions/EditUserProfileRequest'
+responses:
+  200:
+    description: OK
+    schema:
+      $ref: '#/definitions/Profile'

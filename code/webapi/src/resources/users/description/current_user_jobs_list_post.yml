@@ -1,4 +1,4 @@
-Edit the currently logged in User
+Create a new Job for the logged in user
 ---
 tags:
   - users
@@ -15,12 +15,12 @@ parameters:
     required: true
   - in: body
     name: body
-    description: New User
+    description: New Job
     required: true
     schema:
-      $ref: '#/definitions/EditCurrentUserRequest'
+      $ref: '#/definitions/CreateCurrentUserJobRequest'
 responses:
-  200:
-    description: OK
+  201:
+    description: Created.
     schema:
-      $ref: '#/definitions/User'
+      $ref: '#/definitions/Job'

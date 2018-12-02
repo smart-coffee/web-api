@@ -100,6 +100,26 @@ def get_profile_fields():
         'name': fields.String,
         'coffee_strength_in_percent': fields.Integer,
         'water_in_percent': fields.Integer,
-        'user_id': fields.Integer
+        'user_id': fields.String
     }
     return _profile_fields
+
+
+@SWAG.definition('Job')
+def get_job_fields():
+    """
+    file: /controllers/response_model/job.yml
+    """
+    _job_fields = {
+        'id': fields.Integer,
+        'create_date': fields.Integer,
+        'square_date': fields.Integer,
+        'coffee_strength_in_percent': fields.Integer,
+        'water_in_percent': fields.Integer,
+        'price': fields.Integer,
+        'doses': fields.Integer,
+        'coffee_machine_id': fields.Integer,
+        'coffee_product_id': fields.Integer,
+        'user_id': fields.String
+    }
+    return _job_fields

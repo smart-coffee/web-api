@@ -15,10 +15,10 @@ def get_credentials_fields():
     return _credentials_fields
 
 
-@SWAG.definition('EditUserRequest')
-def get_edit_user_request_fields():
+@SWAG.definition('EditCurrentUserRequest')
+def get_edit_current_user_request_fields():
     """
-    file: /controllers/request_model/edit_user_request.yml
+    file: /controllers/request_model/edit_current_user_request.yml
     """
     _user_request_fields = {
         'name': fields.String,
@@ -109,6 +109,117 @@ def get_edit_current_user_profile_request_fields():
     """
     _edit_profile_fields = {
         'id': fields.Integer,
+        'name': fields.String,
+        'coffee_strength_in_percent': fields.Integer,
+        'water_in_percent': fields.Integer
+    }
+    return _edit_profile_fields
+
+
+@SWAG.definition('CreateJobRequest')
+def get_create_job_request_fields():
+    """
+    file: /controllers/request_model/create_job_request.yml
+    """
+    _create_job_fields = {
+        'coffee_strength_in_percent': fields.Integer,
+        'water_in_percent': fields.Integer,
+        'price': fields.Integer,
+        'doses': fields.Integer,
+        'coffee_machine_id': fields.Integer,
+        'coffee_product_id': fields.Integer,
+        'user_id': fields.String
+    }
+    return _create_job_fields
+
+
+@SWAG.definition('EditJobRequest')
+def get_edit_job_request_fields():
+    """
+    file: /controllers/request_model/edit_job_request.yml
+    """
+    _job_fields = {
+        'id': fields.Integer,
+        'create_date': fields.Integer,
+        'square_date': fields.Integer,
+        'coffee_strength_in_percent': fields.Integer,
+        'water_in_percent': fields.Integer,
+        'price': fields.Integer,
+        'doses': fields.Integer,
+        'coffee_machine_id': fields.Integer,
+        'coffee_product_id': fields.Integer,
+        'user_id': fields.String
+    }
+    return _job_fields
+
+
+@SWAG.definition('CreateCurrentUserJobRequest')
+def get_create_current_user_job_request_fields():
+    """
+    file: /controllers/request_model/create_current_user_job_request.yml
+    """
+    _create_job_fields = {
+        'coffee_strength_in_percent': fields.Integer,
+        'water_in_percent': fields.Integer,
+        'price': fields.Integer,
+        'doses': fields.Integer,
+        'coffee_machine_id': fields.Integer,
+        'coffee_product_id': fields.Integer
+    }
+    return _create_job_fields
+
+
+@SWAG.definition('CreateUserRequest')
+def get_create_user_request_fields():
+    """
+    file: /controllers/request_model/create_user_request.yml
+    """
+    _user_request_fields = {
+        'name': fields.String,
+        'email': fields.String,
+        'password': fields.String,
+        'roles': fields.List(fields.Integer)
+    }
+    return _user_request_fields
+
+
+@SWAG.definition('EditUserRequest')
+def get_edit_user_request_fields():
+    """
+    file: /controllers/request_model/edit_user_request.yml
+    """
+    _user_request_fields = {
+        'public_id': fields.String,
+        'name': fields.String,
+        'email': fields.String,
+        'password': fields.String,
+        'roles': fields.List(fields.Integer)
+    }
+    return _user_request_fields
+
+
+@SWAG.definition('CreateUserProfileRequest')
+def get_create_user_profile_request_fields():
+    """
+    file: /controllers/request_model/create_user_profile_request.yml
+    """
+    _create_profile_fields = {
+        'user_id': fields.String,
+        'name': fields.String,
+        'coffee_strength_in_percent': fields.Integer,
+        'water_in_percent': fields.Integer
+    }
+    return _create_profile_fields
+
+
+@SWAG.definition('EditUserProfileRequest')
+def get_edit_user_profile_request_fields():
+    """
+    file: /controllers/request_model/edit_user_profile_request.yml
+    """
+    _edit_profile_fields = {
+        'id': fields.Integer,
+        'user_id': fields.String,
         'name': fields.String,
         'coffee_strength_in_percent': fields.Integer,
         'water_in_percent': fields.Integer

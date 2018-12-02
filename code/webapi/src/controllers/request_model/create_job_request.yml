@@ -1,0 +1,38 @@
+CreateJobRequest object
+---
+type: object
+required:
+  - coffee_strength_in_percent
+  - water_in_percent
+  - price
+  - doses
+  - coffee_machine_id
+  - coffee_product_id
+  - user_id
+properties:
+  coffee_strength_in_percent:
+    type: integer
+    example: 42
+  water_in_percent:
+    type: integer
+    example: 42
+  price:
+    type: integer
+    description: Price of a single coffee dose in percent
+    example: 42
+  doses:
+    type: integer
+    description: Amount of coffees produced by this job
+    example: 1
+  coffee_machine_id:
+    type: integer
+    description: ID of the coffee machine used for this job
+    example: 42
+  coffee_product_id:
+    type: integer
+    description: ID of the coffee product used during this job
+    example: 42
+  user_id:
+    type: string
+    description: Public ID of the user that this job belongs to
+    example: 0e3a21d7-b58d-4469-9627-ae9a23e68cb5
