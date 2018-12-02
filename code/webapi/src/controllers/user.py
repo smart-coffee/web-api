@@ -8,7 +8,7 @@ from email_validator import validate_email, EmailNotValidError, EmailSyntaxError
 
 from models import User, Profile, Role, Job
 from config.flask_config import ResourceNotFound, ResourceException, ForbiddenResourceException
-from controllers.request_model import get_edit_current_user_request_fields, get_register_user_request_fields, get_create_current_user_profile_request_fields, get_edit_current_user_profile_request_fields, get_create_user_request_fields, get_edit_user_request_fields, get_create_user_profile_request_fields
+from controllers.request_model import get_edit_current_user_request_fields, get_register_user_request_fields, get_create_current_user_profile_request_fields, get_edit_current_user_profile_request_fields, get_create_user_request_fields, get_edit_user_request_fields, get_create_user_profile_request_fields, get_edit_user_profile_request_fields
 from controllers.fixture_functions import run_user_fixture, run_profile_fixture
 from controllers.base_controller import _BaseController
 from utils.http import get_validated_request_body_as_json
@@ -137,7 +137,7 @@ class UserController(_BaseController):
 
 class UserProfileController(_BaseController):
     def __init__(self):
-        super(UserProfileController, self).__init__(model_class=Profile, resource_name='Profile', fixture_function=run_profile_fixture, create_request_fields=get_create_user_profile_request_fields())
+        super(UserProfileController, self).__init__(model_class=Profile, resource_name='Profile', fixture_function=run_profile_fixture, edit_request_fields=get_edit_user_profile_request_fields(), create_request_fields=get_create_user_profile_request_fields())
         self.tools = UserTools()
     
     def validate_single_result(self, result: Profile, **kwargs):
@@ -157,6 +157,12 @@ class UserProfileController(_BaseController):
         profile.coffee_strength_in_percent = data['coffee_strength_in_percent']
         profile.water_in_percent = data['water_in_percent']
         return profile
+    
+    def edit_object(self, object_to_edit: Profile, data: dict, current_user: User, **kwargs) -> Profile:
+        object_to_edit.name = data['name']
+        object_to_edit.coffee_strength_in_percent = data['coffee_strength_in_percent']
+        object_to_edit.water_in_percent = data['water_in_percent']
+        return object_to_edit
 
     def _get_user(self, **kwargs):
         public_id = kwargs['public_id']

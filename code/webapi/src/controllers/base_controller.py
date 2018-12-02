@@ -74,11 +74,11 @@ class _BaseController:
     def create_object(self, data: dict, current_user: User, **kwargs) -> object:
         raise NotImplementedError()
 
-    def edit(self, resource_id, current_user: User=None) -> object:
-        obj_by_id = self.get_by_id(resource_id=resource_id, current_user=current_user)
+    def edit(self, resource_id, current_user: User=None, **kwargs) -> object:
+        obj_by_id = self.get_by_id(resource_id=resource_id, current_user=current_user, **kwargs)
         data = get_validated_request_body_as_json(template=self.edit_request_fields)
 
-        obj = self.edit_object(object_to_edit=obj_by_id, data=data, current_user=current_user)
+        obj = self.edit_object(object_to_edit=obj_by_id, data=data, current_user=current_user, **kwargs)
 
         session = DB.session
         try:
@@ -91,7 +91,7 @@ class _BaseController:
         self.fixture_function(obj)
         return obj
     
-    def edit_object(self, object_to_edit, data: dict, current_user: User) -> object:
+    def edit_object(self, object_to_edit, data: dict, current_user: User, **kwargs) -> object:
         raise NotImplementedError()
     
     def delete(self, resource_id, current_user: User=None):
