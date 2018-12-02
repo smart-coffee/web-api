@@ -131,9 +131,22 @@ class UserListResource(Resource):
         response = get_post_response(obj=user, body=json_user, content_type='application/json', api='/{rsc}'.format(rsc=API_PREFIX))
         return response
 
+
+class UserResource(Resource):
+    def __init__(self):
+        self.controller = UserController()
+    
+    @token_required(roles=['Administrator'])
+    @swag_from('/resources/users/description/users_get.yml')
+    @marshal_with(get_registered_user_details())
+    def get(self, public_id: str, current_user: User) -> List[User]:
+        return self.controller.get_by_id(public_id, current_user)
+
+
 api.add_resource(CurrentUserResource, '/{rsc}/current'.format(rsc=API_PREFIX))
 api.add_resource(PublicUserResource, '/public/{rsc}'.format(rsc=API_PREFIX))
 api.add_resource(CurrentUserProfileListResource, '/{rsc}/current/profiles'.format(rsc=API_PREFIX))
 api.add_resource(CurrentUserProfileResource, '/{rsc}/current/profiles/<int:profile_id>'.format(rsc=API_PREFIX))
 api.add_resource(CurrentUserJobListResource, '/{rsc}/current/jobs'.format(rsc=API_PREFIX))
 api.add_resource(UserListResource, '/{rsc}'.format(rsc=API_PREFIX))
+api.add_resource(UserResource, '/{rsc}/<string:public_id>'.format(rsc=API_PREFIX))
