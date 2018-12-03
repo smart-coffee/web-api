@@ -3,7 +3,7 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flasgger import Swagger
 
-from config.environment_tools import init_environment
+from config.environment_tools import init_environment, get_environment_mode
 from config.swagger import get_swagger_template
 
 def create_app(env_path: str):
@@ -11,8 +11,9 @@ def create_app(env_path: str):
     CORS(app, allow_headers="*")
     init_environment(env_path=env_path)
     # Configuration should be refactored (e.g. from .env instead of pyfile)
+    mode = get_environment_mode()
     app.config.from_pyfile('default_config.py')
-    app.config.from_pyfile('development.py')
+    app.config.from_pyfile(mode.config_path)
     return app
 
 
