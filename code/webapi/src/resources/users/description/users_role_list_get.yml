@@ -1,0 +1,25 @@
+Get all Roles of a User Account
+---
+tags:
+  - users
+produces:
+  - application/json
+  - application/xml
+parameters:
+  - in: header
+    name: x-access-token
+    description: JWT received after succussful login.
+    type: string
+    required: true
+  - in: path
+    name: public_id
+    description: Public ID of a User Account
+    type: string
+    required: true
+responses:
+  200:
+    description: OK
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/Role'

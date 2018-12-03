@@ -2,93 +2,53 @@
 
 init_prod_env_file() {
     local_mode='prod'
-    echo "MODE=$local_mode" > .env
+    cat <<EOF >$location/.env
+MODE=$local_mode
 
-    echo >> .env
-    echo "CERT_FILE=cert.pem" >> .env
-    echo "KEY_FILE=privkey.pem" >> .env
+CERT_FILE=cert.pem
+KEY_FILE=privkey.pem
 
-    echo >> .env
-    echo "# Customize as needed" >> .env
-    echo "DB_USER=" >> .env
-    echo "DB_PW=" >> .env
-    echo "DB_HOST=" >> .env
-    echo "DB_NAME=" >> .env
-    echo "DB_PORT=" >> .env
+# Customize as needed
+DB_USER=
+DB_PW=
+DB_HOST=
+DB_NAME=
+DB_PORT=
 
-    echo >> .env
-    echo "APP_HOST=" >> .env
-    echo "APP_PORT=" >> .env
-    echo "SECRET_KEY=" >> .env
-    echo "APP_URL_PREFIX=" >> .env
+APP_HOST=
+APP_PORT=
+SECRET_KEY=
+APP_URL_PREFIX=
 
-    echo >> .env
-    echo "# This path should conform with the path that is provided by uwsgi.ini" >> .env
-    echo "SWAGGER_BASE_URL=/api" >> .env
+# This path should conform with the path that is provided by uwsgi.ini"
+SWAGGER_BASE_URL=/api
+EOF
 }
 
 init_dev_env_file() {
     local_mode='dev'
-    echo "MODE=$local_mode" > "$location/.env"
+    cat <<EOF >$location/.env
+MODE=$local_mode
 
-    echo >> "$location/.env"
-    echo "# Should be empty in $local_mode environment" >> "$location/.env"
-    echo "CERT_FILE=" >> "$location/.env"
+# Should be empty in $local_mode environment
+CERT_FILE=
+KEY_FILE=
 
-    echo >> "$location/.env"
-    echo "# Should be empty in $local_mode environment" >> "$location/.env"
-    echo "KEY_FILE=" >> "$location/.env"
+# Customize as needed
+DB_USER=admin
+DB_PW=admin
+DB_HOST=localhost
+DB_NAME=cm_db
+DB_PORT=3308
 
-    echo >> "$location/.env"
-    echo "# Customize as needed" >> "$location/.env"
-    echo "DB_USER=admin" >> "$location/.env"
-    echo "DB_PW=admin" >> "$location/.env"
-    echo "DB_HOST=localhost" >> "$location/.env"
-    echo "DB_NAME=cm_db" >> "$location/.env"
-    echo "DB_PORT=3308" >> "$location/.env"
+APP_HOST=localhost
+APP_PORT=5000
+SECRET_KEY=XLrIjHvKsQskA7m
+APP_URL_PREFIX=
 
-    echo >> "$location/.env"
-    echo "APP_HOST=localhost" >> "$location/.env"
-    echo "APP_PORT=5000" >> "$location/.env"
-    echo "SECRET_KEY=XLrIjHvKsQskA7m" >> "$location/.env"
-    echo "APP_URL_PREFIX=" >> "$location/.env"
-
-    echo >> "$location/.env"
-    echo "# Should be empty in $local_mode environment" >> "$location/.env"
-    echo "SWAGGER_BASE_URL=" >> "$location/.env"
-
-}
-
-init_test_env_file() {
-    local_mode='test'
-    echo "MODE=$local_mode" > appd/test/.env
-
-    echo >> appd/test/.env
-    echo "# Should be empty in $local_mode environment" >> appd/test/.env
-    echo "CERT_FILE=" >> appd/test/.env
-
-    echo >> appd/test/.env
-    echo "# Should be empty in $local_mode environment" >> appd/test/.env
-    echo "KEY_FILE=" >> appd/test/.env
-
-    echo >> appd/test/.env
-    echo "# Should be empty in $local_mode environment" >> appd/test/.env
-    echo "DB_USER=" >> appd/test/.env
-    echo "DB_PW=" >> appd/test/.env
-    echo "DB_HOST=" >> appd/test/.env
-    echo "DB_NAME=" >> appd/test/.env
-    echo "DB_PORT=" >> appd/test/.env
-
-    echo >> appd/test/.env
-    echo "APP_HOST=" >> appd/test/.env
-    echo "APP_PORT=" >> appd/test/.env
-    echo "SECRET_KEY=" >> appd/test/.env
-    echo "APP_URL_PREFIX=" >> appd/test/.env
-
-    echo >> appd/test/.env
-    echo "# Should be empty in $local_mode environment" >> appd/test/.env
-    echo "SWAGGER_BASE_URL=" >> appd/test/.env
-
+# Should be empty in $local_mode environment
+SWAGGER_BASE_URL=
+EOF
 }
 
 mode=$1
@@ -113,9 +73,6 @@ if [[ "$mode" = "prod" ]]; then
     init_prod_env_file "$location"
 elif [[ "$mode" = "dev" ]]; then
     init_dev_env_file "$location"
-    #init_test_env_file
-elif [[ "$mode" = "test" ]]; then
-    init_test_env_file "$location"
 else
     echo "Unknown mode: $mode"
     exit 1

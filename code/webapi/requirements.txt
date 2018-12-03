@@ -5,10 +5,10 @@ flask-sqlalchemy
 pyjwt
 python-simplexml
 pymysql
-factory_boy
-alembic
 python-dotenv
-uwsgi
 flask-cors
 email_validator
-pytest-cov
+#uwsgi
+#factory_boy
+#alembic
+#pytest-cov

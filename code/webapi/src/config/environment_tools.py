@@ -11,9 +11,9 @@ logger = logging.getLogger(get_logger_name(__name__))
 
 
 class Mode(Enum):
-    PROD = ('prod', 'config/production.py')
-    DEV = ('dev', 'config/development.py')
-    TEST = ('test', 'config/testing.py')
+    PROD = ('prod', 'production.py')
+    DEV = ('dev', 'development.py')
+    TEST = ('test', 'testing.py')
 
     def __init__(self, mode_str, config_path):
         self._mode_str = mode_str

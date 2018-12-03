@@ -5,10 +5,10 @@ from flasgger import swag_from
 from flask import Blueprint
 from flask_restful import Api, marshal_with, Resource
 
-from controllers.user import CurrentUserController, PublicUserController, CurrentUserProfileController, UserController, UserProfileController
+from controllers.user import CurrentUserController, PublicUserController, CurrentUserProfileController, UserController, UserProfileController, UserRoleController
 from controllers.job import CurrentUserJobController
-from models import User, Profile, Job
-from controllers.response_model import get_registered_user_details, get_profile_fields, get_job_fields
+from models import User, Profile, Job, Role
+from controllers.response_model import get_registered_user_details, get_profile_fields, get_job_fields, get_role_fields
 from utils.http import token_required, get_post_response, get_delete_response, serialize
 
 
@@ -199,6 +199,16 @@ class UserProfileResource(Resource):
         return get_delete_response()
 
 
+class UserRoleListResource(Resource):
+    def __init__(self):
+        self.controller = UserRoleController()
+    
+    @token_required(roles=['Administrator'])
+    @swag_from('/resources/users/description/users_role_list_get.yml')
+    @marshal_with(get_role_fields())
+    def get(self, public_id, current_user: User) -> List[Role]:
+        return self.controller.get_list(current_user, public_id=public_id)
+
 
 api.add_resource(CurrentUserResource, '/{rsc}/current'.format(rsc=API_PREFIX))
 api.add_resource(PublicUserResource, '/public/{rsc}'.format(rsc=API_PREFIX))
@@ -209,3 +219,4 @@ api.add_resource(UserListResource, '/{rsc}'.format(rsc=API_PREFIX))
 api.add_resource(UserResource, '/{rsc}/<string:public_id>'.format(rsc=API_PREFIX))
 api.add_resource(UserProfileListResource, '/{rsc}/<string:public_id>/profiles'.format(rsc=API_PREFIX))
 api.add_resource(UserProfileResource, '/{rsc}/<string:public_id>/profiles/<int:profile_id>'.format(rsc=API_PREFIX))
+api.add_resource(UserRoleListResource, '/{rsc}/<string:public_id>/roles'.format(rsc=API_PREFIX))

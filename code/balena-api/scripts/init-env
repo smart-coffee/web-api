@@ -1,16 +1,53 @@
 #!/bin/sh
 
-cat <<EOF >src/.env
+location=$1
+mode=$2
+
+if [[ -z "$location" ]]; then
+    echo "Provide a location as first parameter."
+    exit 1
+fi
+
+if [[ -z "$mode" ]]; then
+    mode="dev"
+fi
+
+if [ "$mode" = "dev" ]; then
+    export APP_HOST="localhost"
+    export APP_PORT="5001"
+    export FLASK_ENV="development"
+elif [ "$mode" = "prod" ]; then
+    export BALENA_TOKEN="<specify token here>"
+    export CERT_FILE="cert.pem"
+    export PRIVKEY_FILE="privkey.pem"
+    export APP_PORT="<specify port here>"
+    export APP_HOST="0.0.0.0"
+    export FLASK_ENV="production"
+else
+    echo "Unknown mode: '$mode'. Use one of the following modes: dev, prod"
+    exit 1
+fi
+
+echo "Generating '.env' file to '$location/.env'"
+
+cat <<EOF >$location/.env
 # Choose one of the following authentication methods.
 
 # (Recommended)
-BALENA_TOKEN=
+BALENA_TOKEN=$BALENA_TOKEN
 
 # Use your email and password here.
-BALENA_USERNAME=
-BALENA_PASSWORD=
+BALENA_USERNAME=$BALENA_USERNAME
+BALENA_PASSWORD=$BALENA_PASSWORD
 
 # HTTP/HTTPS
-CERT_FILE=
-PRIVKEY_FILE=
+CERT_FILE=$CERT_FILE
+PRIVKEY_FILE=$PRIVKEY_FILE
+
+# Flask
+APP_PORT=$APP_PORT
+APP_HOST=$APP_HOST
+FLASK_ENV=$FLASK_ENV
 EOF
+
+echo "'$env_location/.env' file generated. Please adjust as needed for $mode environment."

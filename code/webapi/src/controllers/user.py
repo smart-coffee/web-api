@@ -9,7 +9,7 @@ from email_validator import validate_email, EmailNotValidError, EmailSyntaxError
 from models import User, Profile, Role, Job
 from config.flask_config import ResourceNotFound, ResourceException, ForbiddenResourceException
 from controllers.request_model import get_edit_current_user_request_fields, get_register_user_request_fields, get_create_current_user_profile_request_fields, get_edit_current_user_profile_request_fields, get_create_user_request_fields, get_edit_user_request_fields, get_create_user_profile_request_fields, get_edit_user_profile_request_fields
-from controllers.fixture_functions import run_user_fixture, run_profile_fixture
+from controllers.fixture_functions import run_user_fixture, run_profile_fixture, run_role_fixture
 from controllers.base_controller import _BaseController
 from utils.http import get_validated_request_body_as_json
 from config.logger import logging, get_logger_name
@@ -147,13 +147,13 @@ class UserProfileController(_BaseController):
             raise ForbiddenResourceException('Tried to get a profile that belongs to user {0} as user {1}'.format(acutal_public_id, expected_public_id))
     
     def get_list_statement(self, current_user: User, **kwargs) -> List[Profile]:
-        user = self._get_user(**kwargs)
+        user = self.tools._get_user(**kwargs)
         return user.profiles
 
     def create_object(self, data: dict, current_user: User, **kwargs) -> Profile:
         profile = Profile()
         profile.name = data['name']
-        profile.user = self._get_user(**kwargs)
+        profile.user = self.tools._get_user(**kwargs)
         profile.coffee_strength_in_percent = data['coffee_strength_in_percent']
         profile.water_in_percent = data['water_in_percent']
         return profile
@@ -164,6 +164,20 @@ class UserProfileController(_BaseController):
         object_to_edit.water_in_percent = data['water_in_percent']
         return object_to_edit
 
+
+class UserRoleController(_BaseController):
+    def __init__(self):
+        super(UserRoleController, self).__init__(model_class=Role, resource_name='Role', fixture_function=run_role_fixture)
+        self.tools = UserTools()
+    
+    def get_list_statement(self, current_user: User, **kwargs) -> List[Role]:
+        user = self.tools._get_user(**kwargs)
+        if user.role is None:
+            return [ ]
+        return [ user.role ]
+
+
+class UserTools:
     def _get_user(self, **kwargs):
         public_id = kwargs['public_id']
         if public_id is None:
@@ -173,8 +187,6 @@ class UserProfileController(_BaseController):
             raise ResourceNotFound('User with public id {} not found.'.format(public_id))
         return user
 
-
-class UserTools:
     def _try_edit_user_password(self, data: dict, user: User):
         new_password = data['new_password']
         old_password = data['old_password']
