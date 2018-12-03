@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
 
-  apiUrl: '', // TODO: insert production api url
+  apiUrl: 'https://tobias-blaufuss.de:65291',
 };
