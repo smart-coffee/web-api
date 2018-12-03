@@ -1,29 +1,24 @@
 #!/bin/sh
 
 mode=$1
+env_location='src'
 
 if [ -z "$mode" ]; then
     mode="dev"
 fi
 
-if [ "$mode" = "dev" ]; then
-    export APP_HOST="localhost"
-    export APP_PORT="5001"
-    export FLASK_ENV="development"
-elif [ "$mode" = "prod" ]; then
-    export APP_HOST="0.0.0.0"
-    export APP_PORT="5002"
-    export FLASK_ENV="production"
-else
-    echo "Unknown mode: '$mode'. Use one of the following modes: dev, prod"
-    exit 1
+if [ ! -e "$env_location/.env" ]; then
+    echo "No '$env_location/.env' file found."
+    sh scripts/init-env "$env_location" "$mode"
+    exit 2
 fi
+echo "'$env_location/.env' found."
+source "$env_location/.env"
 
 source venv/bin/activate
-
 if [ "$?" -ne 0 ]; then
     echo "Execute './scripts/init-venv' first."
-    exit 2
+    exit 3
 fi
 
 cd src

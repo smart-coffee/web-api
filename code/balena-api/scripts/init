@@ -1,4 +1,6 @@
 #!/bin/sh
 
-sh scripts/init-env
+mode=$1
+
+sh scripts/init-env "src" "$mode"
 sh scripts/init-venv
