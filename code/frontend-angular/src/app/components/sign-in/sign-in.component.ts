@@ -36,6 +36,7 @@ export class SignInComponent implements OnInit {
     }
   }
 
+  // TODO: add auth service call here
   signIn () {
     if (this.username === 'admin' && this.password === 'admin') {
       localStorage.setItem('isLoggedIn', 'true');
