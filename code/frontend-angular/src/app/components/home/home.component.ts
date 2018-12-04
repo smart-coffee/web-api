@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CoffeeMachine } from '../../shared/models/coffee-machine';
 
 @Component({
   selector: 'app-home',
