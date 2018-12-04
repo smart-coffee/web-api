@@ -10,9 +10,22 @@ export class HomeComponent implements OnInit {
 
   constructor(private router: Router) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    localStorage.setItem('cupSelection', '1');
+  }
 
-  navigateToRoute (routeName: string) {
+  navigateToRoute (tmpRouteName: string) {
+    let routeName = tmpRouteName;
+
+    // absolute mega hack, i dare you to top this shitty shit
+    if (routeName === 'one-cup-preferences') {
+      localStorage.setItem('cupSelection', '1');
+      routeName = 'coffee-preferences';
+    } else if ( routeName === 'two-cup-preferences') {
+      localStorage.setItem('cupSelection', '2');
+      routeName = 'coffee-preferences';
+    }
+
     this.router.navigate([routeName]);
   }
 

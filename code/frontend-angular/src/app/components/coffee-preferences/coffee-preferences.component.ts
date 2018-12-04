@@ -21,7 +21,7 @@ export class CoffeePreferencesComponent implements OnInit {
   constructor(private router: Router, private location: Location) {}
 
   ngOnInit() {
-    this.cupVal = 1;
+    this.cupVal = Number(localStorage.getItem('cupSelection'));
     this.coffeeVal = 75;
     this.waterVal = 30;
     this.profilePickerOpen = 'closed';
