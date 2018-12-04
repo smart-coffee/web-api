@@ -5,7 +5,9 @@
 export const environment = {
   production: false,
 
-  apiUrl: 'http://localhost:5000'
+  webApiUrl: 'http://localhost:5000',
+  balenaApiUrl: 'https://localhost:5001/balena/sandbox-test',
+  machineApiUrl: '' // TODO: insert this url
 };
 
 /*

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import {CoffeeMachineService} from '../../services/coffee-machine.service';
+import {CoffeeMachine} from '../../shared/models/coffee-machine';
 
 @Component({
   selector: 'app-coffee-machine-info',
@@ -29,12 +31,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 export class CoffeeMachineInfoComponent implements OnInit {
 
   showMenu: boolean;
-
-  coffeeMachines: Object = [
-    { name: 'Winston' },
-    { name: 'Reinhart' },
-    { name: 'Moira' }
-  ];
+  coffeeMachines: CoffeeMachine[];
 
   coffeeMachineDetails = {
     name: '',
@@ -49,10 +46,13 @@ export class CoffeeMachineInfoComponent implements OnInit {
     {name: 'Moira', coffeeLevel: 22, waterLevel: 50, trashLevel: 85},
   ];
 
-  constructor() { }
+  constructor(private coffeeMachineService: CoffeeMachineService) { }
 
   ngOnInit() {
     this.showMenu = false;
+
+    this.coffeeMachines = [];
+    this.getCoffeeMachines();
 
     this.coffeeMachineDetails = {
       name: 'Winston',
@@ -64,6 +64,33 @@ export class CoffeeMachineInfoComponent implements OnInit {
 
   toggleMenu () {
     this.showMenu = !this.showMenu;
+  }
+
+  getCoffeeMachines () {
+    this.coffeeMachineService.getCoffeeMachines()
+      .subscribe(devices => {
+        devices.map(device => {
+          const { uuid } = device;
+          this.getCoffeeMachineId(uuid);
+        });
+      });
+  }
+
+  getCoffeeMachineId(uuid: string) {
+    this.coffeeMachineService.getCoffeeMachineId(uuid)
+      .subscribe(balenaDevice => {
+        const { coffee_machine_id } = balenaDevice;
+        this.getCoffeeMachineName(coffee_machine_id, uuid);
+      });
+  }
+
+  getCoffeeMachineName(id: number, uuid: string) {
+    this.coffeeMachineService.getCoffeeMachineName(id)
+      .subscribe( coffeeMachine => {
+        const { name } = coffeeMachine;
+        this.coffeeMachines.push({id: id, name: name, uuid: uuid});
+        console.log(`got the device including name:`, this.coffeeMachines);
+      });
   }
 
   pickMachine (machineName: string) {
