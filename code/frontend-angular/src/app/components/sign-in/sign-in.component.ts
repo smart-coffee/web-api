@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { ITextInputObject } from '../../shared/interfaces/form-input-objects';
+import { first } from 'rxjs/operators';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -12,12 +14,19 @@ export class SignInComponent implements OnInit {
 
   username: string;
   password: string;
+  loading: boolean;
+  error: string;
 
-  constructor(private router: Router, private location: Location) { }
+  constructor(private router: Router,
+              private location: Location,
+              private authenticationService: AuthenticationService
+  ) { }
 
   ngOnInit() {
     this.username = '';
     this.password = '';
+    this.loading = false;
+    this.error = '';
   }
 
   onSwipeRight () {
@@ -47,5 +56,19 @@ export class SignInComponent implements OnInit {
     } else {
       console.log('WOW .... nice try hacking this super secure application ... try again with a different password');
     }
+
+    this.loading = true;
+    this.authenticationService.login(this.username, this.password)
+      .pipe(first())
+      .subscribe(
+        data => {
+          console.log(`In sign in --- response is: ${data}`);
+          this.router.navigate(['home']);
+        },
+        error => {
+          this.error = error;
+          this.loading = false;
+        }
+      );
   }
 }
