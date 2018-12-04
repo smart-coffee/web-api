@@ -45,18 +45,7 @@ export class SignInComponent implements OnInit {
     }
   }
 
-  // TODO: add auth service call here
   signIn () {
-    if (this.username === 'admin' && this.password === 'admin') {
-      localStorage.setItem('isLoggedIn', 'true');
-      console.log('something sign-in related should be happening right now -' +
-        ' it is not though ... you just hacked your way in');
-      console.log('you sneaky little hacker ヽ༼ ಠ益ಠ ༽ﾉ');
-      this.router.navigate(['home']);
-    } else {
-      console.log('WOW .... nice try hacking this super secure application ... try again with a different password');
-    }
-
     this.loading = true;
     this.authenticationService.login(this.username, this.password)
       .pipe(first())

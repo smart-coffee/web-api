@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {CoffeeMachineService} from '../../services/coffee-machine.service';
 import {CoffeeMachine} from '../../shared/models/coffee-machine';
@@ -30,8 +30,11 @@ import {CoffeeMachine} from '../../shared/models/coffee-machine';
 })
 export class CoffeeMachineInfoComponent implements OnInit {
 
+  // TODO: add loading animation, when stuffs not loaded
+
   showMenu: boolean;
   coffeeMachines: CoffeeMachine[];
+  machineDetailsInitialized: boolean;
 
   coffeeMachineDetails = {
     name: '',
@@ -40,26 +43,14 @@ export class CoffeeMachineInfoComponent implements OnInit {
     trashLevel: 0
   };
 
-  coffeeMachineDetailsList: Object = [
-    {name: 'Winston', coffeeLevel: 90, waterLevel: 73, trashLevel: 20},
-    {name: 'Reinhart', coffeeLevel: 50, waterLevel: 40, trashLevel: 60},
-    {name: 'Moira', coffeeLevel: 22, waterLevel: 50, trashLevel: 85},
-  ];
-
-  constructor(private coffeeMachineService: CoffeeMachineService) { }
+  constructor(private coffeeMachineService: CoffeeMachineService,
+              private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.showMenu = false;
-
+    this.machineDetailsInitialized = false;
     this.coffeeMachines = [];
     this.getCoffeeMachines();
-
-    this.coffeeMachineDetails = {
-      name: 'Winston',
-      coffeeLevel: 90,
-      waterLevel: 73,
-      trashLevel: 20
-    };
   }
 
   toggleMenu () {
@@ -69,13 +60,14 @@ export class CoffeeMachineInfoComponent implements OnInit {
   getCoffeeMachines () {
     this.coffeeMachineService.getCoffeeMachines()
       .subscribe(devices => {
-        devices.map(device => {
-          const { uuid } = device;
-          if (typeof uuid !== 'undefined') {
+          devices.map(device => {
+            const { uuid } = device;
+            if (typeof uuid !== 'undefined') {
             this.getCoffeeMachineId(uuid);
-          }
-        });
-      });
+            }
+          });
+        }
+      );
   }
 
   getCoffeeMachineId(uuid: string) {
@@ -95,23 +87,36 @@ export class CoffeeMachineInfoComponent implements OnInit {
       .subscribe( coffeeMachine => {
         const { name } = coffeeMachine;
         if (typeof name !== 'undefined') {
-          this.coffeeMachines.push({id: id, name: name, uuid: uuid});
+          this.coffeeMachines = [...this.coffeeMachines, {id: id, name: name, uuid: uuid}];
+          // TODO: remove this dirty af workaround
+          if (!this.machineDetailsInitialized) {
+            this.initCoffeeMachineDetails({id: id, name: name, uuid: uuid});
+            this.machineDetailsInitialized = true;
+          }
         } else {
           console.error(`could not retrieve coffee machine name for uuid: ${uuid} and machine id: ${id}`);
         }
       });
   }
 
-  pickMachine (machineName: string) {
-    this.coffeeMachineDetails = this.search(machineName, this.coffeeMachineDetailsList);
-  }
+  initCoffeeMachineDetails(cm: CoffeeMachine) {
+    const { name, uuid } = cm;
+    this.coffeeMachineService.getCoffeeMachineStatus(uuid)
+      .subscribe( coffeeMachine => {
+        const { water_tank_fill_level_in_percent: waterLevel,
+          coffee_bean_container_fill_level_in_percent: coffeeLevel,
+          coffee_grounds_container_fill_level_in_percent: trashLevel } = coffeeMachine;
 
-  search (nameKey: string, array: any) {
-    for (let i = 0; i < array.length; i++) {
-      if (array[i].name === nameKey) {
-        return array[i];
-      }
-    }
+        if (typeof waterLevel !== 'undefined' && typeof coffeeLevel !== 'undefined' && typeof trashLevel !== 'undefined') {
+          this.coffeeMachineDetails = {
+            name: name,
+            coffeeLevel: coffeeLevel,
+            waterLevel: waterLevel,
+            trashLevel: trashLevel
+          };
+          this.cdr.detectChanges();
+        }
+      });
   }
 
 }

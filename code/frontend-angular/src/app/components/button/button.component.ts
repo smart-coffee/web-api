@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
 
 @Component({
   selector: 'app-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss']
 })
-export class ButtonComponent implements OnChanges {
+export class ButtonComponent implements OnInit {
 
   @Input() label: string;
   @Input() type: string;
@@ -13,9 +13,7 @@ export class ButtonComponent implements OnChanges {
 
   constructor() { }
 
-  ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
-  }
+  ngOnInit() { }
 
   handleClick(event) {
     this.action.emit(event);
