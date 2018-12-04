@@ -34,16 +34,19 @@
     width: 100%;
   }
 
-
+  /*
+   * kind of not BEM, but not possible any other way, because some idiot
+   * does not support it in his fucking range input lib
+   */
   &__highlighter-bar--coffee {
+    border-radius: 4px;
     background: -moz-linear-gradient(left, $color-gradient-coffee-start 0%, $color-gradient-coffee-end 100%);
     background: -webkit-linear-gradient(left, $color-gradient-coffee-start 0%,$color-gradient-coffee-end 100%);
     background: linear-gradient(to right, $color-gradient-coffee-start 0%,$color-gradient-coffee-end 100%);
   }
 
-
-
   &__highlighter-bar--water {
+    border-radius: 4px;
     background: -moz-linear-gradient(left, $color-gradient-water-start 0%, $color-gradient-water-end 100%);
     background: -webkit-linear-gradient(left, $color-gradient-water-start 0%,$color-gradient-water-end 100%);
     background: linear-gradient(to right, $color-gradient-water-start 0%,$color-gradient-water-end 100%);
