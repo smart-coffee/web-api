@@ -51,7 +51,6 @@ export class SignInComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          console.log(`In sign in --- response is: ${data}`);
           this.router.navigate(['home']);
         },
         error => {
