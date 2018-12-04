@@ -71,7 +71,9 @@ export class CoffeeMachineInfoComponent implements OnInit {
       .subscribe(devices => {
         devices.map(device => {
           const { uuid } = device;
-          this.getCoffeeMachineId(uuid);
+          if (typeof uuid !== 'undefined') {
+            this.getCoffeeMachineId(uuid);
+          }
         });
       });
   }
@@ -80,7 +82,11 @@ export class CoffeeMachineInfoComponent implements OnInit {
     this.coffeeMachineService.getCoffeeMachineId(uuid)
       .subscribe(balenaDevice => {
         const { coffee_machine_id } = balenaDevice;
-        this.getCoffeeMachineName(coffee_machine_id, uuid);
+        if (typeof coffee_machine_id !== 'undefined') {
+          this.getCoffeeMachineName(coffee_machine_id, uuid);
+        } else {
+          console.error(`could not retrieve balena device for uuid: ${uuid}`);
+        }
       });
   }
 
@@ -88,8 +94,11 @@ export class CoffeeMachineInfoComponent implements OnInit {
     this.coffeeMachineService.getCoffeeMachineName(id)
       .subscribe( coffeeMachine => {
         const { name } = coffeeMachine;
-        this.coffeeMachines.push({id: id, name: name, uuid: uuid});
-        console.log(`got the device including name:`, this.coffeeMachines);
+        if (typeof name !== 'undefined') {
+          this.coffeeMachines.push({id: id, name: name, uuid: uuid});
+        } else {
+          console.error(`could not retrieve coffee machine name for uuid: ${uuid} and machine id: ${id}`);
+        }
       });
   }
 
