@@ -1,7 +1,7 @@
 #%RAML 1.0
 title: IoT Coffee Machine Core
 version: v1.0
-baseUri: http://localhost:5000
+baseUri: https://tobias-blaufuss.de:65291
 protocols: [ HTTP, HTTPS ]
 mediaType:  application/json
 
@@ -20,6 +20,7 @@ types:
   job: !include types/job.raml
   token: !include types/token.raml
   user-create: !include types/user-create.raml
+  user-job-create: !include types/user-job-create.raml
   user-register: !include types/user-register.raml
   user: !include types/user.raml
   user-edit: !include types/user-edit.raml
@@ -156,8 +157,18 @@ securitySchemes:
     /jobs:
       securedBy: [ jwt ]
       get: !include resources/jobs-get.raml
-      post: !include resources/jobs-post.raml
-              
+      post:
+        description: Speichert einen neuen ausgeführten Auftrag einer Kaffeemaschine.
+        body:
+          type: user-job-create
+        responses: 
+          201:
+            description: Created. Neuer Auftrag wurde gespeichert.
+            headers:
+              Location:
+                description: URL zum neu angelegten Auftrag.
+            body:
+              type: job              
 
 /roles:
   securedBy: [ jwt ]

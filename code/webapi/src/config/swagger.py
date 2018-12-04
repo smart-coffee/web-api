@@ -4,7 +4,7 @@ from config.environment_tools import get_swagger_base_url
 
 def get_swagger_spec():
     return {
-        "title": "TTC RESTful API Spec",
+        "title": "IoT Coffee Machine Core API",
         "version": "1.0.0",
         # "headers": [
         #     ('Access-Control-Allow-Origin', '*'),
@@ -12,15 +12,15 @@ def get_swagger_spec():
         #     ('Access-Control-Allow-Credentials', "true"),
         # ],
         "contact": {
-            "responsibleOrganization": "TTC Sülzfeld 08 e.V.",
+            "responsibleOrganization": "CM Boys",
             "responsibleDeveloper": "Tobias Blaufuß",
             "email": "tobias.blaufuss@outlook.de",
             "url": "https://www.tobias-blaufuss.de",
         },
         "specs": [
             {
-                "endpoint": 'ttc_apispec',
-                "route": '/ttc_apispec.json',
+                "endpoint": 'cm_apispec',
+                "route": '/cm_apispec.json',
                 "rule_filter": lambda rule: True,  # all in
                 "model_filter": lambda tag: True,  # all in
             }
