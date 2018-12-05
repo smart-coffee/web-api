@@ -8,7 +8,7 @@ pymysql
 python-dotenv
 flask-cors
 email_validator
-#uwsgi
+uwsgi
 #factory_boy
 #alembic
 #pytest-cov
