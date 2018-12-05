@@ -15,7 +15,7 @@
     ". form ."
     ". btn .";
   background-color: $color-background-light;
-  overflow-y: scroll;
+  overflow: auto;
   &__header {
     grid-area: header;
   }
