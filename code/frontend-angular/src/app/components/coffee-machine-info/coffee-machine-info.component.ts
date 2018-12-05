@@ -32,6 +32,7 @@ export class CoffeeMachineInfoComponent implements OnInit {
 
   // TODO: add loading animation, when stuffs not loaded
 
+  detailsAreLoading: boolean;
   showMenu: boolean;
   coffeeMachines: CoffeeMachine[];
   machineDetailsInitialized: boolean;

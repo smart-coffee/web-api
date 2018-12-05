@@ -11,9 +11,9 @@
     </div>
   </div>
   <div class="coffee-machine-info__machine-fill-indicators">
-    <app-radial-progress type="coffee" width="100" [progress]="coffeeMachineDetails.coffeeLevel" iconSource="../../../assets/icons/24/Coffeebean/Dark.svg"></app-radial-progress>
-    <app-radial-progress type="water" width="100" [progress]="coffeeMachineDetails.waterLevel" iconSource="../../../assets/icons/24/Drop/Dark.svg"></app-radial-progress>
-    <app-radial-progress type="trash" width="100" [progress]="coffeeMachineDetails.trashLevel" iconSource="../../../assets/icons/24/Trash/Dark.svg"></app-radial-progress>
+    <app-radial-progress [type]="'coffee'" [width]="100" [progress]="coffeeMachineDetails.coffeeLevel" [iconSource]="'../../../assets/icons/24/Coffeebean/Dark.svg'"></app-radial-progress>
+    <app-radial-progress [type]="'water'" [width]="100" [progress]="coffeeMachineDetails.waterLevel" [iconSource]="'../../../assets/icons/24/Drop/Dark.svg'"></app-radial-progress>
+    <app-radial-progress [type]="'trash'" [width]="100" [progress]="coffeeMachineDetails.trashLevel" [iconSource]="'../../../assets/icons/24/Trash/Dark.svg'"></app-radial-progress>
   </div>
   <div class="coffee-machine-info__machine-dropdown-hack" [@showHide]="showMenu ? 'show' : 'hide'" (click)="toggleMenu()"></div>
 </div>
