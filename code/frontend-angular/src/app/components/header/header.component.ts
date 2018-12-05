@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
   selector: 'app-header',
@@ -31,7 +32,8 @@ export class HeaderComponent implements OnInit {
 
   showMenu: boolean;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+              private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     this.showMenu = false;
@@ -42,7 +44,7 @@ export class HeaderComponent implements OnInit {
   }
 
   signOut () {
-    localStorage.setItem('isLoggedIn', 'false');
+    this.authenticationService.signOut();
     this.router.navigate(['welcome']);
   }
 

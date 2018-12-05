@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import {CoffeeMachineService} from '../../services/coffee-machine.service';
+import {CoffeeMachine} from '../../shared/models/coffee-machine';
 
 @Component({
   selector: 'app-coffee-machine-info',
@@ -28,13 +30,11 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 })
 export class CoffeeMachineInfoComponent implements OnInit {
 
-  showMenu: boolean;
+  // TODO: add loading animation, when stuffs not loaded
 
-  coffeeMachines: Object = [
-    { name: 'Winston' },
-    { name: 'Reinhart' },
-    { name: 'Moira' }
-  ];
+  showMenu: boolean;
+  coffeeMachines: CoffeeMachine[];
+  machineDetailsInitialized: boolean;
 
   coffeeMachineDetails = {
     name: '',
@@ -43,39 +43,80 @@ export class CoffeeMachineInfoComponent implements OnInit {
     trashLevel: 0
   };
 
-  coffeeMachineDetailsList: Object = [
-    {name: 'Winston', coffeeLevel: 90, waterLevel: 73, trashLevel: 20},
-    {name: 'Reinhart', coffeeLevel: 50, waterLevel: 40, trashLevel: 60},
-    {name: 'Moira', coffeeLevel: 22, waterLevel: 50, trashLevel: 85},
-  ];
-
-  constructor() { }
+  constructor(private coffeeMachineService: CoffeeMachineService,
+              private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.showMenu = false;
-
-    this.coffeeMachineDetails = {
-      name: 'Winston',
-      coffeeLevel: 90,
-      waterLevel: 73,
-      trashLevel: 20
-    };
+    this.machineDetailsInitialized = false;
+    this.coffeeMachines = [];
+    this.getCoffeeMachines();
   }
 
   toggleMenu () {
     this.showMenu = !this.showMenu;
   }
 
-  pickMachine (machineName: string) {
-    this.coffeeMachineDetails = this.search(machineName, this.coffeeMachineDetailsList);
+  getCoffeeMachines () {
+    this.coffeeMachineService.getCoffeeMachines()
+      .subscribe(devices => {
+          devices.map(device => {
+            const { uuid } = device;
+            if (typeof uuid !== 'undefined') {
+            this.getCoffeeMachineId(uuid);
+            }
+          });
+        }
+      );
   }
 
-  search (nameKey: string, array: any) {
-    for (let i = 0; i < array.length; i++) {
-      if (array[i].name === nameKey) {
-        return array[i];
-      }
-    }
+  getCoffeeMachineId(uuid: string) {
+    this.coffeeMachineService.getCoffeeMachineId(uuid)
+      .subscribe(balenaDevice => {
+        const { coffee_machine_id } = balenaDevice;
+        if (typeof coffee_machine_id !== 'undefined') {
+          this.getCoffeeMachineName(coffee_machine_id, uuid);
+        } else {
+          console.error(`could not retrieve balena device for uuid: ${uuid}`);
+        }
+      });
+  }
+
+  getCoffeeMachineName(id: number, uuid: string) {
+    this.coffeeMachineService.getCoffeeMachineName(id)
+      .subscribe( coffeeMachine => {
+        const { name } = coffeeMachine;
+        if (typeof name !== 'undefined') {
+          this.coffeeMachines = [...this.coffeeMachines, {id: id, name: name, uuid: uuid}];
+          // TODO: remove this dirty af workaround
+          if (!this.machineDetailsInitialized) {
+            this.initCoffeeMachineDetails({id: id, name: name, uuid: uuid});
+            this.machineDetailsInitialized = true;
+          }
+        } else {
+          console.error(`could not retrieve coffee machine name for uuid: ${uuid} and machine id: ${id}`);
+        }
+      });
+  }
+
+  initCoffeeMachineDetails(cm: CoffeeMachine) {
+    const { name, uuid } = cm;
+    this.coffeeMachineService.getCoffeeMachineStatus(uuid)
+      .subscribe( coffeeMachine => {
+        const { water_tank_fill_level_in_percent: waterLevel,
+          coffee_bean_container_fill_level_in_percent: coffeeLevel,
+          coffee_grounds_container_fill_level_in_percent: trashLevel } = coffeeMachine;
+
+        if (typeof waterLevel !== 'undefined' && typeof coffeeLevel !== 'undefined' && typeof trashLevel !== 'undefined') {
+          this.coffeeMachineDetails = {
+            name: name,
+            coffeeLevel: coffeeLevel,
+            waterLevel: waterLevel,
+            trashLevel: trashLevel
+          };
+          this.cdr.detectChanges();
+        }
+      });
   }
 
 }

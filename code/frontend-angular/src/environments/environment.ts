@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+
+  webApiUrl: 'http://localhost:5000',
+  balenaApiUrl: 'https://localhost:5001/balena/sandbox-test',
+  machineApiUrl: '' // TODO: insert this url
 };
 
 /*

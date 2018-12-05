@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { ITextInputObject } from '../../shared/interfaces/form-input-objects';
+import { first } from 'rxjs/operators';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -12,12 +14,19 @@ export class SignInComponent implements OnInit {
 
   username: string;
   password: string;
+  loading: boolean;
+  error: string;
 
-  constructor(private router: Router, private location: Location) { }
+  constructor(private router: Router,
+              private location: Location,
+              private authenticationService: AuthenticationService
+  ) { }
 
   ngOnInit() {
     this.username = '';
     this.password = '';
+    this.loading = false;
+    this.error = '';
   }
 
   onSwipeRight () {
@@ -37,14 +46,17 @@ export class SignInComponent implements OnInit {
   }
 
   signIn () {
-    if (this.username === 'admin' && this.password === 'admin') {
-      localStorage.setItem('isLoggedIn', 'true');
-      console.log('something sign-in related should be happening right now -' +
-        ' it is not though ... you just hacked your way in');
-      console.log('you sneaky little hacker ヽ༼ ಠ益ಠ ༽ﾉ');
-      this.router.navigate(['home']);
-    } else {
-      console.log('WOW .... nice try hacking this super secure application ... try again with a different password');
-    }
+    this.loading = true;
+    this.authenticationService.login(this.username, this.password)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.router.navigate(['home']);
+        },
+        error => {
+          this.error = error;
+          this.loading = false;
+        }
+      );
   }
 }

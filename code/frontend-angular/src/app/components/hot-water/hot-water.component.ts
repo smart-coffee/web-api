@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-hot-water',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HotWaterComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private location: Location) { }
 
   ngOnInit() {
   }
 
+  onSwipeRight () {
+    this.location.back();
+  }
 }

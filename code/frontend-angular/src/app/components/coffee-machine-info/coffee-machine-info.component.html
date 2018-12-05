@@ -4,7 +4,7 @@
     <span class="coffee-machine-info__arrow-down" (click)="toggleMenu()"></span>
     <div class="coffee-machine-info__machine-dropdown" [@showHide]="showMenu ? 'show' : 'hide'">
       <div class="coffee-machine-info__dropdown-headline">Kaffeemaschinen in meiner Nähe</div>
-      <div class="coffee-machine-info__dropdown-option" *ngFor="let coffeeMachine of coffeeMachines" (click)="pickMachine(coffeeMachine.name)" (click)="toggleMenu()">
+      <div class="coffee-machine-info__dropdown-option" *ngFor="let coffeeMachine of coffeeMachines" (click)="initCoffeeMachineDetails(coffeeMachine)" (click)="toggleMenu()">
         <img class="coffee-machine-info__coffee-machine-icon" alt="coffee-machine" src="../../../assets/icons/24/Coffeemaker/Dark.svg"/>
         <span>{{coffeeMachine.name}}</span>
       </div>

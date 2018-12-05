@@ -1,9 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { APP_BASE_HREF } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { AppComponent } from './app.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
@@ -22,10 +25,9 @@ import { ArtyHeadlineComponent } from './components/arty-headline/arty-headline.
 import { RadialProgressComponent } from './components/radial-progress/radial-progress.component';
 import { HeaderComponent } from './components/header/header.component';
 import { CoffeeMachineInfoComponent } from './components/coffee-machine-info/coffee-machine-info.component';
-import { APP_BASE_HREF } from '@angular/common';
 import { FormRangeInputComponent } from './components/form-range-input/form-range-input.component';
-import { FormsModule } from '@angular/forms';
 import { NgxFormComponentsModule } from 'ngx-form-components';
+import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -51,13 +53,15 @@ import { NgxFormComponentsModule } from 'ngx-form-components';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     FormsModule,
     NgxFormComponentsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     AppRoutingModule
   ],
   providers: [
-    { provide: APP_BASE_HREF, useValue: '/'}
+    { provide: APP_BASE_HREF, useValue: '/'},
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

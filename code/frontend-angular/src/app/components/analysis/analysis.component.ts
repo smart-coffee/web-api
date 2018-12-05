@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-analysis',
@@ -7,16 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AnalysisComponent implements OnInit {
 
-  min = 0;
-  max = 100;
-  twoWayRange = [10, 30];
-
-  constructor() { }
+  constructor(private router: Router, private location: Location) { }
 
   ngOnInit() {
   }
 
-  changed() {
-    this.twoWayRange = [...this.twoWayRange];
+  onSwipeRight () {
+    this.location.back();
   }
 }

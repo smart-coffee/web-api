@@ -8,6 +8,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { AuthGuard } from './auth-guard.service';
 import { AnalysisComponent } from './components/analysis/analysis.component';
+import { HotWaterComponent } from './components/hot-water/hot-water.component';
 
 /**
  * App routing module contains all routes for the application
@@ -17,9 +18,10 @@ import { AnalysisComponent } from './components/analysis/analysis.component';
 const routes: Routes = [
   { path: '', canActivate: [AuthGuard], pathMatch: 'full', redirectTo: 'home' },
   { path: 'account-recovery', component: AccountRecoveryComponent },
-  { path: 'analysis', component: AnalysisComponent},
-  { path: 'coffee-preferences', component: CoffeePreferencesComponent },
+  { path: 'analysis', canActivate: [AuthGuard], component: AnalysisComponent},
+  { path: 'coffee-preferences', canActivate: [AuthGuard], component: CoffeePreferencesComponent },
   { path: 'home', canActivate: [AuthGuard], component: HomeComponent },
+  { path: 'hot-water', canActivate: [AuthGuard], component: HotWaterComponent },
   { path: 'sign-up', component: SignUpComponent },
   { path: 'sign-in', component: SignInComponent  },
   { path: 'welcome', component: WelcomeComponent }
