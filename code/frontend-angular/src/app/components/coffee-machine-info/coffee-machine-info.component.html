@@ -1,4 +1,5 @@
-<div class="coffee-machine-info">
+<app-coffee-loader *ngIf="detailsLoading"></app-coffee-loader>
+<div class="coffee-machine-info" *ngIf="!detailsLoading">
   <div class="coffee-machine-info__machine-picker">
     <span class="coffee-machine-info__machine-name" (click)="toggleMenu()">{{coffeeMachineDetails.name}}</span>
     <span class="coffee-machine-info__arrow-down" (click)="toggleMenu()"></span>

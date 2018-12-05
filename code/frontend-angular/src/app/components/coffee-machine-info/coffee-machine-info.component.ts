@@ -30,9 +30,7 @@ import {CoffeeMachine} from '../../shared/models/coffee-machine';
 })
 export class CoffeeMachineInfoComponent implements OnInit {
 
-  // TODO: add loading animation, when stuffs not loaded
-
-  detailsAreLoading: boolean;
+  detailsLoading: boolean;
   showMenu: boolean;
   coffeeMachines: CoffeeMachine[];
   machineDetailsInitialized: boolean;
@@ -48,6 +46,7 @@ export class CoffeeMachineInfoComponent implements OnInit {
               private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
+    this.detailsLoading = true;
     this.showMenu = false;
     this.machineDetailsInitialized = false;
     this.coffeeMachines = [];
@@ -101,6 +100,7 @@ export class CoffeeMachineInfoComponent implements OnInit {
   }
 
   initCoffeeMachineDetails(cm: CoffeeMachine) {
+    this.detailsLoading = true;
     const { name, uuid } = cm;
     this.coffeeMachineService.getCoffeeMachineStatus(uuid)
       .subscribe( coffeeMachine => {
@@ -115,6 +115,7 @@ export class CoffeeMachineInfoComponent implements OnInit {
             waterLevel: waterLevel,
             trashLevel: trashLevel
           };
+          this.detailsLoading = false;
           this.cdr.detectChanges();
         }
       });
