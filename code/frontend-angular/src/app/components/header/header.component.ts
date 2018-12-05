@@ -39,6 +39,10 @@ export class HeaderComponent implements OnInit {
     this.showMenu = false;
   }
 
+  navigateToHome () {
+    this.router.navigate(['home']);
+  }
+
   toggleMenu () {
     this.showMenu = !this.showMenu;
   }

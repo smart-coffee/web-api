@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { IRangeInputObject } from '../../shared/interfaces/form-input-objects';
 
 @Component({
@@ -7,7 +7,7 @@ import { IRangeInputObject } from '../../shared/interfaces/form-input-objects';
   styleUrls: ['./form-range-input.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class FormRangeInputComponent implements OnInit {
+export class FormRangeInputComponent implements OnInit, AfterViewInit {
 
   @Input() name: string;
   @Input() label: string;
@@ -20,15 +20,15 @@ export class FormRangeInputComponent implements OnInit {
 
   inputObject: IRangeInputObject;
 
+  viewInitialized: boolean;
+
   localValue: number;
   minVal: number;
   maxVal: number;
   unit: string;
   highlighterBarClass: string;
 
-  constructor() {
-
-  }
+  constructor() { }
 
   ngOnInit() {
     this.localValue = this.value;
@@ -42,6 +42,11 @@ export class FormRangeInputComponent implements OnInit {
       this.unit = '%';
     }
     this.highlighterBarClass = `sc-range-input__highlighter-bar--${this.type}`;
+  }
+
+  ngAfterViewInit() {
+    this.viewInitialized = true;
+    console.log(`form range input initialized`);
   }
 
   rangeValChanged (value: any) {
