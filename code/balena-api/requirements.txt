@@ -2,3 +2,4 @@ balena-sdk
 flask
 flask_cors
 python-dotenv
+uwsgi

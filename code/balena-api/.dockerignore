@@ -7,3 +7,6 @@ README.md
 .git/
 __pycache__/
 scripts/
+*.sock
+venv/
+*.pid

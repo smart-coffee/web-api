@@ -10,7 +10,7 @@ from config.flask_config import FlaskExceptionConfig, post_configuration, regist
 from resources import USER_BP, AUTHENTICATION_BP, ROLE_BP, COFFEE_BP, JOB_BP
 
 
-def start_app(app: Flask):
+def configure_app(app: Flask):
     _EXCEPTION_CONF = FlaskExceptionConfig(app)
     _blueprints = [
         INDEX_SWAGGER_BP,
@@ -26,6 +26,8 @@ def start_app(app: Flask):
     post_configuration(app, _configs)
     register_blueprints(app, _blueprints)
 
+
+def start_app(app: Flask):
     certificate = get_cert()
     private_key = get_key()
     if certificate and len(certificate) > 0 and not os.path.isfile(certificate):
@@ -42,5 +44,6 @@ def start_app(app: Flask):
     app.run(host=_host, port=_port, ssl_context=_ssl_context, threaded=_threaded)
 
 
+configure_app(FLASK_APP)
 if __name__ == '__main__':
     start_app(FLASK_APP)

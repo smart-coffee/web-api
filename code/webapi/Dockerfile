@@ -1,6 +1,6 @@
 FROM python:3.7-alpine
 
-RUN apk --update add gcc libffi-dev musl-dev openssl-dev
+RUN apk --update add gcc libffi-dev musl-dev openssl-dev linux-headers
 
 WORKDIR /usr/src/app
 COPY requirements.txt .
