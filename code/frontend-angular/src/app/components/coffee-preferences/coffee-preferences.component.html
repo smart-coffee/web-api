@@ -27,13 +27,19 @@
       <div>
         Kaffeeprofil
       </div>
-      <div class="coffee-preferences__profile-picker">
-        <span>Italienischer Espresso</span>
-        <img class="coffee-preferences__dropdown-activator--{{profilePickerOpen}}"
-             alt="dropdown-activator"
-             src="../../../assets/pictograms/dropdown-activator-down.svg"
-             (click)="toggleProfilePicker()"
-        >
+      <div class="coffee-preferences__profile-picker coffee-preferences__profile-picker--{{profilePickerOpen}}">
+        <div class="coffee-preferences__selected-profile coffee-preferences__selected-profile--{{profilePickerOpen}}">
+          <span>{{selectedProfile.name}}</span>
+          <span (click)="toggleProfilePicker()"
+                class="coffee-preferences__dropdown-activator coffee-preferences__dropdown-activator--{{profilePickerOpen}}">
+          </span>
+        </div>
+        <div class="coffee-preferences__profile-option-wrapper" *ngIf="profilePickerOpen === 'open'">
+          <div *ngFor="let profile of coffeeProfiles; last as isLast" (click)="selectProfile(profile)">
+            <div class="coffee-preferences__profile-option">{{profile.name}}</div>
+            <div *ngIf="!isLast" class="coffee-preferences__profile-option-divider"></div>
+          </div>
+        </div>
       </div>
     </div>
   </form>
