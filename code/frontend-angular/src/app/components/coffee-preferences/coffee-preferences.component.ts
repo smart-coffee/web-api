@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IRangeInputObject } from '../../shared/interfaces/form-input-objects';
 import {CoffeeProfile} from '../../shared/models/coffee-profile';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-coffee-preferences',
@@ -21,7 +22,7 @@ export class CoffeePreferencesComponent implements OnInit {
   waterVal: number;
   profilePickerOpen: string;
 
-  constructor() {}
+  constructor(private userService: UserService) {}
 
   ngOnInit() {
     this.cupVal = Number(localStorage.getItem('cupSelection'));
@@ -32,11 +33,9 @@ export class CoffeePreferencesComponent implements OnInit {
     this.setHeaderText();
 
     this.coffeeProfiles = [
-      {id: 0, name: 'Italienischer Espresso', coffeeVal: 75, waterVal: 30},
-      {id: 1, name: 'Stark', coffeeVal: 100, waterVal: 30},
-      {id: 2, name: 'Fast schon Wasser', coffeeVal: 10, waterVal: 235}
+      {id: 0, name: 'Italienischer Espresso', coffeeVal: 75, waterVal: 30}
     ];
-
+    this.getCoffeeProfiles();
     this.selectedProfile = this.defaultProfile;
   }
 
@@ -70,6 +69,22 @@ export class CoffeePreferencesComponent implements OnInit {
     } else {
       this.profilePickerOpen = 'closed';
     }
+  }
+
+  getCoffeeProfiles() {
+    this.userService.getCoffeeProfiles()
+      .subscribe(profiles => {
+        profiles.map(profile => {
+          const { coffee_strength_in_percent, water_in_percent, name, id } = profile;
+          const tmp = {
+            id: id,
+            name: name,
+            coffeeVal: coffee_strength_in_percent,
+            waterVal: Math.round(water_in_percent * 220 / 100)
+          };
+          this.coffeeProfiles = [...this.coffeeProfiles, tmp];
+        });
+      });
   }
 
 }
