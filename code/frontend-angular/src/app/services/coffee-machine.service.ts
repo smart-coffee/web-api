@@ -41,4 +41,11 @@ export class CoffeeMachineService {
         catchError(this.error.handleError<any>(`getCoffeeMachineStatus`))
       );
   }
+
+  getCoffeeMachineSettings(uuid: string): Observable<any> {
+    return this.http.get<any>(`https://${uuid}.balena-devices.com/api/device/settings`)
+      .pipe(
+        catchError(this.error.handleError<any>(`getCoffeeMachineSettings`))
+      );
+  }
 }
