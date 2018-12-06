@@ -88,9 +88,9 @@ export class CoffeeMachineInfoComponent implements OnInit {
         const { name } = coffeeMachine;
         if (typeof name !== 'undefined') {
           this.coffeeMachines = [...this.coffeeMachines, {id: id, name: name, uuid: uuid}];
-          // TODO: remove this dirty af workaround
           if (!this.machineDetailsInitialized) {
             this.initCoffeeMachineDetails({id: id, name: name, uuid: uuid});
+            localStorage.setItem('currentMachine', JSON.stringify({id: id, name: name, uuid: uuid}));
             this.machineDetailsInitialized = true;
           }
         } else {
