@@ -63,7 +63,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    //height: $font-lnheight-input-1;
   }
 
   &__selected-profile--open {
@@ -78,8 +77,7 @@
 
   &__profile-option {
     padding-left: 4%;
-    font: $font-sc-input-2;
-    //height: $font-lnheight-input-2;
+    font: $font-sc-input-1;
   }
 
   &__profile-option-divider {
