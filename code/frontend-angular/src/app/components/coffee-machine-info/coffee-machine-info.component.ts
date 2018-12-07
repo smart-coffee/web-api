@@ -72,7 +72,6 @@ export class CoffeeMachineInfoComponent implements OnInit {
             const { uuid } = device;
             if (typeof uuid !== 'undefined') {
             this.getCoffeeMachineSettings(uuid);
-            // call get machine status (balena api) here
             }
           });
         }
@@ -86,12 +85,14 @@ export class CoffeeMachineInfoComponent implements OnInit {
         if (typeof coffee_machine_id !== 'undefined') {
           this.getCoffeeMachineName(coffee_machine_id, uuid);
         } else {
-          console.error(`could not retrieve balena device for uuid: ${uuid}`);
+          console.error(`could not retrieve balena device for undefined uuid`);
         }
 
         if (typeof price !== 'undefined' && typeof coffee_product_id !== 'undefined') {
           this.coffeeMachineDetails.pricePerCoffeeInCents = price;
           this.getCoffeeProductById(coffee_product_id);
+        } else {
+          console.error(`could not retrieve coffee product for undefined product id`);
         }
       });
   }
