@@ -10,14 +10,14 @@ import { ServiceError } from '../shared/errorhandling/service-error';
 })
 export class UserService {
 
-  private error = new ServiceError();
+  private _error = new ServiceError();
 
   constructor(private http: HttpClient) { }
 
   getCoffeeProfiles(): Observable<any> {
     return this.http.get<any>(`${environment.webApiUrl}/users/current/profiles`)
       .pipe(
-        catchError(this.error.handleError<any>(`getCoffeeProfiles`))
+        catchError(this._error.handleError<any>(`getCoffeeProfiles`))
       );
   }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IRangeInputObject } from '../../shared/interfaces/form-input-objects';
-import {CoffeeProfile} from '../../shared/models/coffee-profile';
-import {UserService} from '../../services/user.service';
+import { CoffeeProfile } from '../../shared/models/coffee-profile';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-coffee-preferences',
