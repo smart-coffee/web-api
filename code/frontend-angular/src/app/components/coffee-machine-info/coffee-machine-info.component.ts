@@ -1,9 +1,9 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import {CoffeeMachineService} from '../../services/coffee-machine.service';
-import {CoffeeMachine} from '../../shared/models/coffee-machine';
-import {CoffeeMachineDetails} from '../../shared/models/coffee-machine-details';
-import {CoffeeService} from '../../services/coffee.service';
+import { CoffeeMachineService } from '../../services/coffee-machine.service';
+import { CoffeeMachine } from '../../shared/models/coffee-machine';
+import { CoffeeMachineDetails } from '../../shared/models/coffee-machine-details';
+import { CoffeeService } from '../../services/coffee.service';
 
 @Component({
   selector: 'app-coffee-machine-info',
