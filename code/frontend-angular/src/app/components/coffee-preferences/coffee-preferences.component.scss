@@ -41,6 +41,15 @@
     padding: 4% 0;
   }
 
+  &__coffee-profile-label {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__coffee-profile-text, &__coffee-profile-add-icon {
+    display: inline-block;
+  }
+
   &__profile-picker {
     margin-top: 2%;
     border: 1px solid $color-text-dark;

@@ -24,8 +24,14 @@
       (rangeChange)="onRangeChange($event)"
     ></app-form-range-input>
     <div class="coffee-preferences__profile-input-container">
-      <div>
-        Kaffeeprofil
+      <div class="coffee-preferences__coffee-profile-label">
+        <span class="coffee-preferences__coffee-profile-text">Kaffeeprofil</span>
+        <span class="coffee-preferences__coffee-profile-add-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="#57565c"></path>
+            <path d="M0 0h24v24H0z" fill="none"></path>
+          </svg>
+        </span>
       </div>
       <div class="coffee-preferences__profile-picker coffee-preferences__profile-picker--{{profilePickerOpen}}">
         <div class="coffee-preferences__selected-profile coffee-preferences__selected-profile--{{profilePickerOpen}}">
