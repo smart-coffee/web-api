@@ -33,7 +33,8 @@ import { CoffeeService } from '../../services/coffee.service';
 export class CoffeeMachineInfoComponent implements OnInit {
 
   detailsLoading: boolean;
-  showMenu: boolean;
+  showMachineDropdown: boolean;
+  showCoffeeDetails: boolean;
   coffeeMachines: CoffeeMachine[];
   machineDetailsInitialized: boolean;
 
@@ -45,12 +46,12 @@ export class CoffeeMachineInfoComponent implements OnInit {
 
   ngOnInit() {
     this.detailsLoading = true;
-    this.showMenu = false;
+    this.showMachineDropdown = false;
+    this.showCoffeeDetails = false;
     this.machineDetailsInitialized = false;
     this.coffeeMachines = [];
     this.resetCoffeeMachineDetails();
     this.getCoffeeMachines();
-    console.log(`in coffee machine info component ng on init`);
   }
 
   resetCoffeeMachineDetails() {
@@ -65,8 +66,12 @@ export class CoffeeMachineInfoComponent implements OnInit {
     };
   }
 
-  toggleMenu () {
-    this.showMenu = !this.showMenu;
+  toggleMachinePicker () {
+    this.showMachineDropdown = !this.showMachineDropdown;
+  }
+
+  toggleCoffeeDetails () {
+    this.showCoffeeDetails = !this.showCoffeeDetails;
   }
 
   getCoffeeMachines () {

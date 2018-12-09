@@ -39,6 +39,29 @@
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26), 0 2px 10px 0 rgba(0, 0, 0, 0.16);
   }
 
+  &__coffee-details {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    font: $font-sc-input-2;
+    color: $color-text-dark;
+    overflow: auto;
+    width: 80%;
+    padding: 2% 0;
+    z-index: 3;
+    text-align: left;
+    background-color: $color-background-light;
+    border-radius: 3px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26), 0 2px 10px 0 rgba(0, 0, 0, 0.16);
+  }
+
+  &__coffee-details-label {
+    margin: 0 3%;
+    width: 60px;
+    display: inline-block;
+    font-weight: bold;
+  }
+
   &__dropdown-headline {
     font: $font-sc-input-2;
     color: rgba($color-text-dark, 0.7);
@@ -64,11 +87,12 @@
   }
 
   &__machine-fill-indicators {
+    position: relative;
     display: flex;
     justify-content: space-evenly;
   }
 
-  &__machine-dropdown-hack {
+  &__machine-dropdown-hack, &__coffee-details-hack {
     position: absolute;
     top: 0;
     left: 0;
