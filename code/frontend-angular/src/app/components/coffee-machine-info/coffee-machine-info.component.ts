@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CoffeeMachineService } from '../../services/coffee-machine.service';
 import { CoffeeMachine } from '../../shared/models/coffee-machine';
