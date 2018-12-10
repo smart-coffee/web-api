@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {IRangeInputObject, ITextInputObject} from '../../shared/interfaces/form-input-objects';
+import { IRangeInputObject, ITextInputObject } from '../../shared/interfaces/form-input-objects';
 import { CoffeeProfile } from '../../shared/models/coffee-profile';
 import { UserService } from '../../services/user.service';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {CoffeeMachineService} from '../../services/coffee-machine.service';
-import {Router} from '@angular/router';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { CoffeeMachineService } from '../../services/coffee-machine.service';
+import { Router } from '@angular/router';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-coffee-preferences',
@@ -43,6 +44,7 @@ export class CoffeePreferencesComponent implements OnInit {
   editProfileModalNewProfile: boolean;
   newCoffeeProfileName: string;
 
+  startButtonText: string;
   headerText: string;
   waterRangeLabel: string;
   coffeeVal: number;
@@ -59,6 +61,7 @@ export class CoffeePreferencesComponent implements OnInit {
     this.coffeeVal = this.defaultProfile.coffeeVal;
     this.waterVal = this.defaultProfile.waterVal;
     this.profilePickerOpen = 'closed';
+    this.startButtonText = 'Start';
     this.showEditProfileModal = false;
     this.editProfileModalNewProfile = false;
     this.setHeaderText();
@@ -142,11 +145,22 @@ export class CoffeePreferencesComponent implements OnInit {
       doses: Number(this.cupVal)
     };
 
+    const timer = interval(800);
+    const subscription = timer.subscribe(n => {
+      if (this.startButtonText === '...' || this.startButtonText === 'Start') {
+        this.startButtonText = '';
+      } else {
+        this.startButtonText = this.startButtonText + '.';
+      }
+    });
+
     this.coffeeMachineService.postNewCoffeeJob(currentMachine.uuid, jobDetails)
       .subscribe( jobConfirmation => {
+        subscription.unsubscribe();
         if (jobConfirmation) {
           this.router.navigate(['coffee-preparation']);
         } else {
+          this.startButtonText = 'Start';
           console.error(`something went wrong processing the new coffee job`);
         }
       });

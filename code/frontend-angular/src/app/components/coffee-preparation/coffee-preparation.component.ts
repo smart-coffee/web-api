@@ -23,7 +23,6 @@ export class CoffeePreparationComponent implements OnInit {
   setTimer() {
     const timer = interval(20000);
     const subscription = timer.subscribe(n => {
-      console.log(`interval has been called`);
       if (this.coffeePreparationInProgress) {
         this.coffeePreparationInProgress = !this.coffeePreparationInProgress;
       } else {
