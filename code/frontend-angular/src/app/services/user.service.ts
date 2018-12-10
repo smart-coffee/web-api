@@ -21,5 +21,11 @@ export class UserService {
       );
   }
 
+  postNewCoffeeProfile(newProfile: any): Observable<any> {
+    return this.http.post<any>(`${environment.webApiUrl}/users/current/profiles`, newProfile)
+      .pipe(
+        catchError(this._error.handleError<any>(`postNewCoffeeProfile`, newProfile))
+      );
+  }
 
 }

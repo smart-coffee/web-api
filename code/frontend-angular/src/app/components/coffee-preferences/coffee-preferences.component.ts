@@ -3,6 +3,7 @@ import {IRangeInputObject, ITextInputObject} from '../../shared/interfaces/form-
 import { CoffeeProfile } from '../../shared/models/coffee-profile';
 import { UserService } from '../../services/user.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {CoffeeMachineService} from '../../services/coffee-machine.service';
 
 @Component({
   selector: 'app-coffee-preferences',
@@ -47,7 +48,8 @@ export class CoffeePreferencesComponent implements OnInit {
   waterVal: number;
   profilePickerOpen: string;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService,
+              private coffeeMachineService: CoffeeMachineService) {}
 
   ngOnInit() {
     this.cupVal = Number(localStorage.getItem('cupSelection'));
@@ -131,13 +133,33 @@ export class CoffeePreferencesComponent implements OnInit {
   }
 
   sendCoffeeJob() {
-    console.log(`a coffee job is being sent`);
+    const currentMachine = JSON.parse(localStorage.getItem('currentMachine'));
+    const jobDetails = {
+      coffee_strength_in_percent: Number(this.coffeeVal),
+      water_in_percent: this.waterValToPercent(Number(this.waterVal)),
+      doses: Number(this.cupVal)
+    };
+
+    this.coffeeMachineService.postNewCoffeeJob(currentMachine.uuid, jobDetails)
+      .subscribe( jobConfirmation => {
+        console.log(`a coffee job is being sent`);
+        console.log(jobConfirmation);
+      });
   }
 
   saveNewProfile() {
-    console.log(`the new profile "${this.newCoffeeProfileName}" with the coffee 
-    value ${this.coffeeVal} and water value ${this.waterVal} is being saved`);
-    this.resetEditProfileModalState();
+    if (typeof this.newCoffeeProfileName !== 'undefined' && this.newCoffeeProfileName) {
+      const tmpProfile = {
+        coffee_strength_in_percent: Number(this.coffeeVal),
+        name: this.newCoffeeProfileName,
+        water_in_percent: this.waterValToPercent(Number(this.waterVal)),
+      };
+      this.userService.postNewCoffeeProfile(tmpProfile)
+        .subscribe(coffeeProfile => {
+          this.getCoffeeProfiles();
+          this.resetEditProfileModalState();
+        });
+    }
   }
 
   toggleProfilePicker() {
@@ -146,6 +168,14 @@ export class CoffeePreferencesComponent implements OnInit {
     } else {
       this.profilePickerOpen = 'closed';
     }
+  }
+
+  waterValToMl(waterValInPercent: number): number {
+    return Math.round((waterValInPercent * 220 / 100) + 15);
+  }
+
+  waterValToPercent(waterValInMl: number): number {
+    return Math.round(((waterValInMl - 15) * 100) / 220);
   }
 
   getCoffeeProfiles() {
@@ -158,7 +188,7 @@ export class CoffeePreferencesComponent implements OnInit {
             id: id,
             name: name,
             coffeeVal: coffee_strength_in_percent,
-            waterVal: Math.round(water_in_percent * 220 / 100)
+            waterVal: this.waterValToMl(water_in_percent)
           };
           this.coffeeProfiles = [...this.coffeeProfiles, tmp];
         });

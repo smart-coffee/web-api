@@ -174,7 +174,7 @@
 
   &--blurred {
     transition: 0.2s ease-in-out;
-    filter: blur(3px)
+    filter: blur(2px) brightness(0.9);
   }
 }
 

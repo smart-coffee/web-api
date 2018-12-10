@@ -41,4 +41,11 @@ export class CoffeeMachineService {
         catchError(this._error.handleError<any>(`getCoffeeMachineSettings`))
       );
   }
+
+  postNewCoffeeJob(uuid: string, jobDetails: any): Observable<any> {
+    return this.http.post<any>(`https://${uuid}.balena-devices.com/api/device/job`, jobDetails)
+      .pipe(
+        catchError(this._error.handleError<any>(`postNewCoffeeJob`, jobDetails))
+      );
+  }
 }
