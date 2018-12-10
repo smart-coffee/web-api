@@ -1,4 +1,4 @@
-<div class="coffee-preferences">
+<div class="coffee-preferences{{showEditProfileModal ? ' coffee-preferences--blurred' : ''}}">
   <app-header class="coffee-preferences__header"></app-header>
   <app-arty-headline class="coffee-preferences__text-headline" text="{{headerText}}" artSource="../../../assets/backgrounds/bg-art-coffee-preferences.svg"></app-arty-headline>
   <form class="coffee-preferences__form">
@@ -26,7 +26,7 @@
     <div class="coffee-preferences__profile-input-container">
       <div class="coffee-preferences__coffee-profile-label">
         <span class="coffee-preferences__coffee-profile-text">Kaffeeprofil</span>
-        <span class="coffee-preferences__coffee-profile-add-icon">
+        <span class="coffee-preferences__coffee-profile-add-icon" (click)="setEditProfileModalState('newProfile')">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="#57565c"></path>
             <path d="M0 0h24v24H0z" fill="none"></path>
@@ -49,7 +49,7 @@
       </div>
     </div>
   </form>
-  <div class="coffee-preferences__start-button">
+  <div class="coffee-preferences__start-button" (click)="attemptSendingCoffeeJob()">
     <svg width="72px" height="93px" viewBox="0 0 72 93" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <g id="Smart-Coffee-Mobile" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="Brew-Option---Dropdown-Default" transform="translate(-152.000000, -552.000000)">
@@ -66,3 +66,21 @@
     </svg>
   </div>
 </div>
+<div class="coffee-preferences__edit-profile-modal" [@showHide]="showEditProfileModal ? 'show' : 'hide'">
+  <div *ngIf="!editProfileModalNewProfile" class="coffee-preferences__edit-profile-prompt">
+    <div>Ein bestehendes Profil wurde verändert. Willst du die aktuellen Werte in einem neuen Profil abspeichern, oder ohne Speichern fortfahren?</div>
+    <div class="coffee-preferences__edit-profile-cta">
+      <app-button [label]="'Neues Profil'" [type]="'ghost'" (click)="setEditProfileModalState('newProfile')"></app-button>
+      <app-button [label]="'Fortfahren'" [type]="'default'" (click)="setEditProfileModalState('continueWithout')"></app-button>
+    </div>
+  </div>
+  <div *ngIf="editProfileModalNewProfile" class="coffee-preferences__edit-profile-new">
+    <div>Gib bitte einen Namen für dein neues Kaffeeprofil ein</div>
+    <app-form-text-input [label]="'Profilname'" [name]="'profile-name'" [type]="'text'" (typed)="onTyped($event)"></app-form-text-input>
+    <div class="coffee-preferences__edit-profile-cta">
+      <app-button [label]="'Abbrechen'" [type]="'ghost'" (click)="setEditProfileModalState('cancelNew')"></app-button>
+      <app-button [label]="'Speichern'" [type]="'default'" (click)="saveNewProfile()"></app-button>
+    </div>
+  </div>
+</div>
+<div class="coffee-preferences__edit-profile-modal-hack" [@showHide]="showEditProfileModal ? 'show' : 'hide'" (click)="setEditProfileModalState('reset')"></div>
