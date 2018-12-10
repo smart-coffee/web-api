@@ -45,6 +45,7 @@ export class CoffeePreferencesComponent implements OnInit {
   newCoffeeProfileName: string;
 
   startButtonText: string;
+  startButtonTextX: number;
   headerText: string;
   waterRangeLabel: string;
   coffeeVal: number;
@@ -62,6 +63,7 @@ export class CoffeePreferencesComponent implements OnInit {
     this.waterVal = this.defaultProfile.waterVal;
     this.profilePickerOpen = 'closed';
     this.startButtonText = 'Start';
+    this.startButtonTextX = 12.8275; // filthy, i know
     this.showEditProfileModal = false;
     this.editProfileModalNewProfile = false;
     this.setHeaderText();
@@ -149,6 +151,7 @@ export class CoffeePreferencesComponent implements OnInit {
     const subscription = timer.subscribe(n => {
       if (this.startButtonText === '...' || this.startButtonText === 'Start') {
         this.startButtonText = '';
+        this.startButtonTextX = 27;
       } else {
         this.startButtonText = this.startButtonText + '.';
       }
@@ -161,6 +164,7 @@ export class CoffeePreferencesComponent implements OnInit {
           this.router.navigate(['coffee-preparation']);
         } else {
           this.startButtonText = 'Start';
+          this.startButtonTextX = 12.8275;
           console.error(`something went wrong processing the new coffee job`);
         }
       });
