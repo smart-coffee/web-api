@@ -9,6 +9,7 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { AuthGuard } from './auth-guard.service';
 import { AnalysisComponent } from './components/analysis/analysis.component';
 import { HotWaterComponent } from './components/hot-water/hot-water.component';
+import { CoffeePreparationComponent } from './components/coffee-preparation/coffee-preparation.component';
 
 /**
  * App routing module contains all routes for the application
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'account-recovery', component: AccountRecoveryComponent },
   { path: 'analysis', canActivate: [AuthGuard], component: AnalysisComponent},
   { path: 'coffee-preferences', canActivate: [AuthGuard], component: CoffeePreferencesComponent },
+  { path: 'coffee-preparation', canActivate: [AuthGuard], component: CoffeePreparationComponent },
   { path: 'home', canActivate: [AuthGuard], component: HomeComponent },
   { path: 'hot-water', canActivate: [AuthGuard], component: HotWaterComponent },
   { path: 'sign-up', component: SignUpComponent },

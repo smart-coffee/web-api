@@ -4,6 +4,7 @@ import { CoffeeProfile } from '../../shared/models/coffee-profile';
 import { UserService } from '../../services/user.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {CoffeeMachineService} from '../../services/coffee-machine.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-coffee-preferences',
@@ -49,7 +50,8 @@ export class CoffeePreferencesComponent implements OnInit {
   profilePickerOpen: string;
 
   constructor(private userService: UserService,
-              private coffeeMachineService: CoffeeMachineService) {}
+              private coffeeMachineService: CoffeeMachineService,
+              private router: Router) {}
 
   ngOnInit() {
     this.cupVal = Number(localStorage.getItem('cupSelection'));
@@ -142,8 +144,11 @@ export class CoffeePreferencesComponent implements OnInit {
 
     this.coffeeMachineService.postNewCoffeeJob(currentMachine.uuid, jobDetails)
       .subscribe( jobConfirmation => {
-        console.log(`a coffee job is being sent`);
-        console.log(jobConfirmation);
+        if (jobConfirmation) {
+          this.router.navigate(['coffee-preparation']);
+        } else {
+          console.error(`something went wrong processing the new coffee job`);
+        }
       });
   }
 

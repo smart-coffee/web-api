@@ -29,6 +29,7 @@ import { FormRangeInputComponent } from './components/form-range-input/form-rang
 import { NgxFormComponentsModule } from 'ngx-form-components';
 import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
 import { CoffeeLoaderComponent } from './components/coffee-loader/coffee-loader.component';
+import { CoffeePreparationComponent } from './components/coffee-preparation/coffee-preparation.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { CoffeeLoaderComponent } from './components/coffee-loader/coffee-loader.
     CoffeeMachineInfoComponent,
     FormRangeInputComponent,
     CoffeeLoaderComponent,
+    CoffeePreparationComponent,
   ],
   imports: [
     BrowserModule,
