@@ -8,10 +8,17 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
+  buttonsEnabled: boolean;
+
   constructor(private router: Router) { }
 
   ngOnInit() {
     localStorage.setItem('cupSelection', '1');
+    this.buttonsEnabled = false;
+  }
+
+  enableButtons(eventInput: boolean) {
+    this.buttonsEnabled = eventInput;
   }
 
   navigateToRoute (tmpRouteName: string) {
@@ -26,7 +33,9 @@ export class HomeComponent implements OnInit {
       routeName = 'coffee-preferences';
     }
 
-    this.router.navigate([routeName]);
+    if (this.buttonsEnabled) {
+      this.router.navigate([routeName]);
+    }
   }
 
 }

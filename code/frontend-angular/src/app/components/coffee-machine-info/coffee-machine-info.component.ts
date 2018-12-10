@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CoffeeMachineService } from '../../services/coffee-machine.service';
 import { CoffeeMachine } from '../../shared/models/coffee-machine';
@@ -37,6 +37,7 @@ export class CoffeeMachineInfoComponent implements OnInit {
   showCoffeeDetails: boolean;
   coffeeMachines: CoffeeMachine[];
   machineDetailsInitialized: boolean;
+  @Output() detailsLoaded = new EventEmitter<boolean>();
 
   coffeeMachineDetails: CoffeeMachineDetails;
 
@@ -50,6 +51,7 @@ export class CoffeeMachineInfoComponent implements OnInit {
     this.showCoffeeDetails = false;
     this.machineDetailsInitialized = false;
     this.coffeeMachines = [];
+    this.detailsLoaded.emit(false);
     this.resetCoffeeMachineDetails();
     this.getCoffeeMachines();
   }
@@ -117,6 +119,8 @@ export class CoffeeMachineInfoComponent implements OnInit {
 
   initCoffeeMachineDetails(cm: CoffeeMachine) {
     this.detailsLoading = true;
+    this.detailsLoaded.emit(false);
+
     const { name, uuid } = cm;
     localStorage.setItem('currentMachine', JSON.stringify(cm));
 
@@ -165,6 +169,7 @@ export class CoffeeMachineInfoComponent implements OnInit {
           this.coffeeMachineDetails.coffeeType = name;
           this.detailsLoading = false;
           this.cdr.detectChanges();
+          this.detailsLoaded.emit(true);
         }
       });
   }
