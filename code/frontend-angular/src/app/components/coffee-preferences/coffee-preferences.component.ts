@@ -204,11 +204,11 @@ export class CoffeePreferencesComponent implements OnInit {
   }
 
   waterValToMl(waterValInPercent: number): number {
-    return Math.round((waterValInPercent * 220 / 100) + 15);
+    return Math.round((waterValInPercent / 1000 * 220 / 100) + 15);
   }
 
   waterValToPercent(waterValInMl: number): number {
-    return Math.round(((waterValInMl - 15) * 100) / 220);
+    return Math.round((((waterValInMl - 15) * 100) / 220) * 1000);
   }
 
   getCoffeeProfiles() {
