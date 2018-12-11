@@ -11,7 +11,7 @@ properties:
     example: Morning
   coffee_strength_in_percent:
     type: integer
-    example: 42
+    example: 42000
   water_in_percent:
     type: integer
-    example: 42
+    example: 42000
