@@ -1,7 +1,9 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import {CoffeeMachineService} from '../../services/coffee-machine.service';
-import {CoffeeMachine} from '../../shared/models/coffee-machine';
+import { CoffeeMachineService } from '../../services/coffee-machine.service';
+import { CoffeeMachine } from '../../shared/models/coffee-machine';
+import { CoffeeMachineDetails } from '../../shared/models/coffee-machine-details';
+import { CoffeeService } from '../../services/coffee.service';
 
 @Component({
   selector: 'app-coffee-machine-info',
@@ -30,31 +32,48 @@ import {CoffeeMachine} from '../../shared/models/coffee-machine';
 })
 export class CoffeeMachineInfoComponent implements OnInit {
 
-  // TODO: add loading animation, when stuffs not loaded
-
-  showMenu: boolean;
+  detailsLoading: boolean;
+  showMachineDropdown: boolean;
+  showCoffeeDetails: boolean;
   coffeeMachines: CoffeeMachine[];
   machineDetailsInitialized: boolean;
+  @Output() detailsLoaded = new EventEmitter<boolean>();
 
-  coffeeMachineDetails = {
-    name: '',
-    coffeeLevel: 0,
-    waterLevel: 0,
-    trashLevel: 0
-  };
+  coffeeMachineDetails: CoffeeMachineDetails;
 
   constructor(private coffeeMachineService: CoffeeMachineService,
+              private coffeeService: CoffeeService,
               private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.showMenu = false;
+    this.detailsLoading = true;
+    this.showMachineDropdown = false;
+    this.showCoffeeDetails = false;
     this.machineDetailsInitialized = false;
     this.coffeeMachines = [];
+    this.detailsLoaded.emit(false);
+    this.resetCoffeeMachineDetails();
     this.getCoffeeMachines();
   }
 
-  toggleMenu () {
-    this.showMenu = !this.showMenu;
+  resetCoffeeMachineDetails() {
+    this.coffeeMachineDetails = {
+      name: '',
+      coffeeLevel: 0,
+      waterLevel: 0,
+      trashLevel: 0,
+      pricePerCoffeeInCents: 0,
+      coffeeBrand: '',
+      coffeeType: ''
+    };
+  }
+
+  toggleMachinePicker () {
+    this.showMachineDropdown = !this.showMachineDropdown;
+  }
+
+  toggleCoffeeDetails () {
+    this.showCoffeeDetails = !this.showCoffeeDetails;
   }
 
   getCoffeeMachines () {
@@ -63,58 +82,94 @@ export class CoffeeMachineInfoComponent implements OnInit {
           devices.map(device => {
             const { uuid } = device;
             if (typeof uuid !== 'undefined') {
-            this.getCoffeeMachineId(uuid);
+            this.getCoffeeMachineSettings(uuid);
             }
           });
         }
       );
   }
 
-  getCoffeeMachineId(uuid: string) {
-    this.coffeeMachineService.getCoffeeMachineId(uuid)
+  getCoffeeMachineSettings(uuid: string) {
+    this.coffeeMachineService.getCoffeeMachineSettings(uuid)
       .subscribe(balenaDevice => {
-        const { coffee_machine_id } = balenaDevice;
-        if (typeof coffee_machine_id !== 'undefined') {
-          this.getCoffeeMachineName(coffee_machine_id, uuid);
+        const { coffee_machine_id: machineId } = balenaDevice;
+        if (typeof machineId !== 'undefined') {
+          this.getCoffeeMachineDetails(machineId, uuid);
         } else {
-          console.error(`could not retrieve balena device for uuid: ${uuid}`);
+          console.error(`could not retrieve balena device for undefined uuid`);
         }
       });
   }
 
-  getCoffeeMachineName(id: number, uuid: string) {
-    this.coffeeMachineService.getCoffeeMachineName(id)
+  getCoffeeMachineDetails(machineId: number, uuid: string) {
+    this.coffeeMachineService.getCoffeeMachineNameById(machineId)
       .subscribe( coffeeMachine => {
         const { name } = coffeeMachine;
         if (typeof name !== 'undefined') {
-          this.coffeeMachines = [...this.coffeeMachines, {id: id, name: name, uuid: uuid}];
-          // TODO: remove this dirty af workaround
+          const tmpMachine = {id: machineId, name: name, uuid: uuid};
+          this.coffeeMachines = [...this.coffeeMachines, tmpMachine];
+          this.initCoffeeMachineDetails(tmpMachine);
           if (!this.machineDetailsInitialized) {
-            this.initCoffeeMachineDetails({id: id, name: name, uuid: uuid});
+            this.initCoffeeMachineDetails(tmpMachine);
             this.machineDetailsInitialized = true;
           }
-        } else {
-          console.error(`could not retrieve coffee machine name for uuid: ${uuid} and machine id: ${id}`);
         }
       });
   }
 
   initCoffeeMachineDetails(cm: CoffeeMachine) {
+    this.detailsLoading = true;
+    this.detailsLoaded.emit(false);
+
     const { name, uuid } = cm;
+    localStorage.setItem('currentMachine', JSON.stringify(cm));
+
     this.coffeeMachineService.getCoffeeMachineStatus(uuid)
-      .subscribe( coffeeMachine => {
+      .subscribe( coffeeMachineStatus => {
         const { water_tank_fill_level_in_percent: waterLevel,
           coffee_bean_container_fill_level_in_percent: coffeeLevel,
-          coffee_grounds_container_fill_level_in_percent: trashLevel } = coffeeMachine;
+          coffee_grounds_container_fill_level_in_percent: trashLevel } = coffeeMachineStatus;
 
         if (typeof waterLevel !== 'undefined' && typeof coffeeLevel !== 'undefined' && typeof trashLevel !== 'undefined') {
-          this.coffeeMachineDetails = {
-            name: name,
-            coffeeLevel: coffeeLevel,
-            waterLevel: waterLevel,
-            trashLevel: trashLevel
-          };
+          this.coffeeMachineDetails.name = name;
+          this.coffeeMachineDetails.coffeeLevel = coffeeLevel;
+          this.coffeeMachineDetails.waterLevel = waterLevel;
+          this.coffeeMachineDetails.trashLevel = trashLevel;
+
+          // get the product id -> product name -> product type
+          this.coffeeMachineService.getCoffeeMachineSettings(uuid)
+            .subscribe( coffeeMachineSettings => {
+              const { coffee_product_id, price } = coffeeMachineSettings;
+              this.coffeeMachineDetails.pricePerCoffeeInCents = price;
+              this.getCoffeeProductById(coffee_product_id);
+            });
+        }
+      });
+  }
+
+  getCoffeeProductById(id: number) {
+    this.coffeeService.getCoffeeProductById(id)
+      .subscribe( coffeeProduct => {
+        const { name, coffee_brand_id } = coffeeProduct;
+        if (typeof name !== 'undefined') {
+          this.coffeeMachineDetails.coffeeBrand = name;
+        }
+
+        if (typeof coffee_brand_id !== 'undefined') {
+          this.getCoffeeTypeById(coffee_brand_id);
+        }
+      });
+  }
+
+  getCoffeeTypeById(id: number) {
+    this.coffeeService.getCoffeeTypeById(id)
+      .subscribe( coffeeType => {
+        const { name } = coffeeType;
+        if (typeof name !== 'undefined') {
+          this.coffeeMachineDetails.coffeeType = name;
+          this.detailsLoading = false;
           this.cdr.detectChanges();
+          this.detailsLoaded.emit(true);
         }
       });
   }

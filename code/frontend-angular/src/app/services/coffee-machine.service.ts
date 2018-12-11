@@ -10,35 +10,42 @@ import { ServiceError } from '../shared/errorhandling/service-error';
 })
 export class CoffeeMachineService {
 
-  private error = new ServiceError();
+  private _error = new ServiceError();
 
   constructor(private http: HttpClient) { }
 
   getCoffeeMachines(): Observable<any> {
     return this.http.get<any>(`${environment.balenaApiUrl}/devices`)
       .pipe(
-        catchError(this.error.handleError<any>(`getCoffeeMachines`))
+        catchError(this._error.handleError<any>(`getCoffeeMachines`))
       );
   }
 
-  getCoffeeMachineId(uuid: string): Observable<any> {
-    return this.http.get<any>(`https://${uuid}.balena-devices.com/api/device/settings`)
-      .pipe(
-        catchError(this.error.handleError<any>(`getCoffeeMachineId`))
-      );
-  }
-
-  getCoffeeMachineName(id: number): Observable<any> {
+  getCoffeeMachineNameById(id: number): Observable<any> {
     return this.http.get<any>(`${environment.webApiUrl}/coffee/machines/${id}`)
       .pipe(
-        catchError(this.error.handleError<any>(`getCoffeeMachineName`))
+        catchError(this._error.handleError<any>(`getCoffeeMachineName`))
       );
   }
 
   getCoffeeMachineStatus(uuid: string): Observable<any> {
     return this.http.get<any>(`https://${uuid}.balena-devices.com/api/device/status`)
       .pipe(
-        catchError(this.error.handleError<any>(`getCoffeeMachineStatus`))
+        catchError(this._error.handleError<any>(`getCoffeeMachineStatus`))
+      );
+  }
+
+  getCoffeeMachineSettings(uuid: string): Observable<any> {
+    return this.http.get<any>(`https://${uuid}.balena-devices.com/api/device/settings`)
+      .pipe(
+        catchError(this._error.handleError<any>(`getCoffeeMachineSettings`))
+      );
+  }
+
+  postNewCoffeeJob(uuid: string, jobDetails: any): Observable<any> {
+    return this.http.post<any>(`https://${uuid}.balena-devices.com/api/device/job`, jobDetails)
+      .pipe(
+        catchError(this._error.handleError<any>(`postNewCoffeeJob`, jobDetails))
       );
   }
 }

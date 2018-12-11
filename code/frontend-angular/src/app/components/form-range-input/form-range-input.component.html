@@ -4,6 +4,7 @@
     <img class="sc-range-input__range-icon" src="{{startIconSource}}"/>
     <div class="sc-range-input__range-wrapper sc-range-input__range-wrapper--{{type}}">
       <nfc-range-input
+        *ngIf="viewInitialized"
         class="sc-range-input__input"
         id="{{name}}"
         [defaultRange]="localValue"
@@ -12,6 +13,7 @@
         [highlightBarCssClass]="highlighterBarClass"
         [sliderButtonCssClass]="'sc-range-input__slider-button'"
         (rangeChange)="rangeValChanged($event)"
+        [(ngModel)]="range"
       >
       </nfc-range-input>
     </div>

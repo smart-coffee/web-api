@@ -28,6 +28,8 @@ import { CoffeeMachineInfoComponent } from './components/coffee-machine-info/cof
 import { FormRangeInputComponent } from './components/form-range-input/form-range-input.component';
 import { NgxFormComponentsModule } from 'ngx-form-components';
 import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
+import { CoffeeLoaderComponent } from './components/coffee-loader/coffee-loader.component';
+import { CoffeePreparationComponent } from './components/coffee-preparation/coffee-preparation.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,8 @@ import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
     HeaderComponent,
     CoffeeMachineInfoComponent,
     FormRangeInputComponent,
+    CoffeeLoaderComponent,
+    CoffeePreparationComponent,
   ],
   imports: [
     BrowserModule,

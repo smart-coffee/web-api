@@ -4,8 +4,8 @@
     <img alt="coffee-machine" class="welcome__coffee-machine" src="../../../assets/pictograms/coffee-machine-single.svg">
   </div>
   <div class="welcome__text">
-    Machen Sie Ihren Morgen smart!
+    Mach deinen Morgen smart!
   </div>
-  <app-button class="welcome__sign-up-button" label="Registrieren" type="ghost" (click)="navigateToSignUp()"></app-button>
-  <app-button class="welcome__sign-in-button" label="Anmelden" type="default" (click)="navigateToSignIn()"></app-button>
+  <app-button class="welcome__sign-up-button" [label]="'Registrieren'" [type]="'ghost'" [enabled]="true" (click)="navigateToSignUp()"></app-button>
+  <app-button class="welcome__sign-in-button" [label]="'Anmelden'" [type]="'default'" [enabled]="true" (click)="navigateToSignIn()"></app-button>
 </div>
