@@ -43,6 +43,10 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['home']);
   }
 
+  navigateToAccountSettings () {
+    this.router.navigate(['account-settings']);
+  }
+
   toggleMenu () {
     this.showMenu = !this.showMenu;
   }

@@ -3,6 +3,7 @@ import { ITextInputObject } from '../../shared/interfaces/form-input-objects';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { UserService } from '../../services/user.service';
+import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
   selector: 'app-account-settings',
@@ -19,7 +20,8 @@ export class AccountSettingsComponent implements OnInit {
 
   constructor(private router: Router,
               private location: Location,
-              private userService: UserService) { }
+              private userService: UserService,
+              private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     this.username = '';
@@ -58,9 +60,18 @@ export class AccountSettingsComponent implements OnInit {
       };
       this.userService.editUserDetails(tmpUser)
         .subscribe(user => {
-          console.log(user);
+          if (typeof user !== 'undefined') {
+            // TODO: add success message
+            console.log(`there should be a success message here ... redirecting to home`);
+            this.signOut();
+          }
         });
     }
+  }
+
+  signOut () {
+    this.authenticationService.signOut();
+    this.router.navigate(['sign-in']);
   }
 
 }
