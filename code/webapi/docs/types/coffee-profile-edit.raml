@@ -1,0 +1,21 @@
+type: object
+properties:
+  name:
+    required: true
+    type: string
+    description: Name des Kaffee-Profils
+    example: Stark
+  coffee_strength_in_percent:
+    required: true
+    type: integer
+    minimum: 1
+    maximum: 100000
+    description: 'coffee_strength_in_percent' / 1000 = Kaffeestärke in Prozent
+    example: 66000
+  water_in_percent:
+    required: true
+    type: integer
+    minimum: 1
+    maximum: 100000
+    description: 'water_in_percent' / 1000 = Wasseranteil in Prozent
+    example: 66000
