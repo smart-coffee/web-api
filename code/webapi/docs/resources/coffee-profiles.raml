@@ -9,12 +9,15 @@ get:
 post:
   description: Erstellt ein Kaffee-Profil.
   body:
-    type: coffee-profile[]
+    type: coffee-profile-create
   responses: 
     201:
       description: Created. Kaffee-Profil erstellt.
+      headers:
+        Location:
+          description: URL zum neu angelegten Kaffee-Profil.
       body:
-        type: coffee-profile[]
+        type: coffee-profile
 /{id}:
   securedBy: [ jwt ]
   uriParameters: 
@@ -32,12 +35,16 @@ post:
   put:
     description: Bearbeitet das Kaffee-Profil mit der angegebenen ID.
     body:
-      type: coffee-profile
+      type: coffee-profile-edit
     responses: 
       200:
         description: Ok. Kaffee-Profil bearbeitet.
+        body:
+          type: coffee-profile
   delete:
     description: Löscht das Kaffee-Profil mit der angegebenen ID.
     responses: 
       204:
         description: No Content. Kaffee-Profil gelöscht.
+        body:
+          type: coffee-profile
