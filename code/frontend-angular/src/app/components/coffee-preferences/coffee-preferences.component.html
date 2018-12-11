@@ -70,16 +70,16 @@
   <div *ngIf="!editProfileModalNewProfile" class="coffee-preferences__edit-profile-prompt">
     <div>Ein bestehendes Profil wurde verändert. Willst du die aktuellen Werte in einem neuen Profil abspeichern, oder ohne Speichern fortfahren?</div>
     <div class="coffee-preferences__edit-profile-cta">
-      <app-button [label]="'Neues Profil'" [type]="'ghost'" (click)="setEditProfileModalState('newProfile')"></app-button>
-      <app-button [label]="'Fortfahren'" [type]="'default'" (click)="setEditProfileModalState('continueWithout')"></app-button>
+      <app-button [label]="'Neues Profil'" [type]="'ghost'" [enabled]="true" (click)="setEditProfileModalState('newProfile')"></app-button>
+      <app-button [label]="'Fortfahren'" [type]="'default'" [enabled]="true" (click)="setEditProfileModalState('continueWithout')"></app-button>
     </div>
   </div>
   <div *ngIf="editProfileModalNewProfile" class="coffee-preferences__edit-profile-new">
     <div>Gib bitte einen Namen für dein neues Kaffeeprofil ein</div>
     <app-form-text-input [label]="'Profilname'" [name]="'profile-name'" [type]="'text'" (typed)="onTyped($event)"></app-form-text-input>
     <div class="coffee-preferences__edit-profile-cta">
-      <app-button [label]="'Abbrechen'" [type]="'ghost'" (click)="setEditProfileModalState('cancelNew')"></app-button>
-      <app-button [label]="'Speichern'" [type]="'default'" (click)="saveNewProfile()"></app-button>
+      <app-button [label]="'Abbrechen'" [type]="'ghost'" [enabled]="true" (click)="setEditProfileModalState('cancelNew')"></app-button>
+      <app-button [label]="'Speichern'" [type]="'default'" [enabled]="saveProfileSent" (click)="saveNewProfile()"></app-button>
     </div>
   </div>
 </div>

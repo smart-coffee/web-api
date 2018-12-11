@@ -43,6 +43,8 @@ export class CoffeePreferencesComponent implements OnInit {
   showEditProfileModal: boolean;
   editProfileModalNewProfile: boolean;
   newCoffeeProfileName: string;
+  saveProfileSent: boolean;
+  coffeeJobSendInProgress: boolean;
 
   startButtonText: string;
   startButtonTextX: number;
@@ -66,6 +68,8 @@ export class CoffeePreferencesComponent implements OnInit {
     this.startButtonTextX = 12.8275; // filthy, i know
     this.showEditProfileModal = false;
     this.editProfileModalNewProfile = false;
+    this.saveProfileSent = true;
+    this.coffeeJobSendInProgress = false;
     this.setHeaderText();
     this.getCoffeeProfiles();
     this.selectedProfile = this.defaultProfile;
@@ -140,38 +144,43 @@ export class CoffeePreferencesComponent implements OnInit {
   }
 
   sendCoffeeJob() {
-    const currentMachine = JSON.parse(localStorage.getItem('currentMachine'));
-    const jobDetails = {
-      coffee_strength_in_percent: Number(this.coffeeVal),
-      water_in_percent: this.waterValToPercent(Number(this.waterVal)),
-      doses: Number(this.cupVal)
-    };
+    if (!this.coffeeJobSendInProgress) {
+      this.coffeeJobSendInProgress = true;
+      const currentMachine = JSON.parse(localStorage.getItem('currentMachine'));
+      const jobDetails = {
+        coffee_strength_in_percent: Number(this.coffeeVal),
+        water_in_percent: this.waterValToPercent(Number(this.waterVal)),
+        doses: Number(this.cupVal)
+      };
 
-    const timer = interval(800);
-    const subscription = timer.subscribe(n => {
-      if (this.startButtonText === '...' || this.startButtonText === 'Start') {
-        this.startButtonText = '';
-        this.startButtonTextX = 27;
-      } else {
-        this.startButtonText = this.startButtonText + '.';
-      }
-    });
-
-    this.coffeeMachineService.postNewCoffeeJob(currentMachine.uuid, jobDetails)
-      .subscribe( jobConfirmation => {
-        subscription.unsubscribe();
-        if (jobConfirmation) {
-          this.router.navigate(['coffee-preparation']);
+      const timer = interval(800);
+      const subscription = timer.subscribe(n => {
+        if (this.startButtonText === '...' || this.startButtonText === 'Start') {
+          this.startButtonText = '';
+          this.startButtonTextX = 27;
         } else {
-          this.startButtonText = 'Start';
-          this.startButtonTextX = 12.8275;
-          console.error(`something went wrong processing the new coffee job`);
+          this.startButtonText = this.startButtonText + '.';
         }
       });
+
+      this.coffeeMachineService.postNewCoffeeJob(currentMachine.uuid, jobDetails)
+        .subscribe( jobConfirmation => {
+          subscription.unsubscribe();
+          this.coffeeJobSendInProgress = false;
+          if (jobConfirmation) {
+            this.router.navigate(['coffee-preparation']);
+          } else {
+            this.startButtonText = 'Start';
+            this.startButtonTextX = 12.8275;
+            console.error(`something went wrong processing the new coffee job`);
+          }
+        });
+    }
   }
 
   saveNewProfile() {
     if (typeof this.newCoffeeProfileName !== 'undefined' && this.newCoffeeProfileName) {
+      this.saveProfileSent = false;
       const tmpProfile = {
         coffee_strength_in_percent: Number(this.coffeeVal),
         name: this.newCoffeeProfileName,
@@ -179,7 +188,7 @@ export class CoffeePreferencesComponent implements OnInit {
       };
       this.userService.postNewCoffeeProfile(tmpProfile)
         .subscribe(coffeeProfile => {
-          this.getCoffeeProfiles();
+          this.saveProfileSent = true;
           this.resetEditProfileModalState();
         });
     }
