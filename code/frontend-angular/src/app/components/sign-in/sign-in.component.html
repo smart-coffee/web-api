@@ -1,13 +1,13 @@
 <div class="sign-in" (swiperight)="onSwipeRight()">
-  <app-arty-headline class="sign-in__arty-headline-component" text="Anmelden" artSource="../../../assets/backgrounds/bg-art-headline.svg"></app-arty-headline>
+  <app-arty-headline class="sign-in__arty-headline-component" [text]="'Anmelden'" [artSource]="'../../../assets/backgrounds/bg-art-headline.svg'"></app-arty-headline>
   <form class="sign-in__form">
     <!-- Username -->
-    <app-form-text-input label="Benutzername" name="username" type="text" (typed)="onTyped($event)"></app-form-text-input>
+    <app-form-text-input [label]="'Benutzername'" [name]="'username'" [type]="'text'" (typed)="onTyped($event)"></app-form-text-input>
     <!-- Password -->
-    <app-form-text-input label="Passwort" name="password" type="password" (typed)="onTyped($event)"></app-form-text-input>
+    <app-form-text-input [label]="'Passwort'" [name]="'password'" [type]="'password'" (typed)="onTyped($event)"></app-form-text-input>
   </form>
   <div class="sign-in__forgot-pw-link" (click)="recoverPassword()">
     Passwort vergessen?
   </div>
-  <app-button class="sign-in__sign-in-button" label="Anmelden" type="default" (click)="signIn()"></app-button>
+  <app-button class="sign-in__sign-in-button" [label]="'Anmelden'" [type]="'default'" [enabled]="true" (click)="signIn()"></app-button>
 </div>
