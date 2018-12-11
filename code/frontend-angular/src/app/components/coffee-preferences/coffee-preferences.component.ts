@@ -77,7 +77,7 @@ export class CoffeePreferencesComponent implements OnInit {
 
   resetCoffeeProfiles() {
     this.coffeeProfiles = [
-      {id: 0, name: 'Italienischer Espresso', coffeeVal: 75, waterVal: 30}
+      this.defaultProfile
     ];
   }
 
@@ -189,6 +189,7 @@ export class CoffeePreferencesComponent implements OnInit {
       this.userService.postNewCoffeeProfile(tmpProfile)
         .subscribe(coffeeProfile => {
           this.saveProfileSent = true;
+          this.getCoffeeProfiles();
           this.resetEditProfileModalState();
         });
     }
