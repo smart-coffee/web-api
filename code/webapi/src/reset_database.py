@@ -35,15 +35,15 @@ def reset_database():
 
     profile = Profile()
     profile.name = 'Morning'
-    profile.water_in_percent = 32
-    profile.coffee_strength_in_percent = 42
+    profile.water_in_percent = 32000
+    profile.coffee_strength_in_percent = 42000
     profile.user = user
 
     job = Job()
     current_time = time.time()
     job.create_date = current_time
-    job.coffee_strength_in_percent = 66
-    job.water_in_percent = 44
+    job.coffee_strength_in_percent = 66000
+    job.water_in_percent = 44000
     job.price = 10
     job.doses = 1
     job.user = user
