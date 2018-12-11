@@ -12,6 +12,7 @@ import {AuthenticationService} from '../../services/authentication.service';
 })
 export class AccountSettingsComponent implements OnInit {
 
+  // TODO: add form validation
   username: string;
   oldPassword: string;
   newPassword: string;
