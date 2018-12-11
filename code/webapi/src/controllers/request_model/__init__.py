@@ -204,7 +204,6 @@ def get_create_user_profile_request_fields():
     file: /controllers/request_model/create_user_profile_request.yml
     """
     _create_profile_fields = {
-        'user_id': fields.String,
         'name': fields.String,
         'coffee_strength_in_percent': fields.Integer,
         'water_in_percent': fields.Integer
