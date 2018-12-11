@@ -218,7 +218,6 @@ def get_edit_user_profile_request_fields():
     """
     _edit_profile_fields = {
         'id': fields.Integer,
-        'user_id': fields.String,
         'name': fields.String,
         'coffee_strength_in_percent': fields.Integer,
         'water_in_percent': fields.Integer

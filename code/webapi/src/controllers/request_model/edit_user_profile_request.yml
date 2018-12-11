@@ -3,7 +3,6 @@ EditUserProfileRequest object
 type: object
 required:
   - id
-  - user_id
   - name
   - coffee_strength_in_percent
   - water_in_percent
@@ -11,9 +10,6 @@ properties:
   id:
     type: integer
     example: 42
-  user_id:
-    type: string
-    example: b5386ca2-6c25-4308-a22a-4cf81c58af8b
   name:
     type: string
     example: Morning
