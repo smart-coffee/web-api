@@ -30,6 +30,7 @@ import { NgxFormComponentsModule } from 'ngx-form-components';
 import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
 import { CoffeeLoaderComponent } from './components/coffee-loader/coffee-loader.component';
 import { CoffeePreparationComponent } from './components/coffee-preparation/coffee-preparation.component';
+import { ScModalComponent } from './components/sc-modal/sc-modal.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { CoffeePreparationComponent } from './components/coffee-preparation/coff
     FormRangeInputComponent,
     CoffeeLoaderComponent,
     CoffeePreparationComponent,
+    ScModalComponent,
   ],
   imports: [
     BrowserModule,
