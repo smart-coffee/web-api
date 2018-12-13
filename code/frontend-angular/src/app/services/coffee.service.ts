@@ -19,7 +19,7 @@ export class CoffeeService {
 
   @Cacheable({
     cacheBusterObserver: cacheBuster,
-    maxAge: 900000
+    maxAge: 180000
   })
   getCoffeeProductById(id: number): Observable<any> {
     return this.http.get<any>(`${environment.webApiUrl}/coffee/products/${id}`)
@@ -30,7 +30,7 @@ export class CoffeeService {
 
   @Cacheable({
     cacheBusterObserver: cacheBuster,
-    maxAge: 900000
+    maxAge: 180000
   })
   getCoffeeTypeById(id: number): Observable<any> {
     return this.http.get<any>(`${environment.webApiUrl}/coffee/types/${id}`)

@@ -19,7 +19,7 @@ export class CoffeeMachineService {
 
   @Cacheable({
     cacheBusterObserver: cacheBuster,
-    maxAge: 900000
+    maxAge: 180000
   })
   getCoffeeMachines(): Observable<any> {
     return this.http.get<any>(`${environment.balenaApiUrl}/devices`)
@@ -30,7 +30,7 @@ export class CoffeeMachineService {
 
   @Cacheable({
     cacheBusterObserver: cacheBuster,
-    maxAge: 900000
+    maxAge: 180000
   })
   getCoffeeMachineNameById(id: number): Observable<any> {
     return this.http.get<any>(`${environment.webApiUrl}/coffee/machines/${id}`)
@@ -41,7 +41,7 @@ export class CoffeeMachineService {
 
   @Cacheable({
     cacheBusterObserver: cacheBuster,
-    maxAge: 900000
+    maxAge: 180000
   })
   getCoffeeMachineStatus(uuid: string): Observable<any> {
     return this.http.get<any>(`https://${uuid}.balena-devices.com/api/device/status`)
@@ -52,7 +52,7 @@ export class CoffeeMachineService {
 
   @Cacheable({
     cacheBusterObserver: cacheBuster,
-    maxAge: 900000
+    maxAge: 180000
   })
   getCoffeeMachineSettings(uuid: string): Observable<any> {
     return this.http.get<any>(`https://${uuid}.balena-devices.com/api/device/settings`)
@@ -63,7 +63,7 @@ export class CoffeeMachineService {
 
   @Cacheable({
     cacheBusterObserver: cacheBuster,
-    maxAge: 900000
+    maxAge: 180000
   })
   postNewCoffeeJob(uuid: string, jobDetails: any): Observable<any> {
     return this.http.post<any>(`https://${uuid}.balena-devices.com/api/device/job`, jobDetails)
