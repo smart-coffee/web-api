@@ -1,11 +1,9 @@
 <div class="account-recovery" (swiperight)="onSwipeRight()">
   <app-arty-headline class="account-recovery__arty-headline-component" [text]="'Account wiederherstellen'" [artSource]="'../../../assets/backgrounds/bg-art-headline-big.svg'"></app-arty-headline>
-  <form class="account-recovery__form">
+  <div class="account-recovery__form">
     <div class="account-recovery__instructions">
-      Bitte geben Sie die mit Ihrem Account verbundene Email ein.
+      Bitte setze dich mit einem Administrator in Verbindung.
     </div>
-    <!-- Password -->
-    <app-form-text-input [label]="'Email Adresse'" [name]="'email'" [type]="'email'"></app-form-text-input>
-  </form>
-  <app-button class="account-recovery__recovery-button" [label]="'Absenden'" [type]="'default'" (click)="recoverAccount()" [enabled]="true"></app-button>
+  </div>
+  <app-button class="account-recovery__recovery-button" [label]="'Zurück'" [type]="'default'" (click)="onSwipeRight()" [enabled]="true"></app-button>
 </div>
