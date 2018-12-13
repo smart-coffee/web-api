@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import { environment } from '../../environments/environment.prod';
 import { catchError } from 'rxjs/operators';
 import { ServiceError } from '../shared/errorhandling/service-error';
+import {Cacheable} from 'ngx-cacheable';
+
+const cacheBuster = new Subject<void>();
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +17,10 @@ export class CoffeeService {
 
   constructor(private http: HttpClient) { }
 
+  @Cacheable({
+    cacheBusterObserver: cacheBuster,
+    maxAge: 900000
+  })
   getCoffeeProductById(id: number): Observable<any> {
     return this.http.get<any>(`${environment.webApiUrl}/coffee/products/${id}`)
       .pipe(
@@ -21,6 +28,10 @@ export class CoffeeService {
       );
   }
 
+  @Cacheable({
+    cacheBusterObserver: cacheBuster,
+    maxAge: 900000
+  })
   getCoffeeTypeById(id: number): Observable<any> {
     return this.http.get<any>(`${environment.webApiUrl}/coffee/types/${id}`)
       .pipe(

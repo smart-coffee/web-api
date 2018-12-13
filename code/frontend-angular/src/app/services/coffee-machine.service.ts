@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment.prod';
 import { ServiceError } from '../shared/errorhandling/service-error';
+import {Cacheable} from 'ngx-cacheable';
+
+const cacheBuster = new Subject<void>();
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +17,10 @@ export class CoffeeMachineService {
 
   constructor(private http: HttpClient) { }
 
+  @Cacheable({
+    cacheBusterObserver: cacheBuster,
+    maxAge: 900000
+  })
   getCoffeeMachines(): Observable<any> {
     return this.http.get<any>(`${environment.balenaApiUrl}/devices`)
       .pipe(
@@ -21,6 +28,10 @@ export class CoffeeMachineService {
       );
   }
 
+  @Cacheable({
+    cacheBusterObserver: cacheBuster,
+    maxAge: 900000
+  })
   getCoffeeMachineNameById(id: number): Observable<any> {
     return this.http.get<any>(`${environment.webApiUrl}/coffee/machines/${id}`)
       .pipe(
@@ -28,6 +39,10 @@ export class CoffeeMachineService {
       );
   }
 
+  @Cacheable({
+    cacheBusterObserver: cacheBuster,
+    maxAge: 900000
+  })
   getCoffeeMachineStatus(uuid: string): Observable<any> {
     return this.http.get<any>(`https://${uuid}.balena-devices.com/api/device/status`)
       .pipe(
@@ -35,6 +50,10 @@ export class CoffeeMachineService {
       );
   }
 
+  @Cacheable({
+    cacheBusterObserver: cacheBuster,
+    maxAge: 900000
+  })
   getCoffeeMachineSettings(uuid: string): Observable<any> {
     return this.http.get<any>(`https://${uuid}.balena-devices.com/api/device/settings`)
       .pipe(
@@ -42,6 +61,10 @@ export class CoffeeMachineService {
       );
   }
 
+  @Cacheable({
+    cacheBusterObserver: cacheBuster,
+    maxAge: 900000
+  })
   postNewCoffeeJob(uuid: string, jobDetails: any): Observable<any> {
     return this.http.post<any>(`https://${uuid}.balena-devices.com/api/device/job`, jobDetails)
       .pipe(
