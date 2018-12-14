@@ -17,6 +17,10 @@ export class SignUpComponent implements OnInit {
   passwordConfirm: string;
   email: string;
 
+  showNotificationModal: boolean;
+  modalMessages: string[];
+  modalType: string;
+
   constructor(private router: Router,
               private location: Location,
               private userService: UserService) { }
@@ -26,6 +30,10 @@ export class SignUpComponent implements OnInit {
     this.password = '';
     this.passwordConfirm = '';
     this.email = '';
+
+    this.showNotificationModal = false;
+    this.modalMessages = [];
+    this.modalType = 'info';
   }
 
   onSwipeRight () {
@@ -56,8 +64,11 @@ export class SignUpComponent implements OnInit {
       this.userService.postNewUser(newUser)
         .subscribe( user => {
           console.log(user);
+        }, error => {
+          this.showNotificationModal = true;
+          this.modalType = 'error';
+          this.modalMessages = [error];
         });
     }
-    console.log('something sign-uppy should be happening right now');
   }
 }
