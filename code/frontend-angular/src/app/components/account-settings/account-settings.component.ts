@@ -3,7 +3,8 @@ import { ITextInputObject } from '../../shared/interfaces/form-input-objects';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { UserService } from '../../services/user.service';
-import {AuthenticationService} from '../../services/authentication.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { validateAccountSettings } from '../../shared/errorhandling/form-validation';
 
 @Component({
   selector: 'app-account-settings',
@@ -19,6 +20,10 @@ export class AccountSettingsComponent implements OnInit {
   newPasswordConfirm: string;
   email: string;
 
+  showNotificationModal: boolean;
+  modalMessages: string[];
+  modalType: string;
+
   constructor(private router: Router,
               private location: Location,
               private userService: UserService,
@@ -30,6 +35,10 @@ export class AccountSettingsComponent implements OnInit {
     this.newPassword = '';
     this.newPasswordConfirm = '';
     this.email = '';
+
+    this.showNotificationModal = false;
+    this.modalMessages = [];
+    this.modalType = 'info';
   }
 
   onSwipeRight () {
@@ -52,7 +61,15 @@ export class AccountSettingsComponent implements OnInit {
   }
 
   editUser() {
-    if (this.newPassword === this.newPasswordConfirm) {
+
+    const formValidation = validateAccountSettings(this.newPassword, this.newPasswordConfirm, this.username);
+
+    if (formValidation.error) {
+      this.showNotificationModal = true;
+      this.modalType = 'error';
+      this.modalMessages = formValidation.errorMessages;
+    } else if (this.newPassword === this.newPasswordConfirm && this.newPassword !== '') {
+      this.showNotificationModal = false;
       const tmpUser = {
         name: this.username,
         old_password: this.oldPassword,
@@ -62,17 +79,22 @@ export class AccountSettingsComponent implements OnInit {
       this.userService.editUserDetails(tmpUser)
         .subscribe(user => {
           if (typeof user !== 'undefined') {
-            // TODO: add success message
-            console.log(`there should be a success message here ... redirecting to home`);
+            this.modalMessages = ['Deine Einstellungen wurden erfolgreich gespeichert.' +
+            ' Du wirst jetzt auf den Login Bildschirm weitergeleitet'];
+            this.modalType = 'info';
+            this.showNotificationModal = true;
             this.signOut();
           }
         });
     }
+
   }
 
   signOut () {
-    this.authenticationService.signOut();
-    this.router.navigate(['sign-in']);
+    setTimeout(() => {
+        this.authenticationService.signOut();
+        this.router.navigate(['sign-in']);
+      }, 3000);
   }
 
 }

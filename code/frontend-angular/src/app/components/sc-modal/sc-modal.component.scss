@@ -5,48 +5,49 @@
 $width: 300px;
 
 .sc-modal {
+  z-index: 3;
   position: fixed;
   width: 300px;
   padding: 5px 15px;
   display: flex;
+  flex-direction: column;
   bottom: 0;
+  left: 50%;
   border-radius: 5px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26), 0 2px 10px 0 rgba(0, 0, 0, 0.16);
   color: $color-text-dark;
   font: $font-sc-input-2;
-  animation: showModal 10s forwards;
+  background: $color-background-light;
+  animation: showModal 1s forwards;
 
   &--info {
     border: 2px solid $color-link;
+    background-color: lighten($color-link, 45%);
   }
 
   &--error {
     border: 2px solid $color-error;
+    background-color: lighten($color-error, 40%);
   }
 
   &--warning {
     border: 2px solid $color-warning;
+    background-color: lighten($color-warning, 45%);
+  }
+
+  &__message {
+    padding: 1px 0;
   }
 }
 
 @keyframes showModal {
   0% {
     opacity: 0;
-    transform: translateY(0);
-  }
-
-  20% {
-    opacity: 1;
-    transform: translateY(-30px);
-  }
-
-  80% {
-    opacity: 1;
-    transform: translateY(-30px);
+    transform: translate(-50%, 0);
   }
 
   100% {
-    opacity: 0;
-    transform: translateY(0);
+    opacity: 1;
+    transform: translate(-50%, -15vh);
   }
 }

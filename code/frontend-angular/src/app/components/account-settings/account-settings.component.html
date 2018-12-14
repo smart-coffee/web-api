@@ -15,4 +15,6 @@
 
   <app-button class="account-settings__cancel-button" [label]="'Abbrechen'" [type]="'ghost'" [enabled]="true" (click)="goBack()"></app-button>
   <app-button class="account-settings__change-button" [label]="'Ändern'" [type]="'default'" [enabled]="true" (click)="editUser()"></app-button>
+
+  <app-sc-modal *ngIf="showNotificationModal" [type]="modalType" [messages]="modalMessages" (click)="showNotificationModal = false"></app-sc-modal>
 </div>
