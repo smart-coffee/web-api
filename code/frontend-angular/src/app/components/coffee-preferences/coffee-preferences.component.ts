@@ -40,6 +40,9 @@ export class CoffeePreferencesComponent implements OnInit {
 
   cupVal: number;
 
+  showNotificationModal: boolean;
+  modalMessages: string[];
+  modalType: string;
   showEditProfileModal: boolean;
   editProfileModalNewProfile: boolean;
   newCoffeeProfileName: string;
@@ -70,6 +73,9 @@ export class CoffeePreferencesComponent implements OnInit {
     this.editProfileModalNewProfile = false;
     this.saveProfileSent = true;
     this.coffeeJobSendInProgress = false;
+    this.showNotificationModal = false;
+    this.modalMessages = [];
+    this.modalType = 'info';
     this.setHeaderText();
     this.getCoffeeProfiles();
     this.selectedProfile = this.defaultProfile;
@@ -190,7 +196,13 @@ export class CoffeePreferencesComponent implements OnInit {
         .subscribe(coffeeProfile => {
           this.saveProfileSent = true;
           this.getCoffeeProfiles();
+          this.modalMessages = ['Dein neues Kaffeeprofil wurde erfolgreich gespeichert'];
+          this.modalType = 'info';
+          this.showNotificationModal = true;
           this.resetEditProfileModalState();
+          setTimeout(() => {
+            this.showNotificationModal = false;
+          }, 3000);
         });
     }
   }

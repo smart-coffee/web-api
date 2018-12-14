@@ -66,6 +66,7 @@
     </svg>
   </div>
 </div>
+<app-sc-modal *ngIf="showNotificationModal" [type]="modalType" [messages]="modalMessages" (click)="showNotificationModal = false"></app-sc-modal>
 <div class="coffee-preferences__edit-profile-modal" [@showHide]="showEditProfileModal ? 'show' : 'hide'">
   <div *ngIf="!editProfileModalNewProfile" class="coffee-preferences__edit-profile-prompt">
     <div>Ein bestehendes Profil wurde verändert. Willst du die aktuellen Werte in einem neuen Profil abspeichern, oder ohne Speichern fortfahren?</div>
