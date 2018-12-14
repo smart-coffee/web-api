@@ -41,6 +41,10 @@ export class CoffeeMachineInfoComponent implements OnInit {
 
   coffeeMachineDetails: CoffeeMachineDetails;
 
+  showNotificationModal: boolean;
+  modalMessages: string[];
+  modalType: string;
+
   constructor(private coffeeMachineService: CoffeeMachineService,
               private coffeeService: CoffeeService,
               private cdr: ChangeDetectorRef) { }
@@ -51,6 +55,11 @@ export class CoffeeMachineInfoComponent implements OnInit {
     this.showCoffeeDetails = false;
     this.machineDetailsInitialized = false;
     this.coffeeMachines = [];
+
+    this.showNotificationModal = false;
+    this.modalMessages = [];
+    this.modalType = 'info';
+
     this.detailsLoaded.emit(false);
     this.resetCoffeeMachineDetails();
     this.getCoffeeMachines();
@@ -85,8 +94,11 @@ export class CoffeeMachineInfoComponent implements OnInit {
             this.getCoffeeMachineSettings(uuid);
             }
           });
-        }
-      );
+        }, error => {
+        this.showNotificationModal = true;
+        this.modalType = 'error';
+        this.modalMessages = [error];
+      });
   }
 
   getCoffeeMachineSettings(uuid: string) {
@@ -98,6 +110,10 @@ export class CoffeeMachineInfoComponent implements OnInit {
         } else {
           console.error(`could not retrieve balena device for undefined uuid`);
         }
+      }, error => {
+        this.showNotificationModal = true;
+        this.modalType = 'error';
+        this.modalMessages = [error];
       });
   }
 
@@ -114,6 +130,10 @@ export class CoffeeMachineInfoComponent implements OnInit {
             this.machineDetailsInitialized = true;
           }
         }
+      }, error => {
+        this.showNotificationModal = true;
+        this.modalType = 'error';
+        this.modalMessages = [error];
       });
   }
 
@@ -144,6 +164,10 @@ export class CoffeeMachineInfoComponent implements OnInit {
               this.getCoffeeProductById(coffee_product_id);
             });
         }
+      }, error => {
+        this.showNotificationModal = true;
+        this.modalType = 'error';
+        this.modalMessages = [error];
       });
   }
 
@@ -158,6 +182,10 @@ export class CoffeeMachineInfoComponent implements OnInit {
         if (typeof coffee_brand_id !== 'undefined') {
           this.getCoffeeTypeById(coffee_brand_id);
         }
+      }, error => {
+        this.showNotificationModal = true;
+        this.modalType = 'error';
+        this.modalMessages = [error];
       });
   }
 
@@ -171,6 +199,10 @@ export class CoffeeMachineInfoComponent implements OnInit {
           this.cdr.detectChanges();
           this.detailsLoaded.emit(true);
         }
+      }, error => {
+        this.showNotificationModal = true;
+        this.modalType = 'error';
+        this.modalMessages = [error];
       });
   }
 
