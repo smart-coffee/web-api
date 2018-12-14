@@ -203,6 +203,10 @@ export class CoffeePreferencesComponent implements OnInit {
           setTimeout(() => {
             this.showNotificationModal = false;
           }, 3000);
+        }, error => {
+          this.showNotificationModal = true;
+          this.modalType = 'error';
+          this.modalMessages = [error];
         });
     }
   }
@@ -237,6 +241,10 @@ export class CoffeePreferencesComponent implements OnInit {
           };
           this.coffeeProfiles = [...this.coffeeProfiles, tmp];
         });
+      }, error => {
+        this.showNotificationModal = true;
+        this.modalType = 'error';
+        this.modalMessages = [error];
       });
   }
 
