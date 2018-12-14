@@ -11,3 +11,4 @@
   </div>
   <app-button class="sign-in__sign-in-button" [label]="'Anmelden'" [type]="'default'" [enabled]="true" (click)="signIn()"></app-button>
 </div>
+<app-sc-modal *ngIf="showNotificationModal" [type]="modalType" [messages]="modalMessages" (click)="showNotificationModal = false"></app-sc-modal>

@@ -77,15 +77,20 @@ export class AccountSettingsComponent implements OnInit {
         email: this.email
       };
       this.userService.editUserDetails(tmpUser)
-        .subscribe(user => {
-          if (typeof user !== 'undefined') {
-            this.modalMessages = ['Deine Einstellungen wurden erfolgreich gespeichert.' +
-            ' Du wirst jetzt auf den Login Bildschirm weitergeleitet'];
-            this.modalType = 'info';
+        .subscribe(
+            user => {
+            if (typeof user !== 'undefined') {
+              this.modalMessages = ['Deine Einstellungen wurden erfolgreich gespeichert.' +
+              ' Du wirst jetzt auf den Login Bildschirm weitergeleitet'];
+              this.modalType = 'info';
+              this.showNotificationModal = true;
+              this.signOut();
+            }
+          }, error => {
             this.showNotificationModal = true;
-            this.signOut();
-          }
-        });
+            this.modalType = 'error';
+            this.modalMessages = [error];
+          });
     }
 
   }

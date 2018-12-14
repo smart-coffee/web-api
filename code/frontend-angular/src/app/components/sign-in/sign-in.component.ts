@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { ITextInputObject } from '../../shared/interfaces/form-input-objects';
-import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
@@ -14,8 +13,10 @@ export class SignInComponent implements OnInit {
 
   username: string;
   password: string;
-  loading: boolean;
-  error: string;
+
+  showNotificationModal: boolean;
+  modalMessages: string[];
+  modalType: string;
 
   constructor(private router: Router,
               private location: Location,
@@ -25,8 +26,10 @@ export class SignInComponent implements OnInit {
   ngOnInit() {
     this.username = '';
     this.password = '';
-    this.loading = false;
-    this.error = '';
+
+    this.showNotificationModal = false;
+    this.modalMessages = [];
+    this.modalType = 'info';
   }
 
   onSwipeRight () {
@@ -46,17 +49,10 @@ export class SignInComponent implements OnInit {
   }
 
   signIn () {
-    this.loading = true;
     this.authenticationService.login(this.username, this.password)
-      .pipe(first())
       .subscribe(
         data => {
           this.router.navigate(['home']);
-        },
-        error => {
-          this.error = error;
-          this.loading = false;
-        }
-      );
+        });
   }
 }
