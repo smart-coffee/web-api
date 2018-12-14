@@ -53,6 +53,10 @@ export class SignInComponent implements OnInit {
       .subscribe(
         data => {
           this.router.navigate(['home']);
+        }, error => {
+          this.showNotificationModal = true;
+          this.modalType = 'error';
+          this.modalMessages = [error];
         });
   }
 }
