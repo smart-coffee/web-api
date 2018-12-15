@@ -1,4 +1,3 @@
-from config.flask_config import ResourceNotFound
 from models import User, Role, CoffeeMachine, CoffeeType, CoffeeBrand, CoffeeProduct, Profile, Job
 
 

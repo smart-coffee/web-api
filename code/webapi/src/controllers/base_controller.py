@@ -26,7 +26,7 @@ class _BaseController:
         obj = self.get_single_statement(criteria, current_user, autoflush, **kwargs)
         if not obj:
             logger.error('{user} tried to get {resource_name} {instance_name} and failed.'.format(user=current_user.get_id(), resource_name=self.resource_name, instance_name=resource_id))
-            raise ResourceNotFound('{resource_name} not found'.format(resource_name=self.resource_name))
+            raise ResourceNotFound('{resource_name} nicht gefunden.'.format(resource_name=self.resource_name))
         self.validate_single_result(obj, **kwargs)
         self.fixture_function(obj)
         logger.debug('User {user} requested {resource_name} {instance_name}.'.format(user=current_user.id, resource_name=self.resource_name, instance_name=obj.get_id()))

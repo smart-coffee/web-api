@@ -27,13 +27,13 @@ class CurrentUserController(_BaseController):
     def get_by_username(self, username: str, current_user: User=None) -> User:
         _user = User.query.filter_by(name=username).first()
         if not _user:
-            raise ResourceNotFound('User not found')
+            raise ResourceNotFound('Nutzer nicht gefunden.')
         run_user_fixture(_user)
         return _user
 
     def edit_object(self, object_to_edit: User, data: dict, current_user: User) -> User:
         if object_to_edit.public_id != current_user.public_id:
-            raise ForbiddenResourceException('User {0} can not edit user {1}'.format(current_user.public_id, object_to_edit.public_id))
+            raise ForbiddenResourceException('Nutzer {0} kann den Nutzer mit der ID {1} nicht bearbeiten.'.format(current_user.public_id, object_to_edit.public_id))
         self.tools._try_edit_user_password(data=data, user=object_to_edit)
         self.tools._try_edit_user_email(data=data, user=object_to_edit)
         self.tools._try_edit_user_name(data=data, user=object_to_edit)
@@ -69,7 +69,7 @@ class CurrentUserProfileController(_BaseController):
     
     def edit_object(self, object_to_edit: Profile, data: dict, current_user: User) -> Profile:
         if object_to_edit.user.id != current_user.id:
-            raise ForbiddenResourceException('User {0} can not edit profile {1}'.format(current_user.public_id, object_to_edit.id))
+            raise ForbiddenResourceException('Nutzer {0} kann Kaffeeprofil mit der ID {1} nicht bearbeiten.'.format(current_user.public_id, object_to_edit.id))
         object_to_edit.name = data['name']
         object_to_edit.coffee_strength_in_percent = data['coffee_strength_in_percent']
         object_to_edit.water_in_percent = data['water_in_percent']
@@ -107,7 +107,7 @@ class UserController(_BaseController):
             role_id = roles[0]
             role = Role.query.filter_by(id=role_id).first()
             if role is None:
-                raise ResourceNotFound('Given role with id {} not found.'.format(role_id))
+                raise ResourceNotFound('Rollen mit ID {} nicht gefunden.'.format(role_id))
             new_user.role = role
 
         return new_user
@@ -122,7 +122,7 @@ class UserController(_BaseController):
             role_id = roles[0]
             role = Role.query.filter_by(id=role_id).first()
             if role is None:
-                raise ResourceNotFound('Given role with id {} not found.'.format(role_id))
+                raise ResourceNotFound('Rolle mit ID {} nicht gefunden.'.format(role_id))
             object_to_edit.role = role
         else:
             object_to_edit.role = None
@@ -144,7 +144,7 @@ class UserProfileController(_BaseController):
         acutal_public_id = result.user.public_id
         expected_public_id = kwargs['public_id']
         if acutal_public_id != expected_public_id:
-            raise ForbiddenResourceException('Tried to get a profile that belongs to user {0} as user {1}'.format(acutal_public_id, expected_public_id))
+            raise ForbiddenResourceException('Das Kaffeeprofil von Nutzer {0} kann nicht von Nutzer {1} abgerufen werden.'.format(acutal_public_id, expected_public_id))
     
     def get_list_statement(self, current_user: User, **kwargs) -> List[Profile]:
         user = self.tools._get_user(**kwargs)
@@ -181,10 +181,10 @@ class UserTools:
     def _get_user(self, **kwargs):
         public_id = kwargs['public_id']
         if public_id is None:
-            raise ResourceException('Public ID is missing.')
+            raise ResourceException('Public ID fehlt.')
         user = User.query.filter_by(public_id=public_id).first()
         if user is None:
-            raise ResourceNotFound('User with public id {} not found.'.format(public_id))
+            raise ResourceNotFound('Nutzer mit ID {} nicht gefunden.'.format(public_id))
         return user
 
     def _try_edit_user_password(self, data: dict, user: User):
@@ -196,17 +196,17 @@ class UserTools:
             old_password = self._get_validated_password(old_password)
             old_password_confirmed = check_password_hash(user.password, old_password)
             if not old_password_confirmed:
-                msg = 'The old password is not correct.'
-                logger.error(msg)
+                msg = 'Das alte Passwort ist nicht korrekt.'
+                logger.debug(msg)
                 raise ResourceException(msg)
 
         if old_password and not new_password:
-            msg = 'Request body does not contain the new password.'
-            logger.error(msg)
+            msg = 'Anfrage enthält nicht das neue Passwort.'
+            logger.debug(msg)
             raise ResourceException(msg)
         if new_password and not old_password:
-            msg = 'Request body does not contain the old password.'
-            logger.error(msg)
+            msg = 'Anfrage enthält nicht das alte Passwort.'
+            logger.debug(msg)
             raise ResourceException(msg)
 
         new_password_differs = False
@@ -237,29 +237,29 @@ class UserTools:
     @staticmethod
     def _get_validated_email(email:str) -> str:
         if not email:
-            raise ResourceException('Email is missing.')
+            raise ResourceException('Email-Adresse fehlt.')
         try:
             validated_email = validate_email(email)
         except EmailNotValidError as err:
-            raise ResourceException('Email {0} is not in a valid format: {1}'.format(email, str(err)))
+            raise ResourceException('Email-Adresse {0} hat kein valides Format: {1}'.format(email, str(err)))
         except EmailSyntaxError as err:
-            raise ResourceException('Email {0} is not in a valid syntax: {1}'.format(email, str(err)))
+            raise ResourceException('Email-Adresse {0} hat keine valide Syntax: {1}'.format(email, str(err)))
         return validated_email['email']
     
     @staticmethod
     def _get_validated_password(password:str) -> str:
         if not password:
-            raise ResourceException('Password is missing.')
+            raise ResourceException('Passwort fehlt.')
         if len(password) < 6:
-            raise ResourceException('Password is to short. At least 6 characters.')
+            raise ResourceException('Password ist zu kurz (min. 6 Zeichen).')
         return password
 
     @staticmethod    
     def _get_validated_user_name(name:str) -> str:
         if not name:
-            raise ResourceException('Username is missing.')
+            raise ResourceException('Nutzername fehlt.')
         if len(name) < 6:
-            raise ResourceException('Username is to short. At least 6 characters.')
+            raise ResourceException('Nutzername ist zu kurz (min. 6 Zeichen).')
         return name
     
     @staticmethod

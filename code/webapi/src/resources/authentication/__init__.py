@@ -32,19 +32,19 @@ class LoginAPI(MethodView):
 
         if not is_dict_structure_equal(get_credentials_fields(), data):
             logger.warning('Request body has an unknown structure.')
-            raise AuthenticationFailed('Could not verify')
+            raise AuthenticationFailed('Verifizierung nicht möglich.')
 
         username = data['username']
         password = data['password']
 
         if not username or not password:
             logger.warning('Password is missing.')
-            raise AuthenticationFailed('Could not verify')
+            raise AuthenticationFailed('Verifizierung nicht möglich.')
         user = User.query.filter_by(name=username).first()
 
         if not user:
             logger.warning('User could not be found in database.')
-            raise AuthenticationFailed('Could not verify')
+            raise AuthenticationFailed('Verifizierung nicht möglich.')
 
         if check_password_hash(user.password, password):
             logger.info('Log in successful: {}'.format(user.public_id))
@@ -53,7 +53,7 @@ class LoginAPI(MethodView):
                 token=token.decode('UTF-8')
             ))
         logger.warning('Password is wrong.')
-        raise AuthenticationFailed('Could not verify')
+        raise AuthenticationFailed('Verifizierung nicht möglich.')
 
 
 class RefreshAPI(MethodView):

@@ -62,7 +62,7 @@ def get_token_response(body, content_type='application/json'):
 def get_validated_request_body_as_json(template: dict):
     _data = request.get_json()
     if not is_dict_structure_equal(template, _data):
-        raise ResourceException('Request body contains unknown key value pairs.')
+        raise ResourceException('Anfrage enthält unbekannte Wertkombinationen.')
     return _data
 
 def token_required(roles:List[str]=None):
@@ -74,17 +74,17 @@ def token_required(roles:List[str]=None):
                 token = request.headers['x-access-token']
 
             if not token:
-                raise AuthenticationFailed('Token is missing')
+                raise AuthenticationFailed('Token fehlt.')
 
             try:
                 data = jwt.decode(token, get_secret_key(FLASK_APP), algorithms=['HS256'])
                 current_user = User.query.filter_by(
                     public_id=data['public_id']).first()
             except:
-                raise AuthenticationFailed('Token is invalid')
+                raise AuthenticationFailed('Token ist ungültig.')
 
             if not (roles is None) and (current_user.role is None or not current_user.role.name in roles):
-                raise ForbiddenResourceException('Access denied.')
+                raise ForbiddenResourceException('Zugriff verweigert.')
 
             return func(current_user=current_user, *args, **kwargs)
         return wrapper
