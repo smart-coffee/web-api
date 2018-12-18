@@ -18,4 +18,4 @@ properties:
     example: 42
   water_in_percent:
     type: integer
-    example: 42
+    example: 42000

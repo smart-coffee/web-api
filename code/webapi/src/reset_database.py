@@ -35,7 +35,7 @@ def reset_database():
 
     profile = Profile()
     profile.name = 'Morning'
-    profile.water_in_percent = 32
+    profile.water_in_percent = 32 * 1000
     profile.coffee_strength_in_percent = 42
     profile.user = user
 

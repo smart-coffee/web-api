@@ -19,7 +19,7 @@ properties:
     example: 50
   water_in_percent:
     type: integer
-    example: 33
+    example: 33000
   user_id:
     type: string
     example: b5386ca2-6c25-4308-a22a-4cf81c58af8b
