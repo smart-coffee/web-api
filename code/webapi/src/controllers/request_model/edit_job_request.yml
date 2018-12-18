@@ -16,10 +16,10 @@ properties:
     example: 42
   coffee_strength_in_percent:
     type: integer
-    example: 42000
+    example: 42
   water_in_percent:
     type: integer
-    example: 42000
+    example: 42
   price:
     type: integer
     description: Price of a single coffee dose in percent
