@@ -89,11 +89,19 @@ export class CoffeeMachineInfoComponent implements OnInit {
     this.coffeeMachineService.getCoffeeMachines()
       .subscribe(devices => {
           devices.map(device => {
-            const { uuid } = device;
-            if (typeof uuid !== 'undefined') {
+            const { uuid, is_online } = device;
+            if (typeof uuid !== 'undefined' && is_online === true) {
             this.getCoffeeMachineSettings(uuid);
             }
           });
+
+          if (!this.coffeeMachines.length) {
+            this.showNotificationModal = true;
+            this.modalMessages = ['Gerade sind keine Kaffeemaschinen erreichbar. ' +
+            'Versuche es bitte zu einem späteren Zeitpunkt noch einmal.'];
+            this.modalType = 'info';
+            console.log(`there are currently no coffee machines online`);
+          }
         }, error => {
         this.showNotificationModal = true;
         this.modalType = 'error';
@@ -107,8 +115,6 @@ export class CoffeeMachineInfoComponent implements OnInit {
         const { coffee_machine_id: machineId } = balenaDevice;
         if (typeof machineId !== 'undefined') {
           this.getCoffeeMachineDetails(machineId, uuid);
-        } else {
-          console.error(`could not retrieve balena device for undefined uuid`);
         }
       }, error => {
         this.showNotificationModal = true;
