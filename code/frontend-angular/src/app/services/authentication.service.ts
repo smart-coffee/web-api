@@ -4,13 +4,15 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { User } from '../shared/models/user';
 import { environment } from '../../environments/environment.prod';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
+import { ServiceError } from '../shared/errorhandling/service-error';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
+  private _error = new ServiceError();
   public currentUser: Observable<User>;
 
   constructor(private http: HttpClient) {
@@ -24,15 +26,17 @@ export class AuthenticationService {
 
   login(username: string, password: string) {
     return this.http.post<any>(`${environment.webApiUrl}/public/auth/login`, { username, password })
-      .pipe(map(user => {
-        // login successful if there's a jwt token in the response
-        if (user && user.token) {
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
-        }
-
-        return user;
-      }));
+      .pipe(
+        map(user => {
+          // login successful if there's a jwt token in the response
+          if (user && user.token) {
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            this.currentUserSubject.next(user);
+            return user;
+          }
+        }),
+        catchError(this._error.handleError<any>(`login`))
+      );
   }
 
   signOut() {
