@@ -88,20 +88,28 @@ export class CoffeeMachineInfoComponent implements OnInit {
   getCoffeeMachines () {
     this.coffeeMachineService.getCoffeeMachines()
       .subscribe(devices => {
+          // check if only online devices are in the response
+          let noMachinesOnline = true;
+          for (let i = 0; i < devices.length; i++) {
+            const { uuid, is_online } = devices[i];
+            if (typeof uuid !== 'undefined' && is_online === true) {
+              noMachinesOnline = false;
+            }
+          }
+
+          if (noMachinesOnline) {
+            this.showNotificationModal = true;
+            this.modalMessages = ['Gerade sind keine Kaffeemaschinen erreichbar. ' +
+            'Versuche es bitte zu einem späteren Zeitpunkt noch einmal.'];
+            this.modalType = 'info';
+          }
+
           devices.map(device => {
             const { uuid, is_online } = device;
             if (typeof uuid !== 'undefined' && is_online === true) {
             this.getCoffeeMachineSettings(uuid);
             }
           });
-
-          if (!this.coffeeMachines.length) {
-            this.showNotificationModal = true;
-            this.modalMessages = ['Gerade sind keine Kaffeemaschinen erreichbar. ' +
-            'Versuche es bitte zu einem späteren Zeitpunkt noch einmal.'];
-            this.modalType = 'info';
-            console.log(`there are currently no coffee machines online`);
-          }
         }, error => {
         this.showNotificationModal = true;
         this.modalType = 'error';
