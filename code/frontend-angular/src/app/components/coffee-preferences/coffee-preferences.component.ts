@@ -155,7 +155,7 @@ export class CoffeePreferencesComponent implements OnInit {
       const currentMachine = JSON.parse(localStorage.getItem('currentMachine'));
       const jobDetails = {
         coffee_strength_in_percent: Number(this.coffeeVal),
-        water_in_percent: this.waterValToPercent(Number(this.waterVal)),
+        water_in_percent: this.waterValToPercent(Number(this.waterVal)) / 1000,
         doses: Number(this.cupVal)
       };
 
