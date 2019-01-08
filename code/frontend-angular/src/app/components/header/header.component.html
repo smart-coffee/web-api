@@ -1,9 +1,0 @@
-<div class="sc-header">
-  <img class="sc-header__logo-secondary" alt="logo-secondary" (click)="navigateToHome()" src="../../../assets/logos/Secondary/Dark.svg"/>
-  <img class="sc-header__user-icon" alt="user-icon" (click)="toggleMenu()" src="../../../assets/icons/24/User/Dark.svg"/>
-  <div class="sc-header__user-menu" [@showHide]="showMenu ? 'show' : 'hide'">
-    <div class="sc-header__user-menu-option" (click)="navigateToAccountSettings()">Einstellungen</div>
-    <div class="sc-header__user-menu-option" (click)="signOut()">Ausloggen</div>
-  </div>
-  <div class="sc-header__user-menu-hack" [@showHide]="showMenu ? 'show' : 'hide'" (click)="toggleMenu()"></div>
-</div>

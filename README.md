@@ -1,15 +1,32 @@
-# Services Overview
+# Backend Application for our IoT Coffeemachine
+* Python >= 3.6 required
+* API-Documentation: [https://webapi-docs.tobias-blaufuss.de](https://webapi-docs.tobias-blaufuss.de)
 
-## Frontend API
-URL: [https://iot.tobias-blaufuss.de/](https://iot.tobias-blaufuss.de/)
+## Initialization of the project
+Initialize the project: `sh scripts/init.sh`. This will:
+* ... initialize the virtual environment
+* ... initialize `.env` files
+* ... initialize `docker` containers
 
-## Balena API
-URL: [https://tobias-blaufuss.de:63642/balena/sandbox-test/devices](https://tobias-blaufuss.de:63642/balena/sandbox-test/devices)
+## Start the app
+* `sh scripts/app-start.sh`
+* Go to [http://localhost:5000](http://localhost:5000)
+* Try the login resource with the following credentials => admin:password
+* You should receive a JWT Token, which you can use for other available resources that require a JWT Token.
+* Use the token for the `/users/current` and you will receive all information about the current user account.
 
-## Web API
-URL: [https://tobias-blaufuss.de:65291](https://tobias-blaufuss.de:65291)
+## Reset database
+`sh scripts/init-database.sh`
 
-Documentation: [https://webapi-docs.tobias-blaufuss.de/](https://webapi-docs.tobias-blaufuss.de/)
+## Docker
+Start docker environment with `docker-compose up`. This will start the following containers:
+* MySQL, Database Server (Host:3308, Network:3306)
+* Adminer, Database Administration Tool (Host:8081, Network:8080)
 
-## Coffeedevice API
-Documentation: [https://deviceapi-docs.tobias-blaufuss.de/](https://deviceapi-docs.tobias-blaufuss.de/)
+Visit [http://localhost:8081](http://localhost:8081) and access the database with the credentials listed in `docker-compose.yml`. There should be **1 user in the `user` table** if you initialized the project correctly.
+
+Example connection:
+* server: mysql-dev
+* user: admin
+* password: admin
+* database: cm_db
