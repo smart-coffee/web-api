@@ -21,6 +21,11 @@ class ResourceException(Exception):
         return rv
 
 
+class DataStorageException(ResourceException):
+    def __init__(self, message, payload=None, headers=None):
+        ResourceException.__init__(self, message, 400, payload, headers)
+
+
 class ResourceNotFound(ResourceException):
     def __init__(self, message, payload=None, headers=None):
         ResourceException.__init__(self, message, 404, payload, headers)

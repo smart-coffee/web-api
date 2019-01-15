@@ -3,7 +3,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from flask import request
 
 from models import User
-from config.flask_config import ResourceNotFound
+from config.flask_config import ResourceNotFound, DataStorageException
 from config.logger import logging, get_logger_name
 from utils.http import get_validated_request_body_as_json
 from config import DB
@@ -66,7 +66,7 @@ class _BaseController:
         except SQLAlchemyError as err:
             logger.error('Failed to create {resource_name}: {error}'.format(resource_name=self.resource_name, error=str(err)))
             session.rollback()
-            raise err
+            raise DataStorageException(message='Der Nutzer ist möglicherweise schon vorhanden.')
         logger.info('{resource_name} {id} created.'.format(resource_name=self.resource_name, id=obj.get_id()))
         self.fixture_function(obj)
         return obj
