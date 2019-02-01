@@ -41,7 +41,7 @@ class JobResource(Resource):
     def __init__(self):
         self.controller = JobController()
 
-    @token_required(roles=['Administrator'])
+    @token_required()
     @swag_from('/resources/jobs/description/jobs_get.yml')
     @marshal_with(get_job_fields())
     def get(self, job_id: int, current_user: User) -> Job:
