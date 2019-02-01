@@ -21,6 +21,7 @@ class JobListResource(Resource):
     def __init__(self):
         self.controller = JobController()
     
+    # TODO roles=['Administrator']
     @token_required()
     @swag_from('/resources/jobs/description/jobs_list_get.yml')
     @marshal_with(get_job_fields())
@@ -41,6 +42,7 @@ class JobResource(Resource):
     def __init__(self):
         self.controller = JobController()
 
+    # TODO roles=['Administrator'] 
     @token_required()
     @swag_from('/resources/jobs/description/jobs_get.yml')
     @marshal_with(get_job_fields())
