@@ -30,3 +30,8 @@ Example connection:
 * user: admin
 * password: admin
 * database: cm_db
+
+## PRODUCTION (Without docker)
+* Start production server: `./uwsgi-start`
+* Stop production server: `./uwsgi-stop`
+* Ports should be changed in `uwsgi.ini` **AND** `src/.env`
