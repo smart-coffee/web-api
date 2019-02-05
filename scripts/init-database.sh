@@ -1,10 +1,10 @@
 #!/bin/sh
 
 # Start docker containers in background
-docker-compose up -d
+docker-compose up -d mysql-dev
 
 # Wait for them to start
-sleep 5
+sleep 10
 
 # Initialize DB
 source venv/bin/activate

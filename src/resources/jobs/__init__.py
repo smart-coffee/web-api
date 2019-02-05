@@ -50,7 +50,7 @@ class JobResource(Resource):
         return self.controller.get_by_id(job_id, current_user)
 
     
-    @token_required(roles='Administrator')
+    @token_required(roles=['Administrator'])
     @swag_from('/resources/jobs/description/jobs_put.yml')
     @marshal_with(get_job_fields())
     def put(self, job_id, current_user: User) -> Job:

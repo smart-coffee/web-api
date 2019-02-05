@@ -2,11 +2,11 @@
 * Python >= 3.6 required
 * API-Documentation: [https://webapi-docs.tobias-blaufuss.de](https://webapi-docs.tobias-blaufuss.de)
 
-## Initialization of the project
+## Initialization of the project (Development)
 Initialize the project: `sh scripts/init.sh`. This will:
 * ... initialize the virtual environment
 * ... initialize `.env` files
-* ... initialize `docker` containers
+* ... initialize `docker` containers (database)
 
 ## Start the app
 * `sh scripts/app-start.sh`
