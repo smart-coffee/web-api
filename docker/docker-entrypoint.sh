@@ -1,12 +1,12 @@
 #!/bin/sh
 
-DB_USER=${DB_USER:-$MYSQL_USER}
-DB_PW=${DB_PW:-$MYSQL_PASSWORD}
-DB_NAME=${DB_NAME:-$MYSQL_DATABASE}
-DB_HOST=${DB_HOST:-"localhost"}
-DB_PORT=${DB_PORT:-"3306"}
-APP_PROCESSES=${APP_PROCESSES:-"4"}
-APP_THREADS=${APP_THREADS:-"2"}
+export DB_USER=${DB_USER:-$MYSQL_USER}
+export DB_PW=${DB_PW:-$MYSQL_PASSWORD}
+export DB_NAME=${DB_NAME:-$MYSQL_DATABASE}
+export DB_HOST=${DB_HOST:-"localhost"}
+export DB_PORT=${DB_PORT:-"3306"}
+export APP_PROCESSES=${APP_PROCESSES:-"4"}
+export APP_THREADS=${APP_THREADS:-"2"}
 
 echo "Working directory: $WORK_DIR"
 echo "Source directory: $SRC_DIR"
