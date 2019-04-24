@@ -1,34 +1,43 @@
-language: python
 dist: xenial
-cache: pip
+services:
+  - docker
 
 stages:
-  - name: test
+  - build
+  - test
   - name: release
     if: tag IS present
 
 jobs:
   include:
+    - stage: build
+      name: "Create (latest) Docker Image"
+      before_script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker pull $DOCKER_USERNAME/$DOCKER_IMAGE_TAG:latest || true
+      script: docker build --cache-from $DOCKER_USERNAME/$DOCKER_IMAGE_TAG:latest --tag $DOCKER_USERNAME/$DOCKER_IMAGE_TAG:latest .
+      
     - stage: test
       name: "Unit Tests"
-      python:
-        - "3.7"
-        - "3.6"
+      before_install:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker pull $DOCKER_USERNAME/$DOCKER_IMAGE_TAG:latest || true
+      install: docker build --cache-from $DOCKER_USERNAME/$DOCKER_IMAGE_TAG:latest --tag $DOCKER_USERNAME/$DOCKER_IMAGE_TAG:latest .
       script:
         - echo "Run Unit Tests here."
-        - pip list
+        - docker run --env-file docker/test/.env $DOCKER_USERNAME/$DOCKER_IMAGE_TAG:latest
     - stage: test
       name: "Integration Tests"
-      python:
-        - "3.7"
-        - "3.6"
+      before_install:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker pull $DOCKER_USERNAME/$DOCKER_IMAGE_TAG:latest || true
+      install: docker build --cache-from $DOCKER_USERNAME/$DOCKER_IMAGE_TAG:latest --tag $DOCKER_USERNAME/$DOCKER_IMAGE_TAG:latest .
       script: 
         - echo "Run Integration Tests here."
-        - pip list
+        - docker run --env-file docker/test/.env $DOCKER_USERNAME/$DOCKER_IMAGE_TAG:latest
+
     - stage: release
       name: "Release current repository as Docker Image."
-      services:
-        - docker
       before_install:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker pull $DOCKER_USERNAME/$DOCKER_IMAGE_TAG:latest || true
