@@ -3,25 +3,31 @@ dist: xenial
 language: python
 cache: pip
 
+stages:
+  - test
+  - name: release
+    if: tag IS present
+
 jobs:
   include:
     - stage: test
       name: "Unit Tests"
       python:
-        - "3.6"
         - "3.7"
       script:
         - echo "Run Unit Tests here."
         - pip list
     - name: "Integration Tests"
       python:
-        - "3.6"
         - "3.7"
-      script: echo "Run Integration Tests here."
+      script: 
+        - echo "Run Integration Tests here."
         - pip list
     - stage: release
       name: "Release current repository as Docker Image."
       script:
-        - echo "Docker command."
-        - docker build -t bluefu/demo:latest .
-        - docker images
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker pull $DOCKER_USERNAME/$DOCKER_IMAGE_TAG:latest || true
+        - docker build --cache-from $DOCKER_USERNAME/$DOCKER_IMAGE_TAG:latest --tag $DOCKER_USERNAME/$DOCKER_IMAGE_TAG:latest --tag $DOCKER_USERNAME/$DOCKER_IMAGE_TAG:$TRAVIS_TAG .
+        - docker push $DOCKER_USERNAME/$DOCKER_IMAGE_TAG:latest
+        - docker push $DOCKER_USERNAME/$DOCKER_IMAGE_TAG:$TRAVIS_TAG
