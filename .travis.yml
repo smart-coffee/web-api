@@ -1,0 +1,39 @@
+language: python
+dist: xenial
+cache: pip
+
+stages:
+  - name: test
+  - name: release
+    if: tag IS present
+
+jobs:
+  include:
+    - stage: test
+      name: "Unit Tests"
+      python:
+        - "3.7"
+        - "3.6"
+      script:
+        - echo "Run Unit Tests here."
+        - pip list
+    - stage: test
+      name: "Integration Tests"
+      python:
+        - "3.7"
+        - "3.6"
+      script: 
+        - echo "Run Integration Tests here."
+        - pip list
+    - stage: release
+      name: "Release current repository as Docker Image."
+      services:
+        - docker
+      before_install:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker pull $DOCKER_USERNAME/$DOCKER_IMAGE_TAG:latest || true
+      install:
+        - docker build --cache-from $DOCKER_USERNAME/$DOCKER_IMAGE_TAG:latest --tag $DOCKER_USERNAME/$DOCKER_IMAGE_TAG:latest --tag $DOCKER_USERNAME/$DOCKER_IMAGE_TAG:$TRAVIS_TAG .
+      script:
+        - docker push $DOCKER_USERNAME/$DOCKER_IMAGE_TAG:latest
+        - docker push $DOCKER_USERNAME/$DOCKER_IMAGE_TAG:$TRAVIS_TAG
