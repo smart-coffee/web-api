@@ -5,6 +5,8 @@ DB_PW=${DB_PW:-$MYSQL_PASSWORD}
 DB_NAME=${DB_NAME:-$MYSQL_DATABASE}
 DB_HOST=${DB_HOST:-"localhost"}
 DB_PORT=${DB_PORT:-"3306"}
+APP_PROCESSES=${APP_PROCESSES:-"4"}
+APP_THREADS=${APP_THREADS:-"2"}
 
 echo "Working directory: $WORK_DIR"
 echo "Source directory: $SRC_DIR"
@@ -30,8 +32,8 @@ manage-script-name = true
 mount =	/api=app.py
 callable = $APP_CALLABLE
 
-threads = 1
-processes = 2
+threads = $APP_THREADS
+processes = $APP_PROCESSES
 master = true
 safe-pidfile = %n.pid
 EOF
