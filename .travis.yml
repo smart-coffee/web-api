@@ -1,18 +1,27 @@
 dist: xenial
 
 language: python
-
-python:
-  - "3.6"
-  - "3.7"
+cache: pip
 
 jobs:
   include:
     - stage: test
       name: "Unit Tests"
-      script: echo "Run Unit Tests here."
+      python:
+        - "3.6"
+        - "3.7"
+      script:
+        - echo "Run Unit Tests here."
+        - pip list
     - name: "Integration Tests"
+      python:
+        - "3.6"
+        - "3.7"
       script: echo "Run Integration Tests here."
+        - pip list
     - stage: release
       name: "Release current repository as Docker Image."
-      script: echo "Docker command."
+      script:
+        - echo "Docker command."
+        - docker build -t bluefu/demo:latest .
+        - docker images
