@@ -112,3 +112,4 @@ logs/
 alembic/versions/*
 data/
 /docs/**/*.html
+!docker/test/.env

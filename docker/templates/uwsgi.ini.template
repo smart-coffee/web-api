@@ -1,0 +1,12 @@
+[uwsgi]
+https = $APP_HOST:$APP_PORT,src/$CERT_FILE,src/$KEY_FILE
+chdir = src
+socket = %n.sock
+manage-script-name = true
+mount =	/api=app.py
+callable = $APP_CALLABLE
+
+threads = $APP_THREADS
+processes = $APP_PROCESSES
+master = true
+safe-pidfile = %n.pid

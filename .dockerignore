@@ -7,12 +7,11 @@
 .gitignore
 .gitkeep
 .gitlab-ci.yml
-
+.travis.yml
 
 docker/
 Dockerfile
 .dockerignore
-!docker/docker-entrypoint.sh
 logs/
 venv/
 __pycache__/
@@ -21,3 +20,7 @@ scripts/
 .env
 *.sock
 *.pid
+
+!docker/docker-entrypoint.sh
+!docker/templates
+!docker/test/.env
