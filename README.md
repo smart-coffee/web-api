@@ -1,6 +1,7 @@
 # Backend Application for our IoT Coffeemachine
 
 [![Build Status](https://travis-ci.com/smart-coffee/web-api.svg?branch=master)](https://travis-ci.com/smart-coffee/web-api)
+[![License](https://img.shields.io/github/license/smart-coffee/web-api.svg)](https://opensource.org/licenses/MIT)
 
 * Python >= 3.6 required
 * API-Documentation: [https://webapi-docs.tobias-blaufuss.de](https://webapi-docs.tobias-blaufuss.de)
