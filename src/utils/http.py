@@ -6,7 +6,8 @@ from functools import wraps
 from flask import Blueprint, request, make_response
 from flask_restful import Api
 from simplexml import dumps
-from werkzeug.wrappers import Response, HTTP_STATUS_CODES
+from werkzeug.wrappers import Response
+from werkzeug.http import HTTP_STATUS_CODES
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.orm import class_mapper
 
