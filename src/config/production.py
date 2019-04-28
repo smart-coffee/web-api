@@ -10,5 +10,8 @@ SQLALCHEMY_DATABASE_URI = get_connection_uri_from_env()
 # https://docs.sqlalchemy.org/en/13/core/engines.html#engine-creation-api
 # https://flask-sqlalchemy.palletsprojects.com/en/2.x/api/#flask_sqlalchemy.SQLAlchemy.create_engine
 SQLALCHEMY_ENGINE_OPTIONS = {
-    "pool_recycle" : 500
+    # https://flask-sqlalchemy.palletsprojects.com/en/2.x/config/#timeouts
+    "pool_recycle" : 500,
+    # https://docs.sqlalchemy.org/en/13/core/pooling.html#pool-disconnects
+    "pool_pre_ping": True
 }
