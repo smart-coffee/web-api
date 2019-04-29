@@ -106,10 +106,15 @@ venv.bak/
 # Idea PyCharm
 .idea/workspace.xml
 
+## Custom Area
+# Files
 *.pem
 *.pid
-logs/
 alembic/versions/*
-data/
 /docs/**/*.html
 !docker/test/.env
+uwsgi.ini
+
+# Folders
+logs/
+data/
