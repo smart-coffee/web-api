@@ -23,7 +23,21 @@ if [[ -f /ssl/privkey.pem && ! -f "$SRC_DIR/$KEY_FILE" ]] ; then
 fi
 
 # Create uwsgi configuration
-envsubst < ${TEMPLATE_DIR}/uwsgi.ini.template | cat > $WORK_DIR/uwsgi.ini
+UWSGI_HTTPS_TEMPLATE=$TEMPLATE_DIR/uwsgi-docker.https.ini.template
+UWSGI_HTTP_TEMPLATE=$TEMPLATE_DIR/uwsgi-docker.http.ini.template
+
+export MOUNT_URL=${SWAGGER_BASE_URL:-"/"}
+if [[ -z $MOUNT_URL ]]; then
+    export MOUNT_URL="/"
+fi
+
+if [[ ! -z "$CERT_FILE" && ! -z "$KEY_FILE" ]]; then
+    echo "uWSGI HTTPS enabled. Please check your certificates."
+    envsubst < $UWSGI_HTTPS_TEMPLATE | cat > $WORK_DIR/uwsgi.ini
+else
+    echo "uWSGI HTTP enabled."
+    envsubst < $UWSGI_HTTP_TEMPLATE | cat > $WORK_DIR/uwsgi.ini
+fi
 
 # Create .env file
 envsubst < ${TEMPLATE_DIR}/.env.template | cat > $SRC_DIR/.env
