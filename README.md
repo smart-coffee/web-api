@@ -47,7 +47,7 @@ Start the services with `docker-compose -f docker-compose.prod.yml --build -d`
 * Initialize virtual environment: `sh scripts/init-venv.sh`
 * Initialize environment files: `sh scripts/init-env.sh prod src`
 * Configure src/.env according to your production environment
-* Initialize uwsgi.ini: `sh scripts/init-uwsgi-local src/.env`
+* Initialize uwsgi.ini: `./scripts/init-uwsgi-local src/.env`
 
 ### Start
 

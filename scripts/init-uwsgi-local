@@ -1,0 +1,44 @@
+#!/bin/bash
+
+ENV_FILE=$1
+
+TMP_DIR="tmp"
+TEMPLATES_DIR="docker/templates"
+VAR_FILE="variables.sh"
+UWSGI_HTTPS_TEMPLATE=$TEMPLATES_DIR/uwsgi-local.https.ini.template
+UWSGI_HTTP_TEMPLATE=$TEMPLATES_DIR/uwsgi-local.http.ini.template
+SEPARATOR="========="
+SRC_DIR="./src"
+WORK_DIR="./"
+
+if [[ ! -f "$ENV_FILE" ]]; then
+    echo "No '$ENV_FILE' file found."
+    exit 1
+fi
+
+echo "Creating temporary directory '$TMP_DIR'."
+mkdir "$TMP_DIR"
+echo "Creating environment variables file ('$VAR_FILE') in '$TMP_DIR'."
+sed -e 's/^/export /' "$ENV_FILE" > "$TMP_DIR/$VAR_FILE"
+echo
+
+echo "Exporting environment variables:"
+echo "$SEPARATOR"
+cat "$ENV_FILE"
+echo "$SEPARATOR"
+source "$TMP_DIR/$VAR_FILE" > /dev/null
+echo
+
+echo "Deleting temporary directory."
+rm -rf "$TMP_DIR"
+echo
+
+echo "Creating uwsgi.ini file based on environment variables."
+if [[ ! -z "$CERT_FILE" && ! -z "$KEY_FILE" ]]; then
+    echo "uWSGI HTTPS enabled. Please check your certificates."
+    envsubst < $UWSGI_HTTPS_TEMPLATE | cat > $WORK_DIR/uwsgi.ini
+else
+    echo "uWSGI HTTP enabled."
+    envsubst < $UWSGI_HTTP_TEMPLATE | cat > $WORK_DIR/uwsgi.ini
+fi
+echo

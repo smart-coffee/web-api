@@ -1,0 +1,13 @@
+[uwsgi]
+http = $APP_HOST:$APP_PORT
+chdir = $SRC_DIR
+socket = %n.sock
+manage-script-name = true
+mount =	/api=app.py
+callable = $APP_CALLABLE
+
+threads = $APP_THREADS
+processes = $APP_PROCESSES
+master = true
+venv = ../venv
+safe-pidfile = %n.pid
