@@ -8,8 +8,6 @@ VAR_FILE="variables.sh"
 UWSGI_HTTPS_TEMPLATE=$TEMPLATES_DIR/uwsgi-local.https.ini.template
 UWSGI_HTTP_TEMPLATE=$TEMPLATES_DIR/uwsgi-local.http.ini.template
 SEPARATOR="========="
-SRC_DIR="./src"
-WORK_DIR="./"
 
 if [[ ! -f "$ENV_FILE" ]]; then
     echo "No '$ENV_FILE' file found."
@@ -32,6 +30,18 @@ echo
 echo "Deleting temporary directory."
 rm -rf "$TMP_DIR"
 echo
+
+# Apply defaults
+export SRC_DIR=${SRC_DIR:-"src"}
+export WORK_DIR=${WORK_DIR:-"$PWD"}
+export APP_PROCESSES=${APP_PROCESSES:-"2"}
+export APP_THREADS=${APP_THREADS:-"2"}
+export APP_CALLABLE=${APP_CALLABLE:-"FLASK_APP"}
+export MOUNT_URL=${SWAGGER_BASE_URL:-"/"}
+
+if [[ -z $MOUNT_URL ]]; then
+    export MOUNT_URL="/"
+fi
 
 echo "Creating uwsgi.ini file based on environment variables."
 if [[ ! -z "$CERT_FILE" && ! -z "$KEY_FILE" ]]; then

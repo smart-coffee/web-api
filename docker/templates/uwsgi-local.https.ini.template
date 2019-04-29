@@ -3,7 +3,7 @@ https = $APP_HOST:$APP_PORT,$SRC_DIR/$CERT_FILE,$SRC_DIR/$KEY_FILE
 chdir = $SRC_DIR
 socket = %n.sock
 manage-script-name = true
-mount =	/api=app.py
+mount =	$MOUNT_URL=app.py
 callable = $APP_CALLABLE
 
 threads = $APP_THREADS
