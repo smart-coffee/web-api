@@ -126,6 +126,7 @@ class CoffeeMachineJobController(JobController):
         criteria = {
             'coffee_machine_id_fk':coffee_machine_id,
         }
+        # https://gist.github.com/hest/8798884
         query = Job.query.filter_by(**criteria)
         count_q = query.statement.with_only_columns([func.count()]).order_by(None)
         count = query.session.execute(count_q).scalar()
