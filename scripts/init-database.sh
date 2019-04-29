@@ -1,7 +1,9 @@
 #!/bin/sh
 
+SERVICE=mysql-dev
+
 # Start docker containers in background
-docker-compose up -d mysql-dev
+docker-compose up -d $SERVICE
 
 # Wait for them to start
 sleep 10
@@ -14,4 +16,4 @@ cd ..
 deactivate
 
 # Stop containers running in background
-docker-compose stop
+docker-compose stop $SERVICE

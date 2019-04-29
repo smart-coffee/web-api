@@ -2,53 +2,27 @@
 
 init_prod_env_file() {
     local_mode='prod'
-    cat <<EOF >$location/.env
-MODE=$local_mode
+    export MODE=$local_mode
+    export CERT_FILE=${CERT_FILE:-"cert.pem"}
+    export KEY_FILE=${KEY_FILE:-"privkey.pem"}
+    export SWAGGER_BASE_URL=${SWAGGER_BASE_URL:-"/api"}
 
-CERT_FILE=cert.pem
-KEY_FILE=privkey.pem
-
-# Customize as needed
-DB_USER=
-DB_PW=
-DB_HOST=
-DB_NAME=
-DB_PORT=
-
-APP_HOST=
-APP_PORT=
-SECRET_KEY=
-APP_URL_PREFIX=
-
-# This path should conform with the path that is provided by uwsgi.ini"
-SWAGGER_BASE_URL=/api
-EOF
+    envsubst < docker/templates/.env.template | cat > $location/.env
 }
 
 init_dev_env_file() {
     local_mode='dev'
-    cat <<EOF >$location/.env
-MODE=$local_mode
+    export MODE=$local_mode
+    export DB_USER=admin
+    export DB_PW=password
+    export DB_HOST=localhost
+    export DB_NAME=cm_db
+    export DB_PORT=3308
+    export APP_HOST=localhost
+    export APP_PORT=5000
+    export SECRET_KEY=XLrIjHvKsQskA7m
 
-# Should be empty in $local_mode environment
-CERT_FILE=
-KEY_FILE=
-
-# Customize as needed
-DB_USER=admin
-DB_PW=admin
-DB_HOST=localhost
-DB_NAME=cm_db
-DB_PORT=3308
-
-APP_HOST=localhost
-APP_PORT=5000
-SECRET_KEY=XLrIjHvKsQskA7m
-APP_URL_PREFIX=
-
-# Should be empty in $local_mode environment
-SWAGGER_BASE_URL=
-EOF
+    envsubst < docker/templates/.env.template | cat > $location/.env
 }
 
 mode=$1

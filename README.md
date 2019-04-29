@@ -6,7 +6,9 @@
 * Python >= 3.6 required
 * API-Documentation: [https://webapi-docs.tobias-blaufuss.de](https://webapi-docs.tobias-blaufuss.de)
 
-## Initialization of the project (Development)
+## Development
+
+### Initialization of the project
 
 Initialize the project: `sh scripts/init.sh`. This will:
 
@@ -14,7 +16,7 @@ Initialize the project: `sh scripts/init.sh`. This will:
 * ... initialize `.env` files
 * ... initialize `docker` containers (database)
 
-## Start the app
+### Start and test the app
 
 * `sh scripts/app-start.sh`
 * Go to [http://localhost:5000](http://localhost:5000)
@@ -22,27 +24,36 @@ Initialize the project: `sh scripts/init.sh`. This will:
 * You should receive a JWT Token, which you can use for other available resources that require a JWT Token.
 * Use the token for the `/users/current` and you will receive all information about the current user account.
 
-## Reset database
+### Reset database
+
 `sh scripts/init-database.sh`
 
-## Docker
+## Production: Docker
 
-Start docker environment with `docker-compose up`. This will start the following containers:
+You have to create the following files:
 
-* MySQL, Database Server (Host:3308, Network:3306)
-* Adminer, Database Administration Tool (Host:8081, Network:8080)
+* ./docker/db/env/.env
+* ./docker/db/conf/config-file.cnf
+* ./docker/web-api/env/.env
 
-Visit [http://localhost:8081](http://localhost:8081) and access the database with the credentials listed in `docker-compose.yml`. There should be **1 user in the `user` table** if you initialized the project correctly.
+Have a look at `docker-compose.prod.yml` and follow the hints in the line comments about the content of the created .env and cnf files.
 
-Example connection:
+Start the services with `docker-compose -f docker-compose.prod.yml --build -d`
 
-* server: mysql-dev
-* user: admin
-* password: admin
-* database: cm_db
+## Production: Without docker
 
-## PRODUCTION (Without docker)
+### Setup
+
+* Initialize virtual environment: `sh scripts/init-venv.sh`
+* Initialize environment files: `sh scripts/init-env.sh prod src`
+* Configure src/.env according to your production environment
+* Initialize uwsgi.ini: `sh scripts/init-uwsgi-local src/.env`
+
+### Start
 
 * Start production server: `./uwsgi-start`
 * Stop production server: `./uwsgi-stop`
-* Ports should be changed in `uwsgi.ini` **AND** `src/.env`
+
+### Important
+
+If you change ANYTHING in src/.env, you should run `./scripts/init-uwsgi-local src/.env` again!
