@@ -123,3 +123,14 @@ def get_job_fields():
         'user_id': fields.String
     }
     return _job_fields
+
+
+@SWAG.definition('Count')
+def get_count_fields():
+    """
+    file: /controllers/response_model/count.yml
+    """
+    _count_fields = {
+        'size': fields.Integer
+    }
+    return _count_fields

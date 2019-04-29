@@ -7,8 +7,9 @@ from flask import Blueprint
 from flask_restful import Api, marshal_with, Resource
 
 from controllers.coffee import CoffeeMachineController, CoffeeTypeController, CoffeeBrandController, CoffeeProductController
-from models import CoffeeMachine, User, CoffeeType, CoffeeBrand, CoffeeProduct
-from controllers.response_model import get_coffee_machine_fields, get_coffee_type_fields, get_coffee_brand_fields, get_coffee_product_fields
+from controllers.job import CoffeeMachineJobController
+from models import CoffeeMachine, User, CoffeeType, CoffeeBrand, CoffeeProduct, Job
+from controllers.response_model import get_coffee_machine_fields, get_coffee_type_fields, get_coffee_brand_fields, get_coffee_product_fields, get_job_fields, get_count_fields
 from utils.http import token_required, get_post_response, serialize
 
 
@@ -141,8 +142,32 @@ class CoffeeProductResource(Resource):
         return self.controller.get_by_id(coffee_product_id, current_user)
 
 
+class CoffeeMachineJobListResource(Resource):
+    def __init__(self):
+        self.controller = CoffeeMachineJobController()
+    
+    @token_required(roles=['Administrator'])
+    @swag_from('/resources/coffee/description/coffee_machine_job_list_get.yml')
+    @marshal_with(get_job_fields())
+    def get(self, coffee_machine_id, current_user: User) -> List[Job]:
+        return self.controller.get_list(current_user, coffee_machine_id=coffee_machine_id)
+
+
+class CoffeeMachineJobListCountResource(Resource):
+    def __init__(self):
+        self.controller = CoffeeMachineJobController()
+    
+    @token_required()
+    @swag_from('/resources/coffee/description/coffee_machine_job_list_count_get.yml')
+    @marshal_with(get_count_fields())
+    def get(self, coffee_machine_id, current_user: User):
+        return self.controller.get_list_count(current_user, coffee_machine_id=coffee_machine_id)
+
+
 api.add_resource(CoffeeMachineListResource, '/{rsc}/machines'.format(rsc=API_PREFIX))
 api.add_resource(CoffeeMachineResource, '/{rsc}/machines/<int:coffee_machine_id>'.format(rsc=API_PREFIX))
+api.add_resource(CoffeeMachineJobListResource, '/{rsc}/machines/<int:coffee_machine_id>/jobs'.format(rsc=API_PREFIX))
+api.add_resource(CoffeeMachineJobListCountResource, '/{rsc}/machines/<int:coffee_machine_id>/jobs/count'.format(rsc=API_PREFIX))
 api.add_resource(CoffeeTypeListResource, '/{rsc}/types'.format(rsc=API_PREFIX))
 api.add_resource(CoffeeTypeResource, '/{rsc}/types/<int:coffee_type_id>'.format(rsc=API_PREFIX))
 api.add_resource(CoffeeBrandListResource, '/{rsc}/brands'.format(rsc=API_PREFIX))

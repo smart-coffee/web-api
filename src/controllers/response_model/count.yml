@@ -1,0 +1,9 @@
+Count object
+---
+type: object
+required:
+  - size
+properties:
+  size:
+    type: integer
+    example: 42

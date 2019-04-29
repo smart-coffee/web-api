@@ -1,0 +1,30 @@
+Get all available Jobs of the logged in User
+---
+tags:
+  - coffee
+produces:
+  - application/json
+  - application/xml
+parameters:
+  - in: header
+    name: x-access-token
+    description: JWT received after successful login.
+    type: string
+    required: true
+  - in: path
+    name: coffee_machine_id
+    description: ID of the Coffee Machine
+    type: integer
+    required: true
+  - in: query
+    name: square
+    description: Filters the list of jobs. Open (false) or closed (true) jobs.
+    type: boolean
+    example: false
+responses:
+  200:
+    description: OK
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/Count'

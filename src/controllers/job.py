@@ -3,6 +3,7 @@ import time
 
 from typing import List
 from flask import request
+from sqlalchemy import func
 
 from models import User, Job, CoffeeMachine
 from controllers.base_controller import _BaseController
@@ -109,3 +110,25 @@ class CurrentUserJobController(JobController):
     
     def delete(self, resource_id, current_user: User=None):
         raise NotImplementedError
+
+
+class CoffeeMachineJobController(JobController):
+    def __init__(self):
+        super(CoffeeMachineJobController, self).__init__()
+    
+    def get_list_statement(self, current_user: User, **kwargs) -> List[Job]:
+        jobs = super().get_list_statement(current_user)
+        coffee_machine_id = kwargs['coffee_machine_id']
+        jobs = [job for job in jobs if job.coffee_machine.id == coffee_machine_id]
+        return jobs
+
+    def get_list_count(self, current_user, coffee_machine_id):
+        criteria = {
+            'coffee_machine_id_fk':coffee_machine_id,
+        }
+        query = Job.query.filter_by(**criteria)
+        count_q = query.statement.with_only_columns([func.count()]).order_by(None)
+        count = query.session.execute(count_q).scalar()
+        return {
+            'size': count
+        }
