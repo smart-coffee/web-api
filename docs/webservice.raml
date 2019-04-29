@@ -367,8 +367,9 @@ securitySchemes:
           securedBy: [ jwt ]
           get:
             description: Liefert die Anzahl aller Aufträge einer Kaffeemaschine mit der angegebenen ID.
-            responses: 
-              description: Ok.
-              body:
-                type: count
+            responses:
+              200:
+                description: Ok.
+                body:
+                  type: count
   
