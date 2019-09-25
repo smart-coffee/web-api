@@ -118,3 +118,4 @@ uwsgi.ini
 # Folders
 logs/
 data/
+.vscode/settings.json
