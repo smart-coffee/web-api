@@ -74,7 +74,7 @@ def _generate_token(user: User):
     secret_key = get_secret_key()
     algorithm = 'HS256'
 
-    token = jwt.encode({'public_id':public_id, 'iat': now,'exp':expires}, secret_key, algorithm=algorithm)
+    token = jwt.encode({'public_id':public_id, 'iat':now, 'exp':expires}, secret_key, algorithm=algorithm)
     return token
 
 
