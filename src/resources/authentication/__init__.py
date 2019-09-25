@@ -68,11 +68,13 @@ class RefreshAPI(MethodView):
 
 def _generate_token(user: User):
     public_id = user.public_id
-    expires = datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
+    now = datetime.datetime.utcnow()
+    timedelta = datetime.timedelta(days=14)
+    expires = now + timedelta
     secret_key = get_secret_key()
     algorithm = 'HS256'
 
-    token = jwt.encode({'public_id':public_id, 'exp':expires}, secret_key, algorithm=algorithm)
+    token = jwt.encode({'public_id':public_id, 'iat': now,'exp':expires}, secret_key, algorithm=algorithm)
     return token
 
 
